@@ -289,8 +289,14 @@ h1,h2,h3{ margin:0 0 10px; }
 .chips{
   display:flex;
   gap: 8px;
-  overflow:auto;
-  padding-bottom: 2px;
+
+  /* FIX: antes era overflow:auto; eso recorta sombras/halos por arriba */
+  overflow-x: auto;
+  overflow-y: visible;
+
+  /* FIX: da espacio vertical para que sombras/halos no choquen con el borde y se corten */
+  padding: 8px 0;
+
   -webkit-overflow-scrolling: touch;
 }
 .chip{

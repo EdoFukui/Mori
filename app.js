@@ -108,18 +108,6 @@ function setYear(){
   if(el) el.textContent = String(new Date().getFullYear());
 }
 
-/* UI 1: resumen de filtros para el usuario */
-function buildActiveFiltersText(parts){
-  const clean = parts.filter(Boolean);
-  return clean.length ? `Filtros: ${clean.join(" • ")}` : "";
-}
-
-/* UI 1: clear helper */
-function clearAllCommon(state, defaults){
-  state.query = defaults.query ?? "";
-  if("familia" in defaults) state.familia = defaults.familia;
-}
-
 /* =========================
    Menú móvil
    ========================= */
@@ -134,6 +122,7 @@ function initNav(){
     toggle.setAttribute("aria-expanded", String(open));
   });
 
+  // Cierra el menú al tocar un link (móvil)
   qsa(".nav__list a").forEach(a => {
     a.addEventListener("click", () => {
       list.classList.remove("is-open");
@@ -143,7 +132,7 @@ function initNav(){
 }
 
 /* =========================
-   Render chips (UI 1)
+   Render chips
    ========================= */
 
 function renderChips(container, options, activeValue, onClick){
@@ -159,17 +148,8 @@ function renderChips(container, options, activeValue, onClick){
   });
 }
 
-/* UI 1: animación sutil de entrada para items */
-function applyStaggerFade(listEl){
-  const items = qsa(".item", listEl);
-  items.forEach((el, i) => {
-    el.classList.add("fade-in");
-    el.style.animationDelay = `${Math.min(i, 10) * 14}ms`;
-  });
-}
-
 /* =========================
-   Página Archivo (UI 1)
+   Página Archivo
    ========================= */
 
 function initArchivo(){
@@ -177,18 +157,16 @@ function initArchivo(){
   if(!root) return;
 
   const search = qs("#search", root);
-  const clearBtn = qs("#clearBtn", root);
-  const emptyClearBtn = qs("#emptyClearBtn", root);
   const chipsFamilia = qs("#chipsFamilia", root);
   const resultCount = qs("#resultCount", root);
-  const activeFilters = qs("#activeFilters", root);
   const list = qs("#list", root);
-  const emptyState = qs("#emptyState", root);
 
   const familiaOptions = buildFamilyOptions(DATA.archivo);
 
-  let state = { familia: "__all", query: "" };
-  const defaults = { familia: "__all", query: "" };
+  let state = {
+    familia: "__all",
+    query: ""
+  };
 
   function render(){
     const items = DATA.archivo
@@ -197,16 +175,10 @@ function initArchivo(){
 
     resultCount.textContent = `${items.length} resultado(s)`;
 
-    const filterText = buildActiveFiltersText([
-      state.query ? `búsqueda “${state.query}”` : "",
-      state.familia !== "__all" ? state.familia : ""
-    ]);
-    if(activeFilters) activeFilters.textContent = filterText;
-
     list.innerHTML = "";
     items.forEach(x => {
       const card = document.createElement("article");
-      card.className = "card item lift";
+      card.className = "card item";
 
       const ph = document.createElement("div");
       ph.className = "ph";
@@ -267,42 +239,22 @@ function initArchivo(){
       list.appendChild(card);
     });
 
-    // chips
     renderChips(chipsFamilia, familiaOptions, state.familia, (v) => {
       state.familia = v;
       render();
     });
-
-    // empty state
-    if(emptyState){
-      emptyState.hidden = items.length !== 0;
-    }
-
-    // animación
-    applyStaggerFade(list);
   }
 
-  function clearAll(){
-    state.familia = defaults.familia;
-    state.query = defaults.query;
-    if(search) search.value = "";
+  search.addEventListener("input", (e) => {
+    state.query = e.target.value;
     render();
-  }
-
-  if(search){
-    search.addEventListener("input", (e) => {
-      state.query = e.target.value;
-      render();
-    });
-  }
-  if(clearBtn) clearBtn.addEventListener("click", clearAll);
-  if(emptyClearBtn) emptyClearBtn.addEventListener("click", clearAll);
+  });
 
   render();
 }
 
 /* =========================
-   Página Trueque (UI 1)
+   Página Trueque
    ========================= */
 
 function initTrueque(){
@@ -310,15 +262,11 @@ function initTrueque(){
   if(!root) return;
 
   const search = qs("#search", root);
-  const clearBtn = qs("#clearBtn", root);
-  const emptyClearBtn = qs("#emptyClearBtn", root);
   const chipsDispon = qs("#chipsDispon", root);
   const chipsCond = qs("#chipsCond", root);
   const chipsFamilia = qs("#chipsFamilia", root);
   const resultCount = qs("#resultCount", root);
-  const activeFilters = qs("#activeFilters", root);
   const list = qs("#list", root);
-  const emptyState = qs("#emptyState", root);
 
   const familiaOptions = buildFamilyOptions(DATA.trueque);
 
@@ -342,13 +290,6 @@ function initTrueque(){
     query: ""
   };
 
-  const defaults = {
-    dispon: "disponible",
-    condicion: "__any",
-    familia: "__all",
-    query: ""
-  };
-
   function render(){
     const items = DATA.trueque
       .filter(x => {
@@ -360,24 +301,17 @@ function initTrueque(){
       .filter(x => state.familia === "__all" ? true : x.familia === state.familia)
       .filter(x => {
         if(state.condicion === "__any") return true;
+        // condición solo aplica a disponibles
         return x.disponible === true && x.condicion === state.condicion;
       })
       .filter(x => matchesQuery(x, state.query));
 
     resultCount.textContent = `${items.length} resultado(s)`;
 
-    const filterText = buildActiveFiltersText([
-      state.query ? `búsqueda “${state.query}”` : "",
-      state.dispon === "disponible" ? "Disponible" : (state.dispon === "nodisponible" ? "No disponible" : "Todos"),
-      state.dispon !== "nodisponible" && state.condicion !== "__any" ? state.condicion : "",
-      state.familia !== "__all" ? state.familia : ""
-    ]);
-    if(activeFilters) activeFilters.textContent = filterText;
-
     list.innerHTML = "";
     items.forEach(x => {
       const card = document.createElement("article");
-      card.className = "card item lift";
+      card.className = "card item";
 
       const ph = document.createElement("div");
       ph.className = "ph";
@@ -403,11 +337,13 @@ function initTrueque(){
       const tags = document.createElement("div");
       tags.className = "tags";
 
+      // Estado principal
       const st = document.createElement("span");
       st.className = "pill pill--wine";
       st.textContent = x.disponible ? "Disponible" : "No disponible";
       tags.appendChild(st);
 
+      // Condición secundaria SOLO si disponible
       if(x.disponible){
         const cd = document.createElement("span");
         cd.className = "pill";
@@ -415,6 +351,7 @@ function initTrueque(){
         tags.appendChild(cd);
       }
 
+      // tags extra (máx 2)
       (x.tags || []).slice(0,2).forEach(t => {
         const p = document.createElement("span");
         p.className = "pill";
@@ -439,6 +376,7 @@ function initTrueque(){
         window.open(waLink(msg), "_blank", "noopener,noreferrer");
       });
 
+      // Atenuar si no disponible
       if(!x.disponible){
         btn.classList.add("btn--ghost");
       }
@@ -458,11 +396,13 @@ function initTrueque(){
 
     renderChips(chipsDispon, disponOptions, state.dispon, (v) => {
       state.dispon = v;
+      // si se elige "No disponible", la condición deja de tener sentido -> reseteo
       if(state.dispon === "nodisponible") state.condicion = "__any";
       render();
     });
 
     renderChips(chipsCond, condOptions, state.condicion, (v) => {
+      // condición solo aplica a disponibles
       if(state.dispon === "nodisponible") return;
       state.condicion = v;
       render();
@@ -472,31 +412,12 @@ function initTrueque(){
       state.familia = v;
       render();
     });
-
-    if(emptyState){
-      emptyState.hidden = items.length !== 0;
-    }
-
-    applyStaggerFade(list);
   }
 
-  function clearAll(){
-    state.dispon = defaults.dispon;
-    state.condicion = defaults.condicion;
-    state.familia = defaults.familia;
-    state.query = defaults.query;
-    if(search) search.value = "";
+  search.addEventListener("input", (e) => {
+    state.query = e.target.value;
     render();
-  }
-
-  if(search){
-    search.addEventListener("input", (e) => {
-      state.query = e.target.value;
-      render();
-    });
-  }
-  if(clearBtn) clearBtn.addEventListener("click", clearAll);
-  if(emptyClearBtn) emptyClearBtn.addEventListener("click", clearAll);
+  });
 
   render();
 }
@@ -506,6 +427,7 @@ function initTrueque(){
    ========================= */
 
 function loadFonts(){
+  // Fraunces (serif) + Inter (sans)
   const link1 = document.createElement("link");
   link1.rel = "preconnect";
   link1.href = "https://fonts.googleapis.com";
