@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trueque — Plantas Mori</title>
+  <meta name="description" content="Inventario de esquejes para intercambio. Disponible/No disponible + Corte fresco/Enraizado." />
+  <meta name="theme-color" content="#cfc0c2" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="index.html">
+        <strong class="serif">Plantas Mori</strong>
+        <small>Trueque</small>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+        <ul class="nav__list" id="menu">
+          <li><a href="archivo.html">Archivo</a></li>
+          <li><a href="trueque.html">Trueque</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a class="btn btn--small btn--ghost" href="index.html">Inicio</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" data-page="trueque">
+    <section class="section">
+      <div class="container">
+        <article class="card">
+          <h1 class="serif">Trueque</h1>
+          <p class="muted">
+            Inventario vivo de esquejes. Por defecto se muestra <strong>Disponible</strong>.
+            Condición: <em>Corte fresco</em> o <em>Enraizado</em>.
+          </p>
+
+          <div class="hr"></div>
+
+          <div class="controls">
+            <div class="search">
+              <input id="search" type="search"
+                     placeholder="Buscar: philo, monstera, corte, enraizado..."
+                     aria-label="Buscar en trueque" />
+            </div>
+
+            <div>
+              <div class="small muted" style="margin-bottom:6px;">Disponibilidad</div>
+              <div class="chips" id="chipsDispon" aria-label="Filtro por disponibilidad"></div>
+            </div>
+
+            <div>
+              <div class="small muted" style="margin-bottom:6px;">Condición (solo si está disponible)</div>
+              <div class="chips" id="chipsCond" aria-label="Filtro por condición"></div>
+            </div>
+
+            <div>
+              <div class="small muted" style="margin-bottom:6px;">Familias</div>
+              <div class="chips" id="chipsFamilia" aria-label="Filtro por familias"></div>
+            </div>
+
+            <div class="small muted" id="resultCount">0 resultado(s)</div>
+          </div>
+        </article>
+
+        <div class="section">
+          <div class="grid" id="list" aria-label="Listado de trueque"></div>
+        </div>
+
+        <div class="section">
+          <article class="card">
+            <h2 class="serif">Nota de convivencia</h2>
+            <p class="muted">
+              Recomendación: cuarentena preventiva y revisión de plagas. Este espacio es de intercambio entre coleccionistas.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© <span id="year"></span> Plantas Mori</span>
+      <span class="small">Trueque • filtros + buscador</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

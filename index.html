@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plantas Mori — Archivo y Trueque</title>
+  <meta name="description" content="Plantas Mori: archivo vivo de plantas y espacio de trueque de esquejes. Enfoque educativo, fase cero." />
+  <meta name="theme-color" content="#cfc0c2" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="index.html">
+        <strong class="serif">Plantas Mori</strong>
+        <small>Archivo vivo • Trueque • Educación</small>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+        <ul class="nav__list" id="menu">
+          <li><a href="archivo.html">Archivo</a></li>
+          <li><a href="trueque.html">Trueque</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a class="btn btn--small btn--ghost" href="#estado">Fase cero</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero">
+      <div class="container">
+        <div class="hero__top">
+          <span class="badge">Fase cero • Sin venta • En construcción</span>
+          <h1 class="serif">Un archivo vivo de plantas y un espacio simple para trueque.</h1>
+          <p class="lead">
+            Aquí juntamos fichas (archivo) y un inventario de esquejes disponibles para intercambio.
+            Sin humo: lo que ves es lo que hay.
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+            <a class="btn" href="archivo.html">Entrar al Archivo</a>
+            <a class="btn btn--ghost" href="trueque.html">Ver Trueque</a>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <section class="section grid grid-3" aria-label="Entradas">
+          <article class="card">
+            <h2 class="serif">Archivo</h2>
+            <p class="muted">Fichas simples por familia. Pensado para móvil: buscador + chips.</p>
+            <div class="hr"></div>
+            <a class="btn btn--small" href="archivo.html">Abrir Archivo</a>
+          </article>
+
+          <article class="card">
+            <h2 class="serif">Trueque</h2>
+            <p class="muted">Inventario vivo de esquejes. Disponible / No disponible + Corte fresco / Enraizado.</p>
+            <div class="hr"></div>
+            <a class="btn btn--small" href="trueque.html">Abrir Trueque</a>
+          </article>
+
+          <article class="card" id="estado">
+            <h2 class="serif">Estado</h2>
+            <p class="muted">Este sitio está diseñado para crecer sin rehacerlo completo (fase futura: servicios).</p>
+            <div class="hr"></div>
+            <p class="small muted">Por ahora: placeholders + navegación real.</p>
+          </article>
+        </section>
+
+        <section class="section" id="contacto">
+          <article class="card">
+            <h2 class="serif">Contacto</h2>
+            <p class="muted">Placeholder. (Luego conectamos a WhatsApp/Instagram/correo.)</p>
+            <div class="hr"></div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn btn--small" href="https://wa.me/56955555555?text=Hola%21%20Vengo%20desde%20Plantas%20Mori."
+                 target="_blank" rel="noopener noreferrer">WhatsApp (ficticio)</a>
+              <a class="btn btn--small btn--ghost" href="#" onclick="alert('Luego: Instagram'); return false;">Instagram</a>
+              <a class="btn btn--small btn--ghost" href="#" onclick="alert('Luego: correo'); return false;">Correo</a>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© <span id="year"></span> Plantas Mori</span>
+      <span class="small">Mobile-first • Serif editorial • Paleta base</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

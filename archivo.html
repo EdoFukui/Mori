@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Archivo — Plantas Mori</title>
+  <meta name="description" content="Archivo de plantas por familia. Buscador + chips para navegar en móvil." />
+  <meta name="theme-color" content="#cfc0c2" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="index.html">
+        <strong class="serif">Plantas Mori</strong>
+        <small>Archivo</small>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+        <ul class="nav__list" id="menu">
+          <li><a href="archivo.html">Archivo</a></li>
+          <li><a href="trueque.html">Trueque</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a class="btn btn--small btn--ghost" href="index.html">Inicio</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" data-page="archivo">
+    <section class="section">
+      <div class="container">
+        <article class="card">
+          <h1 class="serif">Archivo</h1>
+          <p class="muted">Buscador + chips por familia. (Sin imágenes por ahora: placeholders).</p>
+
+          <div class="hr"></div>
+
+          <div class="controls">
+            <div class="search">
+              <input id="search" type="search"
+                     placeholder="Buscar: monstera, philo, variegata, luz..."
+                     aria-label="Buscar en el archivo" />
+            </div>
+
+            <div>
+              <div class="small muted" style="margin-bottom:6px;">Familias</div>
+              <div class="chips" id="chipsFamilia" aria-label="Filtro por familias"></div>
+            </div>
+
+            <div class="small muted" id="resultCount">0 resultado(s)</div>
+          </div>
+        </article>
+
+        <div class="section">
+          <div class="grid" id="list" aria-label="Listado del archivo"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© <span id="year"></span> Plantas Mori</span>
+      <span class="small">Archivo • placeholders</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
