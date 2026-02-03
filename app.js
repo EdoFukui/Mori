@@ -198,7 +198,7 @@ function matchesQuery(item, query){
 
   let expanded = q;
   for(const [a,b] of synonyms){
-    if(expanded.includes(a)) expanded = expanded.replaceAll(a, b);
+    if(expanded.includes(a)) expanded = expanded.replace(a, b);
   }
 
   const hay = [
@@ -247,31 +247,80 @@ function initNav(){
 }
 
 /* =========================
-   Toggle colapsable de filtros
-   (ahora la barra del toggle siempre es visible)
+   UI 2: altura real del header (para sticky offsets)
+   ========================= */
+
+function setHeaderOffsetVar(){
+  const header = qs(".header");
+  if(!header) return;
+  const h = Math.round(header.getBoundingClientRect().height);
+  // Fallback a 58px si algo raro ocurre
+  document.documentElement.style.setProperty("--header-h", `${h || 58}px`);
+}
+
+function initHeaderHeightSync(){
+  const header = qs(".header");
+  if(!header) return;
+
+  // 1) primera medición (después del layout)
+  requestAnimationFrame(setHeaderOffsetVar);
+
+  // 2) si cambian fuentes, puede variar 1-2px
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(() => setHeaderOffsetVar()).catch(() => {});
+  }
+
+  // 3) observar cambios reales de tamaño
+  if("ResizeObserver" in window){
+    const ro = new ResizeObserver(() => setHeaderOffsetVar());
+    ro.observe(header);
+  } else {
+    window.addEventListener("resize", () => setHeaderOffsetVar());
+  }
+}
+
+/* =========================
+   Filtros colapsables
    ========================= */
 
 function initFiltersToggle(){
   const stickyControls = qs(".sticky-controls");
   const toggles = qsa(".filters-toggle");
+  const handle = qs(".filters-handle");
 
   if(!stickyControls || toggles.length === 0) return;
 
-  function applyState(collapsed){
-    stickyControls.classList.toggle("is-collapsed", collapsed);
+  // Toggle behavior: keep all toggle buttons in sync
+  function setCollapsed(collapsed){
+    if(collapsed) stickyControls.classList.add("is-collapsed");
+    else stickyControls.classList.remove("is-collapsed");
     toggles.forEach(t => t.setAttribute("aria-expanded", String(!collapsed)));
   }
-
-  // Estado inicial (por defecto expandido)
-  applyState(stickyControls.classList.contains("is-collapsed"));
 
   toggles.forEach(t => {
     t.addEventListener("click", (e) => {
       e.preventDefault();
-      const nowCollapsed = !stickyControls.classList.contains("is-collapsed");
-      applyState(nowCollapsed);
+      const isCollapsed = stickyControls.classList.toggle("is-collapsed");
+      toggles.forEach(tb => tb.setAttribute("aria-expanded", String(!isCollapsed)));
     });
   });
+
+  // Show a small handle when the full filters bar scrolls out of view
+  if(handle){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          handle.classList.remove('show');
+          handle.setAttribute('aria-hidden', 'true');
+        } else {
+          handle.classList.add('show');
+          handle.setAttribute('aria-hidden', 'false');
+        }
+      });
+    }, { root: null, threshold: 0 });
+
+    io.observe(stickyControls);
+  }
 }
 
 /* =========================
@@ -316,6 +365,17 @@ function buildMedia(imgSrc, altText){
     im.alt = altText || "";
     im.loading = "lazy";
     im.decoding = "async";
+
+    // Si la imagen falla (404, nombre mal, etc.), evitamos el ícono de "imagen rota"
+    // y dejamos un placeholder limpio.
+    im.addEventListener("error", () => {
+      try{ im.removeAttribute("src"); }catch(_){/* noop */}
+      im.style.display = "none";
+      ph.classList.add("ph--fallback");
+      ph.setAttribute("data-fallback", "Sin imagen");
+      if(altText) ph.setAttribute("title", altText);
+    }, { once: true });
+
     ph.appendChild(im);
   }
 
@@ -363,6 +423,7 @@ function initArchivo(){
       const card = document.createElement("article");
       card.className = "card item lift";
 
+      // media (UI 2)
       card.appendChild(buildMedia(x.img, x.nombre));
 
       const body = document.createElement("div");
@@ -515,6 +576,7 @@ function initTrueque(){
       const card = document.createElement("article");
       card.className = "card item lift";
 
+      // media (UI 2)
       card.appendChild(buildMedia(x.img, x.nombre));
 
       const body = document.createElement("div");
@@ -652,6 +714,7 @@ function loadFonts(){
 
 document.addEventListener("DOMContentLoaded", () => {
   loadFonts();
+  initHeaderHeightSync();
   setYear();
   initNav();
   initFiltersToggle();
