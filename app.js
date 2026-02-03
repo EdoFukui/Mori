@@ -24,7 +24,7 @@ const DATA = {
       id: "a3",
       nombre: "Cordatum sp. Brasil",
       familia: "Philodendron",
-      img: "assets/img/philodendron-brasil.jpeg",
+      img: "assets/img/cordatum-brasil.jpeg",
       tags: ["cordatum", "corte"],
       nota: "Grupo cordatum/hederaceum ‘Brasil’. (Ficha breve, borrador.)"
     },
