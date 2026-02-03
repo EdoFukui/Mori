@@ -304,6 +304,33 @@ h1,h2,h3{ margin:0 0 10px; }
   max-height: 0;
   opacity: 0;
 }
+
+/* Handle visible when filters scroll out of view */
+.filters-handle{
+  position: sticky;
+  top: 0;
+  z-index: 65;
+  display: none;
+  background: transparent;
+  pointer-events: none; /* allow only the button to be interactive */
+  padding: 6px 0;
+}
+.filters-handle .container{ display:flex; justify-content:flex-end; }
+.filters-handle .filters-toggle--handle{
+  pointer-events: auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(26,20,22,.08);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+.filters-handle.show{ display: block; }
+
+/* Ensure the handle aligns visually with sticky-controls width */
+@media (min-width: 860px){
+  .filters-handle .container{ justify-content:flex-end; }
+}
 .controls{
   display:flex;
   flex-direction:column;

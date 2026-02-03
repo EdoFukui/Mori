@@ -244,15 +244,43 @@ function initNav(){
    ========================= */
 
 function initFiltersToggle(){
-  const toggleBtn = qs(".filters-toggle");
   const stickyControls = qs(".sticky-controls");
-  
-  if(!toggleBtn || !stickyControls) return;
+  const toggles = qsa(".filters-toggle");
+  const handle = qs(".filters-handle");
 
-  toggleBtn.addEventListener("click", () => {
-    const isCollapsed = stickyControls.classList.toggle("is-collapsed");
-    toggleBtn.setAttribute("aria-expanded", String(!isCollapsed));
+  if(!stickyControls || toggles.length === 0) return;
+
+  // Toggle behavior: keep all toggle buttons in sync
+  function setCollapsed(collapsed){
+    if(collapsed) stickyControls.classList.add("is-collapsed");
+    else stickyControls.classList.remove("is-collapsed");
+    toggles.forEach(t => t.setAttribute("aria-expanded", String(!collapsed)));
+  }
+
+  toggles.forEach(t => {
+    t.addEventListener("click", (e) => {
+      e.preventDefault();
+      const isCollapsed = stickyControls.classList.toggle("is-collapsed");
+      toggles.forEach(tb => tb.setAttribute("aria-expanded", String(!isCollapsed)));
+    });
   });
+
+  // Show a small handle when the full filters bar scrolls out of view
+  if(handle){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          handle.classList.remove('show');
+          handle.setAttribute('aria-hidden', 'true');
+        } else {
+          handle.classList.add('show');
+          handle.setAttribute('aria-hidden', 'false');
+        }
+      });
+    }, { root: null, threshold: 0 });
+
+    io.observe(stickyControls);
+  }
 }
 
 /* =========================
