@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Archivo — Plantas Mori</title>
-  <meta name="description" content="Archivo: colección completa. Filtra por familia y estado (juvenil/madre/colección)." />
+  <meta name="description" content="Archivo: colección completa. Filtra por familia, estado y trueque." />
   <meta name="theme-color" content="#DED7D1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -55,6 +55,14 @@
               <button id="clearBtn" class="btn btn--small btn--ghost" type="button" aria-label="Limpiar búsqueda y filtros">Limpiar</button>
             </div>
 
+            <div class="toggle-row" aria-label="Mostrar/ocultar plantas de trueque">
+              <label class="toggle">
+                <input id="toggleTrueque" type="checkbox" />
+                <span class="toggle__track" aria-hidden="true"></span>
+                <span class="toggle__text">Mostrar plantas de Trueque</span>
+              </label>
+            </div>
+
             <div>
               <div class="small muted" style="margin-bottom:6px;">Estado</div>
               <div class="chips" id="chipsEstado" aria-label="Filtro por estado"></div>
@@ -75,6 +83,11 @@
 
       <div class="section">
         <div class="container">
+          <!-- BONUS: badge de estado del Trueque (visible/oculto) -->
+          <div class="list-top">
+            <span class="mini-badge" id="truequeBadge">Trueque oculto</span>
+          </div>
+
           <div class="grid list-grid" id="list" aria-label="Listado del archivo"></div>
 
           <div class="card empty-state" id="emptyState" hidden>

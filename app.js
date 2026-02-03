@@ -1,13 +1,11 @@
 /* =========================
-   UI 3 — Catálogo maestro
-   Archivo = colección completa
-   Trueque = subset transaccional
+   UI 3.2 — Archivo: switch Trueque (oculto por defecto)
+   + badge Trueque oculto/visible
+   + Trueque: sin "comuna"
    ========================= */
 
-/** Estados minimalistas (Archivo) */
 const STATUS_ORDER = ["Juvenil", "Madre", "Colección"];
 
-/** Familias (orden editorial) */
 const FAMILY_ORDER = [
   "Alocasia",
   "Anthurium",
@@ -21,10 +19,13 @@ const FAMILY_ORDER = [
 
 const WHATSAPP_NUMBER = "56955555555"; // ficticio
 
+/* Admin (oculto práctico, NO seguridad real) */
+const ADMIN_PIN = "5555";
+const ADMIN_FLAG_KEY = "mori_admin_enabled";
+const STATE_OVERRIDES_KEY = "mori_estado_overrides";
+
 /* =========================
-   Catálogo
-   - Una planta existe UNA vez
-   - Si tiene trueque, aparece en Trueque
+   Catálogo maestro
    ========================= */
 
 const CATALOGO = [
@@ -36,7 +37,7 @@ const CATALOGO = [
     estado: "Juvenil",
     img: "assets/img/alocasia-silver-dragon.jpeg",
     tags: ["textura", "hoja densa"],
-    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato mineral • comuna por definir", tags: ["1 hoja"] }
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato mineral", tags: ["1 hoja"] }
   },
   {
     id: "p2",
@@ -45,7 +46,7 @@ const CATALOGO = [
     estado: "Juvenil",
     img: "assets/img/epipremnum-manjula.jpeg",
     tags: ["variegada", "interior"],
-    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato • comuna por definir", tags: ["variegada"] }
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato", tags: ["variegada"] }
   },
   {
     id: "p3",
@@ -54,7 +55,7 @@ const CATALOGO = [
     estado: "Juvenil",
     img: "assets/img/cordatum-brasil.jpeg",
     tags: ["cordatum"],
-    trueque: { disponible: true, condicion: "Corte fresco", meta: "corte fresco • comuna por definir", tags: ["2 hojas"] }
+    trueque: { disponible: true, condicion: "Corte fresco", meta: "corte fresco", tags: ["2 hojas"] }
   },
   {
     id: "p4",
@@ -63,7 +64,7 @@ const CATALOGO = [
     estado: "Juvenil",
     img: "assets/img/monstera-siltepecana.jpeg",
     tags: ["juvenil", "textura"],
-    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato • comuna por definir", tags: ["juvenil"] }
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato", tags: ["juvenil"] }
   },
   {
     id: "p5",
@@ -72,7 +73,7 @@ const CATALOGO = [
     estado: "Juvenil",
     img: "assets/img/philodendron-glorious.jpeg",
     tags: ["venas claras"],
-    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato • comuna por definir", tags: ["hoja grande"] }
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato", tags: ["hoja grande"] }
   },
   {
     id: "p6",
@@ -81,10 +82,10 @@ const CATALOGO = [
     estado: "Juvenil",
     img: "assets/img/syngonium-holly.jpeg",
     tags: ["variegada", "compacta"],
-    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato • comuna por definir", tags: ["variegada"] }
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato", tags: ["variegada"] }
   },
 
-  // ==== NUEVAS (UI 3: colección, aún sin foto -> placeholder limpio) ====
+  // ==== NUEVAS (sin foto por ahora) ====
   { id: "p7",  nombre: "Philodendron billietiae", familia: "Philodendron", estado: "Juvenil", img: "assets/img/philodendron-billietiae.jpeg", tags: [] },
   { id: "p8",  nombre: "Monstera deliciosa", familia: "Monstera", estado: "Juvenil", img: "assets/img/monstera-deliciosa.jpeg", tags: [] },
 
@@ -95,19 +96,16 @@ const CATALOGO = [
   { id: "p12", nombre: "Philodendron gloriosum", familia: "Philodendron", estado: "Juvenil", img: "assets/img/philodendron-gloriosum.jpeg", tags: [] },
   { id: "p13", nombre: "Philodendron McDowell", familia: "Philodendron", estado: "Juvenil", img: "assets/img/philodendron-mcdowell.jpeg", tags: [] },
 
-  // Corregidos: Marble Queen / Golden -> Epipremnum
-  { id: "p14", nombre: "Epipremnum ‘Marble Queen’", familia: "Epipremnum", estado: "Juvenil", img: "assets/img/epipremnum-marble-queen.jpeg", tags: ["variegada"] },
-  { id: "p15", nombre: "Epipremnum ‘Golden’", familia: "Epipremnum", estado: "Juvenil", img: "assets/img/epipremnum-golden.jpeg", tags: ["golden"] },
+  { id: "p14", nombre: "Epipremnum Marble Queen", familia: "Epipremnum", estado: "Juvenil", img: "assets/img/epipremnum-marble-queen.jpeg", tags: ["variegada"] },
+  { id: "p15", nombre: "Epipremnum Golden", familia: "Epipremnum", estado: "Juvenil", img: "assets/img/epipremnum-golden.jpeg", tags: ["golden"] },
 
-  // Scindapsus (pictus seguro)
-  { id: "p16", nombre: "Scindapsus pictus ‘Argyraeus’", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-pictus-argyraeus.jpeg", tags: ["plateada"] },
-  { id: "p17", nombre: "Scindapsus pictus ‘Exotica’", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-pictus-exotica.jpeg", tags: ["plateada"] },
+  { id: "p16", nombre: "Scindapsus pictus Argyraeus", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-pictus-argyraeus.jpeg", tags: ["plateada"] },
+  { id: "p17", nombre: "Scindapsus pictus Exotica", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-pictus-exotica.jpeg", tags: ["plateada"] },
 
-  // Jade Satin -> Jade (como pediste)
-  { id: "p18", nombre: "Scindapsus ‘Jade’", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-jade.jpeg", tags: [] },
+  { id: "p18", nombre: "Scindapsus Jade", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-jade.jpeg", tags: [] },
 
   { id: "p19", nombre: "Alocasia amazonica", familia: "Alocasia", estado: "Juvenil", img: "assets/img/alocasia-amazonica.jpeg", tags: [] },
-  { id: "p20", nombre: "Alocasia ‘Dragon’s Breath’", familia: "Alocasia", estado: "Juvenil", img: "assets/img/alocasia-dragons-breath.jpeg", tags: [] }
+  { id: "p20", nombre: "Alocasia Dragons Breath", familia: "Alocasia", estado: "Juvenil", img: "assets/img/alocasia-dragons-breath.jpeg", tags: [] }
 ];
 
 /* =========================
@@ -156,10 +154,6 @@ function buildTruequeMessage(item){
   ].join("\n");
 }
 
-/* =========================
-   Opciones de filtros
-   ========================= */
-
 function buildFamilyOptions(items){
   const present = new Set(items.map(x => x.familia).filter(Boolean));
   const ordered = FAMILY_ORDER.filter(f => present.has(f));
@@ -176,11 +170,9 @@ function matchesQuery(item, query){
   if(!query) return true;
   const q = norm(query);
 
-  // sinónimos (por si escribes abreviado)
   const synonyms = [
     ["ph.", "philodendron"],
     ["sc.", "scindapsus"],
-    ["pictus", "pictus"],
     ["mq", "marble queen"]
   ];
 
@@ -205,10 +197,6 @@ function matchesQuery(item, query){
   return hay.includes(expanded);
 }
 
-/* =========================
-   UI: render chips
-   ========================= */
-
 function renderChips(container, options, activeValue, onClick){
   container.innerHTML = "";
   options.forEach(opt => {
@@ -230,10 +218,6 @@ function applyStaggerFade(listEl){
   });
 }
 
-/* =========================
-   Media (foto) con fallback limpio
-   ========================= */
-
 function buildMedia(imgSrc, altText){
   const wrap = document.createElement("div");
   wrap.className = "item__media";
@@ -241,7 +225,6 @@ function buildMedia(imgSrc, altText){
   const ph = document.createElement("div");
   ph.className = "ph";
 
-  // Si no hay src, fallback directo
   if(!imgSrc){
     ph.classList.add("ph--fallback");
     ph.setAttribute("data-fallback", "Sin imagen");
@@ -269,10 +252,7 @@ function buildMedia(imgSrc, altText){
   return wrap;
 }
 
-/* =========================
-   Nav móvil
-   ========================= */
-
+/* Nav móvil */
 function initNav(){
   const toggle = qs(".nav__toggle");
   const list = qs(".nav__list");
@@ -291,17 +271,13 @@ function initNav(){
   });
 }
 
-/* =========================
-   Sticky offset automático
-   ========================= */
-
+/* Sticky offset automático */
 function setHeaderOffsetVar(){
   const header = qs(".header");
   if(!header) return;
   const h = Math.round(header.getBoundingClientRect().height);
   document.documentElement.style.setProperty("--header-h", `${h || 58}px`);
 }
-
 function initHeaderHeightSync(){
   const header = qs(".header");
   if(!header) return;
@@ -320,10 +296,7 @@ function initHeaderHeightSync(){
   }
 }
 
-/* =========================
-   Toggle colapsable de filtros
-   ========================= */
-
+/* Toggle colapsable de filtros */
 function initFiltersToggle(){
   const stickyControls = qs(".sticky-controls");
   const toggles = qsa(".filters-toggle");
@@ -345,17 +318,62 @@ function initFiltersToggle(){
   });
 }
 
+/* Admin mode (oculto práctico) */
+function getAdminEnabled(){
+  return localStorage.getItem(ADMIN_FLAG_KEY) === "1";
+}
+function maybeEnableAdminFromURL(){
+  const url = new URL(window.location.href);
+  const wantsAdmin = url.searchParams.get("admin") === "1";
+  if(!wantsAdmin) return;
+  if(getAdminEnabled()) return;
+
+  const pin = prompt("Modo admin: ingresa PIN");
+  if(pin === null) return;
+
+  if(String(pin).trim() === ADMIN_PIN){
+    localStorage.setItem(ADMIN_FLAG_KEY, "1");
+    alert("Admin habilitado en este navegador.");
+  } else {
+    alert("PIN incorrecto.");
+  }
+}
+function loadEstadoOverrides(){
+  try{ return JSON.parse(localStorage.getItem(STATE_OVERRIDES_KEY) || "{}"); }
+  catch { return {}; }
+}
+function saveEstadoOverrides(map){
+  localStorage.setItem(STATE_OVERRIDES_KEY, JSON.stringify(map));
+}
+function applyEstadoOverrides(items){
+  const ov = loadEstadoOverrides();
+  return items.map(p => ov[p.id] ? ({ ...p, estado: ov[p.id] }) : p);
+}
+
+/* Archivo blurb */
+function estadoBlurb(estado){
+  if(estado === "Colección") return "Pieza de colección.";
+  if(estado === "Madre") return "Planta madre.";
+  return "Juvenil (en crecimiento).";
+}
+
 /* =========================
-   Archivo (Colección completa)
+   Archivo
    ========================= */
 
 function initArchivo(){
   const root = qs("[data-page='archivo']");
   if(!root) return;
 
+  maybeEnableAdminFromURL();
+  const isAdmin = getAdminEnabled();
+
   const search = qs("#search", root);
   const clearBtn = qs("#clearBtn", root);
   const emptyClearBtn = qs("#emptyClearBtn", root);
+
+  const toggleTrueque = qs("#toggleTrueque", root);
+  const truequeBadge = qs("#truequeBadge", root);
 
   const chipsEstado = qs("#chipsEstado", root);
   const chipsFamilia = qs("#chipsFamilia", root);
@@ -365,14 +383,25 @@ function initArchivo(){
   const list = qs("#list", root);
   const emptyState = qs("#emptyState", root);
 
-  const familiaOptions = buildFamilyOptions(CATALOGO);
-  const estadoOptions = buildEstadoOptions(CATALOGO);
+  let baseItems = applyEstadoOverrides(CATALOGO);
 
-  let state = { estado: "__all", familia: "__all", query: "" };
+  const familiaOptions = buildFamilyOptions(baseItems);
+  const estadoOptions = buildEstadoOptions(baseItems);
+
+  // showTrueque: false => OCULTA las que tienen trueque
+  let state = { showTrueque: false, estado: "__all", familia: "__all", query: "" };
   const defaults = { ...state };
 
+  function updateBadge(){
+    if(!truequeBadge) return;
+    truequeBadge.textContent = state.showTrueque ? "Trueque visible" : "Trueque oculto";
+  }
+
   function render(){
-    const items = CATALOGO
+    baseItems = applyEstadoOverrides(CATALOGO);
+
+    const items = baseItems
+      .filter(x => state.showTrueque ? true : !x.trueque)
       .filter(x => state.estado === "__all" ? true : x.estado === state.estado)
       .filter(x => state.familia === "__all" ? true : x.familia === state.familia)
       .filter(x => matchesQuery(x, state.query));
@@ -381,10 +410,14 @@ function initArchivo(){
 
     const filterText = buildActiveFiltersText([
       state.query ? `búsqueda “${state.query}”` : "",
+      state.showTrueque ? "incluye trueque" : "sin trueque",
       state.estado !== "__all" ? state.estado : "",
       state.familia !== "__all" ? state.familia : ""
     ]);
     if(activeFilters) activeFilters.textContent = filterText;
+
+    updateBadge();
+    if(toggleTrueque) toggleTrueque.checked = state.showTrueque;
 
     list.innerHTML = "";
     items.forEach(x => {
@@ -418,6 +451,14 @@ function initArchivo(){
       st.textContent = x.estado;
       tags.appendChild(st);
 
+      // si está en trueque y lo estamos mostrando, marca discreta
+      if(x.trueque && state.showTrueque){
+        const tt = document.createElement("span");
+        tt.className = "pill";
+        tt.textContent = "Trueque";
+        tags.appendChild(tt);
+      }
+
       (x.tags || []).slice(0,2).forEach(t => {
         const p = document.createElement("span");
         p.className = "pill";
@@ -427,7 +468,7 @@ function initArchivo(){
 
       const meta = document.createElement("div");
       meta.className = "item__meta";
-      meta.textContent = "Colección (UI 3).";
+      meta.textContent = estadoBlurb(x.estado);
 
       const actions = document.createElement("div");
       actions.className = "item__actions";
@@ -438,7 +479,7 @@ function initArchivo(){
       btn.textContent = "Ver notas (placeholder)";
       btn.addEventListener("click", (e) => {
         e.preventDefault();
-        alert("UI 3: notas por especie vendrán después. Por ahora: colección minimalista.");
+        alert("Más adelante: notas/ficha por especie. Por ahora, archivo minimalista.");
       });
 
       actions.appendChild(btn);
@@ -447,6 +488,30 @@ function initArchivo(){
       body.appendChild(tags);
       body.appendChild(meta);
       body.appendChild(actions);
+
+      // Admin-only: set estado local (solo tu navegador)
+      if(isAdmin){
+        const admin = document.createElement("div");
+        admin.className = "admin-actions";
+
+        const setEstado = (nuevo) => {
+          const ov = loadEstadoOverrides();
+          ov[x.id] = nuevo;
+          saveEstadoOverrides(ov);
+          render();
+        };
+
+        ["Juvenil","Madre","Colección"].forEach(label => {
+          const b = document.createElement("button");
+          b.className = "btn-admin";
+          b.type = "button";
+          b.textContent = label;
+          b.addEventListener("click", () => setEstado(label));
+          admin.appendChild(b);
+        });
+
+        body.appendChild(admin);
+      }
 
       card.appendChild(body);
       list.appendChild(card);
@@ -472,7 +537,15 @@ function initArchivo(){
   function clearAll(){
     state = { ...defaults };
     if(search) search.value = "";
+    if(toggleTrueque) toggleTrueque.checked = state.showTrueque;
     render();
+  }
+
+  if(toggleTrueque){
+    toggleTrueque.addEventListener("change", () => {
+      state.showTrueque = !!toggleTrueque.checked;
+      render();
+    });
   }
 
   if(search){
@@ -488,7 +561,7 @@ function initArchivo(){
 }
 
 /* =========================
-   Trueque (subset)
+   Trueque
    ========================= */
 
 function initTrueque(){
@@ -509,7 +582,6 @@ function initTrueque(){
   const emptyState = qs("#emptyState", root);
 
   const TRUEQUE_ITEMS = CATALOGO.filter(x => !!x.trueque);
-
   const familiaOptions = buildFamilyOptions(TRUEQUE_ITEMS);
 
   const disponOptions = [
@@ -674,10 +746,7 @@ function initTrueque(){
   render();
 }
 
-/* =========================
-   Fuentes + Init
-   ========================= */
-
+/* Fonts + Init */
 function loadFonts(){
   const link1 = document.createElement("link");
   link1.rel = "preconnect";
