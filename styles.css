@@ -283,7 +283,10 @@ h1,h2,h3{ margin:0 0 10px; }
 .toggle-icon{
   width: 18px;
   height: 18px;
+  display: inline-block;
   transition: transform var(--t) var(--ease);
+  font-size: 14px;
+  line-height: 1;
 }
 
 .sticky-controls.is-collapsed .toggle-icon{
