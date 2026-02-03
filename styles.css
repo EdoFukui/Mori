@@ -17,6 +17,7 @@
 
   --ease: cubic-bezier(.2,.8,.2,1);
   --t: 170ms;
+  --stickyTop: 58px; /* debajo del header */
 }
 
 /* Reset mínimo */
@@ -243,37 +244,51 @@ h1,h2,h3{ margin:0 0 10px; }
 /* Sticky controls */
 .sticky-controls{
   position: sticky;
-  top: 58px;
+  top: var(--stickyTop);
   z-index: 55;
   padding: 10px 0 6px;
   background: rgba(222,215,209,.72);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(26,20,22,.10);
-  transition: padding var(--t) var(--ease), border-bottom-color var(--t) var(--ease);
+  transition: padding var(--t) var(--ease), border-bottom-color var(--t) var(--ease), background var(--t) var(--ease);
 }
 
+/* Cuando está colapsado, la barra “desaparece” y queda solo el botón flotante */
 .sticky-controls.is-collapsed{
-  padding: 6px 0;
+  padding: 0;
+  background: transparent;
   border-bottom-color: transparent;
+}
+
+/* Centrar el botón de colapso en la barra (expandida) */
+.sticky-controls .filters-toggle{
+  margin: 0 auto 10px;
+}
+
+/* Ocultar el botón superior cuando está colapsado (evita doble botón) */
+.sticky-controls.is-collapsed > .container > .filters-toggle{
+  display: none;
 }
 
 .filters-toggle{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: transparent;
+  background: rgba(251,247,243,.66);
   color: var(--ink);
   cursor: pointer;
-  transition: transform var(--t) var(--ease), background var(--t) var(--ease);
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  transition: transform var(--t) var(--ease), background var(--t) var(--ease), border-color var(--t) var(--ease);
 }
 
 .filters-toggle:hover{
-  background: rgba(251,247,243,.74);
+  background: rgba(251,247,243,.92);
+  border-color: rgba(126,15,34,.18);
 }
 
 .filters-toggle:active{
@@ -289,8 +304,9 @@ h1,h2,h3{ margin:0 0 10px; }
   line-height: 1;
 }
 
-.sticky-controls.is-collapsed .toggle-icon{
-  transform: scaleY(-1);
+/* Icono apunta abajo cuando está colapsado (aria-expanded=false) */
+.filters-toggle[aria-expanded="false"] .toggle-icon{
+  transform: rotate(180deg);
 }
 
 #filtersContent{
@@ -305,32 +321,37 @@ h1,h2,h3{ margin:0 0 10px; }
   opacity: 0;
 }
 
-/* Handle visible when filters scroll out of view */
+/* Botón flotante centrado visible SOLO cuando está colapsado */
 .filters-handle{
-  position: sticky;
-  top: 58px; /* sit below the header, aligned with sticky-controls */
-  z-index: 65;
+  position: fixed;
+  top: var(--stickyTop);
+  left: 0;
+  right: 0;
+  z-index: 70;
   display: none;
   background: transparent;
-  pointer-events: none; /* allow only the button to be interactive */
-  padding: 6px 0 8px; /* a little taller for aesthetics */
+  pointer-events: none;
+  padding: 0;
 }
-.filters-handle .container{ display:flex; justify-content:center; }
+
+.filters-handle .container{
+  display:flex;
+  justify-content:center;
+}
+
 .filters-handle .filters-toggle--handle{
   pointer-events: auto;
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  border: 1px solid rgba(26,20,22,.08);
+  border: 1px solid rgba(26,20,22,.10);
   background: var(--paper);
   box-shadow: var(--shadow);
+  margin-top: 0; /* justo bajo el header */
 }
+
 .filters-handle.show{ display: block; }
 
-/* Ensure the handle aligns visually with sticky-controls width */
-@media (min-width: 860px){
-  .filters-handle .container{ justify-content:flex-end; }
-}
 .controls{
   display:flex;
   flex-direction:column;

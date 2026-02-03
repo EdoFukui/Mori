@@ -24,7 +24,7 @@ const DATA = {
       id: "a3",
       nombre: "Cordatum sp. Brasil",
       familia: "Philodendron",
-      img: "assets/img/cordatum-brasil.jpeg",
+      img: "assets/img/philodendron-brasil.jpeg",
       tags: ["cordatum", "corte"],
       nota: "Grupo cordatum/hederaceum ‘Brasil’. (Ficha breve, borrador.)"
     },
@@ -63,7 +63,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["1 hoja"],
-      meta: ""
+      meta: "en sustrato mineral • comuna por definir"
     },
     {
       id: "t2",
@@ -73,17 +73,17 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["variegada"],
-      meta: ""
+      meta: "en sustrato • comuna por definir"
     },
     {
       id: "t3",
       nombre: "Cordatum sp. Brasil",
       familia: "Philodendron",
-      img: "assets/img/cordatum-brasil.jpeg",
+      img: "assets/img/philodendron-brasil.jpeg",
       disponible: true,
       condicion: "Corte fresco",
       tags: ["2 hojas"],
-      meta: ""
+      meta: "corte fresco • comuna por definir"
     },
     {
       id: "t4",
@@ -93,7 +93,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["juvenil"],
-      meta: ""
+      meta: "en sustrato • comuna por definir"
     },
     {
       id: "t5",
@@ -103,7 +103,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["hoja grande"],
-      meta: ""
+      meta: "en sustrato • comuna por definir"
     },
     {
       id: "t6",
@@ -113,7 +113,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["variegada"],
-      meta: ""
+      meta: "en sustrato • comuna por definir"
     }
   ]
 };
@@ -152,11 +152,18 @@ function waLink(text){
 }
 
 function buildTruequeMessage(item){
+  const disponibilidad = item.disponible ? "Disponible" : "No disponible";
+  const condicion = item.disponible ? ` • ${item.condicion}` : "";
+  const meta = item.meta ? `\nDetalles: ${item.meta}` : "";
+  const tags = (item.tags && item.tags.length) ? `\nTags: ${item.tags.join(", ")}` : "";
+
   return [
-    "Hola! Me interesa esta planta:",
-    `${item.nombre} (${item.familia})`,
+    "Hola! Vengo desde Plantas Mori.",
+    `Me interesa este esqueje: ${item.nombre} (${item.familia})`,
+    `Estado: ${disponibilidad}${condicion}`,
+    `${meta}${tags}`,
     "",
-    "¿Sigue disponible?"
+    "¿Podemos coordinar un trueque? 🙂"
   ].join("\n");
 }
 
@@ -240,7 +247,9 @@ function initNav(){
 }
 
 /* =========================
-   Filtros colapsables
+   Toggle colapsable de filtros (UI mejorada)
+   - Botón centrado
+   - Handle fijo visible al colapsar (aunque scrollees abajo)
    ========================= */
 
 function initFiltersToggle(){
@@ -250,37 +259,26 @@ function initFiltersToggle(){
 
   if(!stickyControls || toggles.length === 0) return;
 
-  // Toggle behavior: keep all toggle buttons in sync
-  function setCollapsed(collapsed){
-    if(collapsed) stickyControls.classList.add("is-collapsed");
-    else stickyControls.classList.remove("is-collapsed");
+  function applyState(collapsed){
+    stickyControls.classList.toggle("is-collapsed", collapsed);
     toggles.forEach(t => t.setAttribute("aria-expanded", String(!collapsed)));
+
+    if(handle){
+      handle.classList.toggle("show", collapsed);
+      handle.setAttribute("aria-hidden", collapsed ? "false" : "true");
+    }
   }
+
+  // Estado inicial: expandido por defecto (a menos que el HTML venga colapsado)
+  applyState(stickyControls.classList.contains("is-collapsed"));
 
   toggles.forEach(t => {
     t.addEventListener("click", (e) => {
       e.preventDefault();
-      const isCollapsed = stickyControls.classList.toggle("is-collapsed");
-      toggles.forEach(tb => tb.setAttribute("aria-expanded", String(!isCollapsed)));
+      const nowCollapsed = !stickyControls.classList.contains("is-collapsed");
+      applyState(nowCollapsed);
     });
   });
-
-  // Show a small handle when the full filters bar scrolls out of view
-  if(handle){
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          handle.classList.remove('show');
-          handle.setAttribute('aria-hidden', 'true');
-        } else {
-          handle.classList.add('show');
-          handle.setAttribute('aria-hidden', 'false');
-        }
-      });
-    }, { root: null, threshold: 0 });
-
-    io.observe(stickyControls);
-  }
 }
 
 /* =========================
