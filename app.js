@@ -79,7 +79,7 @@ const DATA = {
       id: "t3",
       nombre: "Cordatum sp. Brasil",
       familia: "Philodendron",
-      img: "assets/img/philodendron-brasil.jpeg",
+      img: "assets/img/cordatum-brasil.jpeg",
       disponible: true,
       condicion: "Corte fresco",
       tags: ["2 hojas"],
