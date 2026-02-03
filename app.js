@@ -1,174 +1,117 @@
 /* =========================
-   UI 2 — Datos + fotos reales (assets/img)
+   UI 3 — Catálogo maestro
+   Archivo = colección completa
+   Trueque = subset transaccional
    ========================= */
 
-const DATA = {
-  archivo: [
-    {
-      id: "a1",
-      nombre: "Alocasia sp. Silver Dragon",
-      familia: "Alocasia",
-      img: "assets/img/alocasia-silver-dragon.jpeg",
-      tags: ["textura", "hoja densa"],
-      nota: "Alocasia compacta de hoja gruesa. (Ficha breve, borrador.)"
-    },
-    {
-      id: "a2",
-      nombre: "Epipremnum sp. Manjula",
-      familia: "Epipremnum",
-      img: "assets/img/epipremnum-manjula.jpeg",
-      tags: ["variegada", "interior"],
-      nota: "Variegación clara/verde. (Ficha breve, borrador.)"
-    },
-    {
-      id: "a3",
-      nombre: "Cordatum sp. Brasil",
-      familia: "Philodendron",
-      img: "assets/img/cordatum-brasil.jpeg",
-      tags: ["cordatum", "corte"],
-      nota: "Grupo cordatum/hederaceum ‘Brasil’. (Ficha breve, borrador.)"
-    },
-    {
-      id: "a4",
-      nombre: "Monstera sp. Siltepecana",
-      familia: "Monstera",
-      img: "assets/img/monstera-siltepecana.jpeg",
-      tags: ["juvenil", "textura"],
-      nota: "Juvenil con textura marcada. (Ficha breve, borrador.)"
-    },
-    {
-      id: "a5",
-      nombre: "Philodendron sp. Glorious",
-      familia: "Philodendron",
-      img: "assets/img/philodendron-glorious.jpeg",
-      tags: ["hoja grande", "venas claras"],
-      nota: "Híbrido/colección. (Ficha breve, borrador.)"
-    },
-    {
-      id: "a6",
-      nombre: "Syngonium sp. Holly",
-      familia: "Syngonium",
-      img: "assets/img/syngonium-holly.jpeg",
-      tags: ["variegada", "compacta"],
-      nota: "Syngonium con bordes oscuros y centro claro. (Ficha breve, borrador.)"
-    }
-  ],
+/** Estados minimalistas (Archivo) */
+const STATUS_ORDER = ["Juvenil", "Madre", "Colección"];
 
-  trueque: [
-    {
-      id: "t1",
-      nombre: "Alocasia sp. Silver Dragon",
-      familia: "Alocasia",
-      img: "assets/img/alocasia-silver-dragon.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      tags: ["1 hoja"],
-      meta: "en sustrato mineral • comuna por definir"
-    },
-    {
-      id: "t2",
-      nombre: "Epipremnum sp. Manjula",
-      familia: "Epipremnum",
-      img: "assets/img/epipremnum-manjula.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      tags: ["variegada"],
-      meta: "en sustrato • comuna por definir"
-    },
-    {
-      id: "t3",
-      nombre: "Cordatum sp. Brasil",
-      familia: "Philodendron",
-      img: "assets/img/cordatum-brasil.jpeg",
-      disponible: true,
-      condicion: "Corte fresco",
-      tags: ["2 hojas"],
-      meta: "corte fresco • comuna por definir"
-    },
-    {
-      id: "t4",
-      nombre: "Monstera sp. Siltepecana",
-      familia: "Monstera",
-      img: "assets/img/monstera-siltepecana.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      tags: ["juvenil"],
-      meta: "en sustrato • comuna por definir"
-    },
-    {
-      id: "t5",
-      nombre: "Philodendron sp. Glorious",
-      familia: "Philodendron",
-      img: "assets/img/philodendron-glorious.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      tags: ["hoja grande"],
-      meta: "en sustrato • comuna por definir"
-    },
-    {
-      id: "t6",
-      nombre: "Syngonium sp. Holly",
-      familia: "Syngonium",
-      img: "assets/img/syngonium-holly.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      tags: ["variegada"],
-      meta: "en sustrato • comuna por definir"
-    }
-  ]
-};
-
-/* =========================
-   Orden editorial (familias) — UI 2
-   ========================= */
-
+/** Familias (orden editorial) */
 const FAMILY_ORDER = [
   "Alocasia",
+  "Anthurium",
   "Philodendron",
   "Monstera",
   "Epipremnum",
+  "Scindapsus",
   "Syngonium",
-  "Anthurium",
   "Otros"
 ];
 
-const HIDE_EMPTY_FAMILIES = false;
-
-function buildFamilyOptions(items){
-  const present = new Set(items.map(x => x.familia).filter(Boolean));
-  const ordered = FAMILY_ORDER.filter(f => !HIDE_EMPTY_FAMILIES || present.has(f));
-  return [{label:"Todas", value:"__all"}].concat(ordered.map(f => ({label:f, value:f})));
-}
+const WHATSAPP_NUMBER = "56955555555"; // ficticio
 
 /* =========================
-   WhatsApp (ficticio)
+   Catálogo
+   - Una planta existe UNA vez
+   - Si tiene trueque, aparece en Trueque
    ========================= */
 
-// Número ficticio para mock visual (no funcionará como contacto real)
-const WHATSAPP_NUMBER = "56955555555";
+const CATALOGO = [
+  // ==== EXISTENTES (con foto) ====
+  {
+    id: "p1",
+    nombre: "Alocasia sp. Silver Dragon",
+    familia: "Alocasia",
+    estado: "Juvenil",
+    img: "assets/img/alocasia-silver-dragon.jpeg",
+    tags: ["textura", "hoja densa"],
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato mineral • comuna por definir", tags: ["1 hoja"] }
+  },
+  {
+    id: "p2",
+    nombre: "Epipremnum sp. Manjula",
+    familia: "Epipremnum",
+    estado: "Juvenil",
+    img: "assets/img/epipremnum-manjula.jpeg",
+    tags: ["variegada", "interior"],
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato • comuna por definir", tags: ["variegada"] }
+  },
+  {
+    id: "p3",
+    nombre: "Philodendron sp. Brasil",
+    familia: "Philodendron",
+    estado: "Juvenil",
+    img: "assets/img/cordatum-brasil.jpeg",
+    tags: ["cordatum"],
+    trueque: { disponible: true, condicion: "Corte fresco", meta: "corte fresco • comuna por definir", tags: ["2 hojas"] }
+  },
+  {
+    id: "p4",
+    nombre: "Monstera sp. Siltepecana",
+    familia: "Monstera",
+    estado: "Juvenil",
+    img: "assets/img/monstera-siltepecana.jpeg",
+    tags: ["juvenil", "textura"],
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato • comuna por definir", tags: ["juvenil"] }
+  },
+  {
+    id: "p5",
+    nombre: "Philodendron sp. Glorious",
+    familia: "Philodendron",
+    estado: "Juvenil",
+    img: "assets/img/philodendron-glorious.jpeg",
+    tags: ["venas claras"],
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato • comuna por definir", tags: ["hoja grande"] }
+  },
+  {
+    id: "p6",
+    nombre: "Syngonium sp. Holly",
+    familia: "Syngonium",
+    estado: "Juvenil",
+    img: "assets/img/syngonium-holly.jpeg",
+    tags: ["variegada", "compacta"],
+    trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato • comuna por definir", tags: ["variegada"] }
+  },
 
-function waLink(text){
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-}
+  // ==== NUEVAS (UI 3: colección, aún sin foto -> placeholder limpio) ====
+  { id: "p7",  nombre: "Philodendron billietiae", familia: "Philodendron", estado: "Juvenil", img: "assets/img/philodendron-billietiae.jpeg", tags: [] },
+  { id: "p8",  nombre: "Monstera deliciosa", familia: "Monstera", estado: "Juvenil", img: "assets/img/monstera-deliciosa.jpeg", tags: [] },
 
-function buildTruequeMessage(item){
-  const disponibilidad = item.disponible ? "Disponible" : "No disponible";
-  const condicion = item.disponible ? ` • ${item.condicion}` : "";
-  const meta = item.meta ? `\nDetalles: ${item.meta}` : "";
-  const tags = (item.tags && item.tags.length) ? `\nTags: ${item.tags.join(", ")}` : "";
+  { id: "p9",  nombre: "Syngonium Red Arrow", familia: "Syngonium", estado: "Juvenil", img: "assets/img/syngonium-red-arrow.jpeg", tags: [] },
+  { id: "p10", nombre: "Syngonium Confetti", familia: "Syngonium", estado: "Juvenil", img: "assets/img/syngonium-confetti.jpeg", tags: [] },
+  { id: "p11", nombre: "Syngonium Gold Allusion", familia: "Syngonium", estado: "Juvenil", img: "assets/img/syngonium-gold-allusion.jpeg", tags: [] },
 
-  return [
-    "Hola! Vengo desde Plantas Mori.",
-    `Me interesa este esqueje: ${item.nombre} (${item.familia})`,
-    `Estado: ${disponibilidad}${condicion}`,
-    `${meta}${tags}`,
-    "",
-    "¿Podemos coordinar un trueque? 🙂"
-  ].join("\n");
-}
+  { id: "p12", nombre: "Philodendron gloriosum", familia: "Philodendron", estado: "Juvenil", img: "assets/img/philodendron-gloriosum.jpeg", tags: [] },
+  { id: "p13", nombre: "Philodendron McDowell", familia: "Philodendron", estado: "Juvenil", img: "assets/img/philodendron-mcdowell.jpeg", tags: [] },
+
+  // Corregidos: Marble Queen / Golden -> Epipremnum
+  { id: "p14", nombre: "Epipremnum ‘Marble Queen’", familia: "Epipremnum", estado: "Juvenil", img: "assets/img/epipremnum-marble-queen.jpeg", tags: ["variegada"] },
+  { id: "p15", nombre: "Epipremnum ‘Golden’", familia: "Epipremnum", estado: "Juvenil", img: "assets/img/epipremnum-golden.jpeg", tags: ["golden"] },
+
+  // Scindapsus (pictus seguro)
+  { id: "p16", nombre: "Scindapsus pictus ‘Argyraeus’", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-pictus-argyraeus.jpeg", tags: ["plateada"] },
+  { id: "p17", nombre: "Scindapsus pictus ‘Exotica’", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-pictus-exotica.jpeg", tags: ["plateada"] },
+
+  // Jade Satin -> Jade (como pediste)
+  { id: "p18", nombre: "Scindapsus ‘Jade’", familia: "Scindapsus", estado: "Juvenil", img: "assets/img/scindapsus-jade.jpeg", tags: [] },
+
+  { id: "p19", nombre: "Alocasia amazonica", familia: "Alocasia", estado: "Juvenil", img: "assets/img/alocasia-amazonica.jpeg", tags: [] },
+  { id: "p20", nombre: "Alocasia ‘Dragon’s Breath’", familia: "Alocasia", estado: "Juvenil", img: "assets/img/alocasia-dragons-breath.jpeg", tags: [] }
+];
 
 /* =========================
-   Utilidades
+   Helpers
    ========================= */
 
 function qs(sel, root=document){ return root.querySelector(sel); }
@@ -182,38 +125,6 @@ function norm(s){
     .trim();
 }
 
-function matchesQuery(item, query){
-  if(!query) return true;
-  const q = norm(query);
-
-  const synonyms = [
-    ["philo", "philodendron"],
-    ["syngo", "syngonium"],
-    ["silte", "siltepecana"],
-    ["manj", "manjula"],
-    ["silver", "silver dragon"],
-    ["glor", "glorious"],
-    ["brasil", "brazil"]
-  ];
-
-  let expanded = q;
-  for(const [a,b] of synonyms){
-    if(expanded.includes(a)) expanded = expanded.replace(a, b);
-  }
-
-  const hay = [
-    item.nombre,
-    item.familia,
-    ...(item.tags || []),
-    item.nota,
-    item.meta,
-    item.condicion,
-    item.disponible === true ? "disponible" : "no disponible"
-  ].map(norm).join(" ");
-
-  return hay.includes(expanded);
-}
-
 function setYear(){
   const el = qs("#year");
   if(el) el.textContent = String(new Date().getFullYear());
@@ -224,107 +135,78 @@ function buildActiveFiltersText(parts){
   return clean.length ? `Filtros: ${clean.join(" • ")}` : "";
 }
 
+function waLink(text){
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+function buildTruequeMessage(item){
+  const t = item.trueque || {};
+  const disponibilidad = t.disponible ? "Disponible" : "No disponible";
+  const condicion = t.disponible ? ` • ${t.condicion}` : "";
+  const meta = t.meta ? `\nDetalles: ${t.meta}` : "";
+  const tags = (t.tags && t.tags.length) ? `\nTags: ${t.tags.join(", ")}` : "";
+
+  return [
+    "Hola! Vengo desde Plantas Mori.",
+    `Me interesa este esqueje: ${item.nombre} (${item.familia})`,
+    `Estado: ${disponibilidad}${condicion}`,
+    `${meta}${tags}`,
+    "",
+    "¿Podemos coordinar un trueque? 🙂"
+  ].join("\n");
+}
+
 /* =========================
-   Menú móvil
+   Opciones de filtros
    ========================= */
 
-function initNav(){
-  const toggle = qs(".nav__toggle");
-  const list = qs(".nav__list");
-  if(!toggle || !list) return;
+function buildFamilyOptions(items){
+  const present = new Set(items.map(x => x.familia).filter(Boolean));
+  const ordered = FAMILY_ORDER.filter(f => present.has(f));
+  return [{label:"Todas", value:"__all"}].concat(ordered.map(f => ({label:f, value:f})));
+}
 
-  toggle.addEventListener("click", () => {
-    const open = list.classList.toggle("is-open");
-    toggle.setAttribute("aria-expanded", String(open));
-  });
+function buildEstadoOptions(items){
+  const present = new Set(items.map(x => x.estado).filter(Boolean));
+  const ordered = STATUS_ORDER.filter(s => present.has(s));
+  return [{label:"Todos", value:"__all"}].concat(ordered.map(s => ({label:s, value:s})));
+}
 
-  qsa(".nav__list a").forEach(a => {
-    a.addEventListener("click", () => {
-      list.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
-    });
-  });
+function matchesQuery(item, query){
+  if(!query) return true;
+  const q = norm(query);
+
+  // sinónimos (por si escribes abreviado)
+  const synonyms = [
+    ["ph.", "philodendron"],
+    ["sc.", "scindapsus"],
+    ["pictus", "pictus"],
+    ["mq", "marble queen"]
+  ];
+
+  let expanded = q;
+  for(const [a,b] of synonyms){
+    if(expanded.includes(a)) expanded = expanded.replaceAll(a, b);
+  }
+
+  const hay = [
+    item.nombre,
+    item.familia,
+    item.estado,
+    ...(item.tags || []),
+    item.trueque?.condicion,
+    item.trueque?.meta,
+    item.trueque?.disponible === true ? "disponible" : (item.trueque ? "no disponible" : "")
+  ]
+    .filter(Boolean)
+    .map(norm)
+    .join(" ");
+
+  return hay.includes(expanded);
 }
 
 /* =========================
-   UI 2: altura real del header (para sticky offsets)
-   ========================= */
-
-function setHeaderOffsetVar(){
-  const header = qs(".header");
-  if(!header) return;
-  const h = Math.round(header.getBoundingClientRect().height);
-  // Fallback a 58px si algo raro ocurre
-  document.documentElement.style.setProperty("--header-h", `${h || 58}px`);
-}
-
-function initHeaderHeightSync(){
-  const header = qs(".header");
-  if(!header) return;
-
-  // 1) primera medición (después del layout)
-  requestAnimationFrame(setHeaderOffsetVar);
-
-  // 2) si cambian fuentes, puede variar 1-2px
-  if(document.fonts && document.fonts.ready){
-    document.fonts.ready.then(() => setHeaderOffsetVar()).catch(() => {});
-  }
-
-  // 3) observar cambios reales de tamaño
-  if("ResizeObserver" in window){
-    const ro = new ResizeObserver(() => setHeaderOffsetVar());
-    ro.observe(header);
-  } else {
-    window.addEventListener("resize", () => setHeaderOffsetVar());
-  }
-}
-
-/* =========================
-   Filtros colapsables
-   ========================= */
-
-function initFiltersToggle(){
-  const stickyControls = qs(".sticky-controls");
-  const toggles = qsa(".filters-toggle");
-  const handle = qs(".filters-handle");
-
-  if(!stickyControls || toggles.length === 0) return;
-
-  // Toggle behavior: keep all toggle buttons in sync
-  function setCollapsed(collapsed){
-    if(collapsed) stickyControls.classList.add("is-collapsed");
-    else stickyControls.classList.remove("is-collapsed");
-    toggles.forEach(t => t.setAttribute("aria-expanded", String(!collapsed)));
-  }
-
-  toggles.forEach(t => {
-    t.addEventListener("click", (e) => {
-      e.preventDefault();
-      const isCollapsed = stickyControls.classList.toggle("is-collapsed");
-      toggles.forEach(tb => tb.setAttribute("aria-expanded", String(!isCollapsed)));
-    });
-  });
-
-  // Show a small handle when the full filters bar scrolls out of view
-  if(handle){
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          handle.classList.remove('show');
-          handle.setAttribute('aria-hidden', 'true');
-        } else {
-          handle.classList.add('show');
-          handle.setAttribute('aria-hidden', 'false');
-        }
-      });
-    }, { root: null, threshold: 0 });
-
-    io.observe(stickyControls);
-  }
-}
-
-/* =========================
-   Render chips
+   UI: render chips
    ========================= */
 
 function renderChips(container, options, activeValue, onClick){
@@ -349,7 +231,7 @@ function applyStaggerFade(listEl){
 }
 
 /* =========================
-   UI 2: helper para media (foto)
+   Media (foto) con fallback limpio
    ========================= */
 
 function buildMedia(imgSrc, altText){
@@ -359,32 +241,112 @@ function buildMedia(imgSrc, altText){
   const ph = document.createElement("div");
   ph.className = "ph";
 
-  if(imgSrc){
-    const im = document.createElement("img");
-    im.src = imgSrc;
-    im.alt = altText || "";
-    im.loading = "lazy";
-    im.decoding = "async";
-
-    // Si la imagen falla (404, nombre mal, etc.), evitamos el ícono de "imagen rota"
-    // y dejamos un placeholder limpio.
-    im.addEventListener("error", () => {
-      try{ im.removeAttribute("src"); }catch(_){/* noop */}
-      im.style.display = "none";
-      ph.classList.add("ph--fallback");
-      ph.setAttribute("data-fallback", "Sin imagen");
-      if(altText) ph.setAttribute("title", altText);
-    }, { once: true });
-
-    ph.appendChild(im);
+  // Si no hay src, fallback directo
+  if(!imgSrc){
+    ph.classList.add("ph--fallback");
+    ph.setAttribute("data-fallback", "Sin imagen");
+    if(altText) ph.setAttribute("title", altText);
+    wrap.appendChild(ph);
+    return wrap;
   }
 
+  const im = document.createElement("img");
+  im.src = imgSrc;
+  im.alt = altText || "";
+  im.loading = "lazy";
+  im.decoding = "async";
+
+  im.addEventListener("error", () => {
+    try{ im.removeAttribute("src"); }catch(_){}
+    im.style.display = "none";
+    ph.classList.add("ph--fallback");
+    ph.setAttribute("data-fallback", "Sin imagen");
+    if(altText) ph.setAttribute("title", altText);
+  }, { once: true });
+
+  ph.appendChild(im);
   wrap.appendChild(ph);
   return wrap;
 }
 
 /* =========================
-   Página Archivo
+   Nav móvil
+   ========================= */
+
+function initNav(){
+  const toggle = qs(".nav__toggle");
+  const list = qs(".nav__list");
+  if(!toggle || !list) return;
+
+  toggle.addEventListener("click", () => {
+    const open = list.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+
+  qsa(".nav__list a").forEach(a => {
+    a.addEventListener("click", () => {
+      list.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
+/* =========================
+   Sticky offset automático
+   ========================= */
+
+function setHeaderOffsetVar(){
+  const header = qs(".header");
+  if(!header) return;
+  const h = Math.round(header.getBoundingClientRect().height);
+  document.documentElement.style.setProperty("--header-h", `${h || 58}px`);
+}
+
+function initHeaderHeightSync(){
+  const header = qs(".header");
+  if(!header) return;
+
+  requestAnimationFrame(setHeaderOffsetVar);
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(() => setHeaderOffsetVar()).catch(() => {});
+  }
+
+  if("ResizeObserver" in window){
+    const ro = new ResizeObserver(() => setHeaderOffsetVar());
+    ro.observe(header);
+  } else {
+    window.addEventListener("resize", () => setHeaderOffsetVar());
+  }
+}
+
+/* =========================
+   Toggle colapsable de filtros
+   ========================= */
+
+function initFiltersToggle(){
+  const stickyControls = qs(".sticky-controls");
+  const toggles = qsa(".filters-toggle");
+  if(!stickyControls || toggles.length === 0) return;
+
+  function applyState(collapsed){
+    stickyControls.classList.toggle("is-collapsed", collapsed);
+    toggles.forEach(t => t.setAttribute("aria-expanded", String(!collapsed)));
+  }
+
+  applyState(stickyControls.classList.contains("is-collapsed"));
+
+  toggles.forEach(t => {
+    t.addEventListener("click", (e) => {
+      e.preventDefault();
+      const nowCollapsed = !stickyControls.classList.contains("is-collapsed");
+      applyState(nowCollapsed);
+    });
+  });
+}
+
+/* =========================
+   Archivo (Colección completa)
    ========================= */
 
 function initArchivo(){
@@ -394,179 +356,32 @@ function initArchivo(){
   const search = qs("#search", root);
   const clearBtn = qs("#clearBtn", root);
   const emptyClearBtn = qs("#emptyClearBtn", root);
+
+  const chipsEstado = qs("#chipsEstado", root);
   const chipsFamilia = qs("#chipsFamilia", root);
+
   const resultCount = qs("#resultCount", root);
   const activeFilters = qs("#activeFilters", root);
   const list = qs("#list", root);
   const emptyState = qs("#emptyState", root);
 
-  const familiaOptions = buildFamilyOptions(DATA.archivo);
+  const familiaOptions = buildFamilyOptions(CATALOGO);
+  const estadoOptions = buildEstadoOptions(CATALOGO);
 
-  let state = { familia: "__all", query: "" };
-  const defaults = { familia: "__all", query: "" };
-
-  function render(){
-    const items = DATA.archivo
-      .filter(x => state.familia === "__all" ? true : x.familia === state.familia)
-      .filter(x => matchesQuery(x, state.query));
-
-    resultCount.textContent = `${items.length} resultado(s)`;
-
-    const filterText = buildActiveFiltersText([
-      state.query ? `búsqueda “${state.query}”` : "",
-      state.familia !== "__all" ? state.familia : ""
-    ]);
-    if(activeFilters) activeFilters.textContent = filterText;
-
-    list.innerHTML = "";
-    items.forEach(x => {
-      const card = document.createElement("article");
-      card.className = "card item lift";
-
-      // media (UI 2)
-      card.appendChild(buildMedia(x.img, x.nombre));
-
-      const body = document.createElement("div");
-      body.className = "item__body";
-
-      const titleRow = document.createElement("div");
-      titleRow.className = "item__title";
-
-      const h3 = document.createElement("h3");
-      h3.className = "serif";
-      h3.textContent = x.nombre;
-
-      const fam = document.createElement("span");
-      fam.className = "pill pill--muted";
-      fam.textContent = x.familia;
-
-      titleRow.appendChild(h3);
-      titleRow.appendChild(fam);
-
-      const tags = document.createElement("div");
-      tags.className = "tags";
-      (x.tags || []).slice(0,3).forEach(t => {
-        const p = document.createElement("span");
-        p.className = "pill";
-        p.textContent = t;
-        tags.appendChild(p);
-      });
-
-      const meta = document.createElement("div");
-      meta.className = "item__meta";
-      meta.textContent = x.nota || "Ficha breve (borrador).";
-
-      const actions = document.createElement("div");
-      actions.className = "item__actions";
-
-      const btn = document.createElement("a");
-      btn.className = "btn btn--small btn--ghost";
-      btn.href = "#";
-      btn.textContent = "Ver ficha (placeholder)";
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        alert("Más adelante: ficha por especie. Por ahora es borrador.");
-      });
-
-      actions.appendChild(btn);
-
-      body.appendChild(titleRow);
-      body.appendChild(tags);
-      body.appendChild(meta);
-      body.appendChild(actions);
-
-      card.appendChild(body);
-      list.appendChild(card);
-    });
-
-    renderChips(chipsFamilia, familiaOptions, state.familia, (v) => {
-      state.familia = v;
-      render();
-    });
-
-    if(emptyState){
-      emptyState.hidden = items.length !== 0;
-    }
-
-    applyStaggerFade(list);
-  }
-
-  function clearAll(){
-    state.familia = defaults.familia;
-    state.query = defaults.query;
-    if(search) search.value = "";
-    render();
-  }
-
-  if(search){
-    search.addEventListener("input", (e) => {
-      state.query = e.target.value;
-      render();
-    });
-  }
-  if(clearBtn) clearBtn.addEventListener("click", clearAll);
-  if(emptyClearBtn) emptyClearBtn.addEventListener("click", clearAll);
-
-  render();
-}
-
-/* =========================
-   Página Trueque
-   ========================= */
-
-function initTrueque(){
-  const root = qs("[data-page='trueque']");
-  if(!root) return;
-
-  const search = qs("#search", root);
-  const clearBtn = qs("#clearBtn", root);
-  const emptyClearBtn = qs("#emptyClearBtn", root);
-  const chipsDispon = qs("#chipsDispon", root);
-  const chipsCond = qs("#chipsCond", root);
-  const chipsFamilia = qs("#chipsFamilia", root);
-  const resultCount = qs("#resultCount", root);
-  const activeFilters = qs("#activeFilters", root);
-  const list = qs("#list", root);
-  const emptyState = qs("#emptyState", root);
-
-  const familiaOptions = buildFamilyOptions(DATA.trueque);
-
-  const disponOptions = [
-    {label:"Disponible", value:"disponible"},
-    {label:"No disponible", value:"nodisponible"},
-    {label:"Todos", value:"todos"},
-  ];
-
-  const condOptions = [
-    {label:"Cualquiera", value:"__any"},
-    {label:"Corte fresco", value:"Corte fresco"},
-    {label:"Enraizado", value:"Enraizado"},
-  ];
-
-  let state = { dispon: "disponible", condicion: "__any", familia: "__all", query: "" };
+  let state = { estado: "__all", familia: "__all", query: "" };
   const defaults = { ...state };
 
   function render(){
-    const items = DATA.trueque
-      .filter(x => {
-        if(state.dispon === "todos") return true;
-        if(state.dispon === "disponible") return x.disponible === true;
-        if(state.dispon === "nodisponible") return x.disponible === false;
-        return true;
-      })
+    const items = CATALOGO
+      .filter(x => state.estado === "__all" ? true : x.estado === state.estado)
       .filter(x => state.familia === "__all" ? true : x.familia === state.familia)
-      .filter(x => {
-        if(state.condicion === "__any") return true;
-        return x.disponible === true && x.condicion === state.condicion;
-      })
       .filter(x => matchesQuery(x, state.query));
 
     resultCount.textContent = `${items.length} resultado(s)`;
 
     const filterText = buildActiveFiltersText([
       state.query ? `búsqueda “${state.query}”` : "",
-      state.dispon === "disponible" ? "Disponible" : (state.dispon === "nodisponible" ? "No disponible" : "Todos"),
-      state.dispon !== "nodisponible" && state.condicion !== "__any" ? state.condicion : "",
+      state.estado !== "__all" ? state.estado : "",
       state.familia !== "__all" ? state.familia : ""
     ]);
     if(activeFilters) activeFilters.textContent = filterText;
@@ -576,7 +391,6 @@ function initTrueque(){
       const card = document.createElement("article");
       card.className = "card item lift";
 
-      // media (UI 2)
       card.appendChild(buildMedia(x.img, x.nombre));
 
       const body = document.createElement("div");
@@ -601,15 +415,8 @@ function initTrueque(){
 
       const st = document.createElement("span");
       st.className = "pill pill--wine";
-      st.textContent = x.disponible ? "Disponible" : "No disponible";
+      st.textContent = x.estado;
       tags.appendChild(st);
-
-      if(x.disponible){
-        const cd = document.createElement("span");
-        cd.className = "pill";
-        cd.textContent = x.condicion;
-        tags.appendChild(cd);
-      }
 
       (x.tags || []).slice(0,2).forEach(t => {
         const p = document.createElement("span");
@@ -620,7 +427,184 @@ function initTrueque(){
 
       const meta = document.createElement("div");
       meta.className = "item__meta";
-      meta.textContent = x.meta || "Detalles por definir.";
+      meta.textContent = "Colección (UI 3).";
+
+      const actions = document.createElement("div");
+      actions.className = "item__actions";
+
+      const btn = document.createElement("a");
+      btn.className = "btn btn--small btn--ghost";
+      btn.href = "#";
+      btn.textContent = "Ver notas (placeholder)";
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("UI 3: notas por especie vendrán después. Por ahora: colección minimalista.");
+      });
+
+      actions.appendChild(btn);
+
+      body.appendChild(titleRow);
+      body.appendChild(tags);
+      body.appendChild(meta);
+      body.appendChild(actions);
+
+      card.appendChild(body);
+      list.appendChild(card);
+    });
+
+    renderChips(chipsEstado, estadoOptions, state.estado, (v) => {
+      state.estado = v;
+      render();
+    });
+
+    renderChips(chipsFamilia, familiaOptions, state.familia, (v) => {
+      state.familia = v;
+      render();
+    });
+
+    if(emptyState){
+      emptyState.hidden = items.length !== 0;
+    }
+
+    applyStaggerFade(list);
+  }
+
+  function clearAll(){
+    state = { ...defaults };
+    if(search) search.value = "";
+    render();
+  }
+
+  if(search){
+    search.addEventListener("input", (e) => {
+      state.query = e.target.value;
+      render();
+    });
+  }
+  if(clearBtn) clearBtn.addEventListener("click", clearAll);
+  if(emptyClearBtn) emptyClearBtn.addEventListener("click", clearAll);
+
+  render();
+}
+
+/* =========================
+   Trueque (subset)
+   ========================= */
+
+function initTrueque(){
+  const root = qs("[data-page='trueque']");
+  if(!root) return;
+
+  const search = qs("#search", root);
+  const clearBtn = qs("#clearBtn", root);
+  const emptyClearBtn = qs("#emptyClearBtn", root);
+
+  const chipsDispon = qs("#chipsDispon", root);
+  const chipsCond = qs("#chipsCond", root);
+  const chipsFamilia = qs("#chipsFamilia", root);
+
+  const resultCount = qs("#resultCount", root);
+  const activeFilters = qs("#activeFilters", root);
+  const list = qs("#list", root);
+  const emptyState = qs("#emptyState", root);
+
+  const TRUEQUE_ITEMS = CATALOGO.filter(x => !!x.trueque);
+
+  const familiaOptions = buildFamilyOptions(TRUEQUE_ITEMS);
+
+  const disponOptions = [
+    {label:"Disponible", value:"disponible"},
+    {label:"No disponible", value:"nodisponible"},
+    {label:"Todos", value:"todos"},
+  ];
+
+  const condOptions = [
+    {label:"Cualquiera", value:"__any"},
+    {label:"Corte fresco", value:"Corte fresco"},
+    {label:"Enraizado", value:"Enraizado"},
+  ];
+
+  let state = { dispon: "disponible", condicion: "__any", familia: "__all", query: "" };
+  const defaults = { ...state };
+
+  function render(){
+    const items = TRUEQUE_ITEMS
+      .filter(x => {
+        const t = x.trueque;
+        if(state.dispon === "todos") return true;
+        if(state.dispon === "disponible") return t.disponible === true;
+        if(state.dispon === "nodisponible") return t.disponible === false;
+        return true;
+      })
+      .filter(x => state.familia === "__all" ? true : x.familia === state.familia)
+      .filter(x => {
+        const t = x.trueque;
+        if(state.condicion === "__any") return true;
+        return t.disponible === true && t.condicion === state.condicion;
+      })
+      .filter(x => matchesQuery(x, state.query));
+
+    resultCount.textContent = `${items.length} resultado(s)`;
+
+    const filterText = buildActiveFiltersText([
+      state.query ? `búsqueda “${state.query}”` : "",
+      state.dispon === "disponible" ? "Disponible" : (state.dispon === "nodisponible" ? "No disponible" : "Todos"),
+      state.dispon !== "nodisponible" && state.condicion !== "__any" ? state.condicion : "",
+      state.familia !== "__all" ? state.familia : ""
+    ]);
+    if(activeFilters) activeFilters.textContent = filterText;
+
+    list.innerHTML = "";
+    items.forEach(x => {
+      const t = x.trueque || {};
+
+      const card = document.createElement("article");
+      card.className = "card item lift";
+
+      card.appendChild(buildMedia(x.img, x.nombre));
+
+      const body = document.createElement("div");
+      body.className = "item__body";
+
+      const titleRow = document.createElement("div");
+      titleRow.className = "item__title";
+
+      const h3 = document.createElement("h3");
+      h3.className = "serif";
+      h3.textContent = x.nombre;
+
+      const fam = document.createElement("span");
+      fam.className = "pill pill--muted";
+      fam.textContent = x.familia;
+
+      titleRow.appendChild(h3);
+      titleRow.appendChild(fam);
+
+      const tags = document.createElement("div");
+      tags.className = "tags";
+
+      const st = document.createElement("span");
+      st.className = "pill pill--wine";
+      st.textContent = t.disponible ? "Disponible" : "No disponible";
+      tags.appendChild(st);
+
+      if(t.disponible && t.condicion){
+        const cd = document.createElement("span");
+        cd.className = "pill";
+        cd.textContent = t.condicion;
+        tags.appendChild(cd);
+      }
+
+      (t.tags || []).slice(0,2).forEach(tag => {
+        const p = document.createElement("span");
+        p.className = "pill";
+        p.textContent = tag;
+        tags.appendChild(p);
+      });
+
+      const meta = document.createElement("div");
+      meta.className = "item__meta";
+      meta.textContent = t.meta || "Detalles por definir.";
 
       const actions = document.createElement("div");
       actions.className = "item__actions";
@@ -628,14 +612,14 @@ function initTrueque(){
       const btn = document.createElement("a");
       btn.href = "#";
       btn.className = "btn btn--small";
-      btn.textContent = x.disponible ? "Proponer trueque (WhatsApp)" : "Consultar igual (WhatsApp)";
+      btn.textContent = t.disponible ? "Proponer trueque (WhatsApp)" : "Consultar igual (WhatsApp)";
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         const msg = buildTruequeMessage(x);
         window.open(waLink(msg), "_blank", "noopener,noreferrer");
       });
 
-      if(!x.disponible) btn.classList.add("btn--ghost");
+      if(!t.disponible) btn.classList.add("btn--ghost");
 
       actions.appendChild(btn);
 
@@ -691,7 +675,7 @@ function initTrueque(){
 }
 
 /* =========================
-   Fuentes + Init global
+   Fuentes + Init
    ========================= */
 
 function loadFonts(){

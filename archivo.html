@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Archivo — Plantas Mori</title>
-  <meta name="description" content="Archivo de plantas por familia. Buscador + chips para navegar en móvil." />
+  <meta name="description" content="Archivo: colección completa. Filtra por familia y estado (juvenil/madre/colección)." />
   <meta name="theme-color" content="#DED7D1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -15,7 +15,7 @@
     <div class="container header__inner">
       <a class="brand" href="index.html">
         <strong class="serif">Plantas Mori</strong>
-        <small>Archivo</small>
+        <small>Archivo • Colección</small>
       </a>
 
       <nav class="nav" aria-label="Navegación principal">
@@ -35,39 +35,39 @@
       <div class="container">
         <article class="card lift">
           <h1 class="serif">Archivo</h1>
-          <p class="muted">Buscador + chips por familia. (Ahora con fotos 4:5).</p>
+          <p class="muted">
+            Colección completa (no necesariamente para trueque). Estados: <strong>Juvenil</strong>, <strong>Madre</strong>, <strong>Colección</strong>.
+          </p>
         </article>
       </div>
 
-      <!-- Barra fija bajo el header + panel de filtros colapsable -->
-      <div class="sticky-controls" role="region" aria-label="Controles de búsqueda y filtros" data-collapsible="filters">
-        <div class="filters-bar">
-          <div class="container filters-bar__inner">
-            <button class="filters-toggle" type="button" aria-expanded="true" aria-controls="filtersContent" aria-label="Colapsar/expandir filtros">
-              <span class="toggle-icon">▲</span>
-            </button>
-          </div>
-        </div>
+      <div class="sticky-controls" role="region" aria-label="Controles de búsqueda y filtros">
+        <div class="container">
+          <button class="filters-toggle" type="button" aria-expanded="true" aria-controls="filtersContent" aria-label="Colapsar/expandir filtros">
+            <span class="toggle-icon">▲</span>
+          </button>
 
-        <div class="filters-panel">
-          <div class="container">
-            <div class="controls" id="filtersContent">
-              <div class="search">
-                <input id="search" type="search"
-                       placeholder="Buscar: silver dragon, manjula, holly..."
-                       aria-label="Buscar en el archivo" />
-                <button id="clearBtn" class="btn btn--small btn--ghost" type="button" aria-label="Limpiar búsqueda y filtros">Limpiar</button>
-              </div>
+          <div class="controls" id="filtersContent">
+            <div class="search">
+              <input id="search" type="search"
+                     placeholder="Buscar: billietiae, deliciosa, confetti..."
+                     aria-label="Buscar en el archivo" />
+              <button id="clearBtn" class="btn btn--small btn--ghost" type="button" aria-label="Limpiar búsqueda y filtros">Limpiar</button>
+            </div>
 
-              <div>
-                <div class="small muted" style="margin-bottom:6px;">Familias</div>
-                <div class="chips" id="chipsFamilia" aria-label="Filtro por familias"></div>
-              </div>
+            <div>
+              <div class="small muted" style="margin-bottom:6px;">Estado</div>
+              <div class="chips" id="chipsEstado" aria-label="Filtro por estado"></div>
+            </div>
 
-              <div class="results-row">
-                <div class="small muted" id="resultCount">0 resultado(s)</div>
-                <div class="small muted" id="activeFilters" aria-live="polite"></div>
-              </div>
+            <div>
+              <div class="small muted" style="margin-bottom:6px;">Familias</div>
+              <div class="chips" id="chipsFamilia" aria-label="Filtro por familias"></div>
+            </div>
+
+            <div class="results-row">
+              <div class="small muted" id="resultCount">0 resultado(s)</div>
+              <div class="small muted" id="activeFilters" aria-live="polite"></div>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <span>© <span id="year"></span> Plantas Mori</span>
-      <span class="small">UI 2 • Archivo</span>
+      <span class="small">UI 3 • Archivo</span>
     </div>
   </footer>
 
