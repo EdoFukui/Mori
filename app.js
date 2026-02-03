@@ -247,6 +247,22 @@ function initNav(){
 }
 
 /* =========================
+   Filtros colapsables
+   ========================= */
+
+function initFiltersToggle(){
+  const toggleBtn = qs(".filters-toggle");
+  const stickyControls = qs(".sticky-controls");
+  
+  if(!toggleBtn || !stickyControls) return;
+
+  toggleBtn.addEventListener("click", () => {
+    const isCollapsed = stickyControls.classList.toggle("is-collapsed");
+    toggleBtn.setAttribute("aria-expanded", String(!isCollapsed));
+  });
+}
+
+/* =========================
    Render chips
    ========================= */
 
@@ -628,6 +644,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadFonts();
   setYear();
   initNav();
+  initFiltersToggle();
   initArchivo();
   initTrueque();
 });

@@ -249,6 +249,57 @@ h1,h2,h3{ margin:0 0 10px; }
   background: rgba(222,215,209,.72);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(26,20,22,.10);
+  transition: padding var(--t) var(--ease), border-bottom-color var(--t) var(--ease);
+}
+
+.sticky-controls.is-collapsed{
+  padding: 6px 0;
+  border-bottom-color: transparent;
+}
+
+.filters-toggle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform var(--t) var(--ease), background var(--t) var(--ease);
+}
+
+.filters-toggle:hover{
+  background: rgba(251,247,243,.74);
+}
+
+.filters-toggle:active{
+  transform: translateY(1px);
+}
+
+.toggle-icon{
+  width: 18px;
+  height: 18px;
+  transition: transform var(--t) var(--ease);
+}
+
+.sticky-controls.is-collapsed .toggle-icon{
+  transform: scaleY(-1);
+}
+
+#filtersContent{
+  max-height: 1000px;
+  overflow: hidden;
+  transition: max-height var(--t) var(--ease), opacity 120ms var(--ease);
+  opacity: 1;
+}
+
+.sticky-controls.is-collapsed #filtersContent{
+  max-height: 0;
+  opacity: 0;
 }
 .controls{
   display:flex;
