@@ -247,29 +247,22 @@ function initNav(){
 }
 
 /* =========================
-   Toggle colapsable de filtros (UI mejorada)
-   - Botón centrado
-   - Handle fijo visible al colapsar (aunque scrollees abajo)
+   Toggle colapsable de filtros
+   (ahora la barra del toggle siempre es visible)
    ========================= */
 
 function initFiltersToggle(){
   const stickyControls = qs(".sticky-controls");
   const toggles = qsa(".filters-toggle");
-  const handle = qs(".filters-handle");
 
   if(!stickyControls || toggles.length === 0) return;
 
   function applyState(collapsed){
     stickyControls.classList.toggle("is-collapsed", collapsed);
     toggles.forEach(t => t.setAttribute("aria-expanded", String(!collapsed)));
-
-    if(handle){
-      handle.classList.toggle("show", collapsed);
-      handle.setAttribute("aria-hidden", collapsed ? "false" : "true");
-    }
   }
 
-  // Estado inicial: expandido por defecto (a menos que el HTML venga colapsado)
+  // Estado inicial (por defecto expandido)
   applyState(stickyControls.classList.contains("is-collapsed"));
 
   toggles.forEach(t => {
@@ -370,7 +363,6 @@ function initArchivo(){
       const card = document.createElement("article");
       card.className = "card item lift";
 
-      // media (UI 2)
       card.appendChild(buildMedia(x.img, x.nombre));
 
       const body = document.createElement("div");
@@ -523,7 +515,6 @@ function initTrueque(){
       const card = document.createElement("article");
       card.className = "card item lift";
 
-      // media (UI 2)
       card.appendChild(buildMedia(x.img, x.nombre));
 
       const body = document.createElement("div");

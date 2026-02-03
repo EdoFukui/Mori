@@ -37,12 +37,20 @@
           <h1 class="serif">Archivo</h1>
           <p class="muted">Buscador + chips por familia. (Ahora con fotos 4:5).</p>
         </article>
+      </div>
 
-        <div class="sticky-controls" role="region" aria-label="Controles de búsqueda y filtros" data-collapsible="filters">
-          <div class="container">
-            <button class="filters-toggle" type="button" aria-expanded="true" aria-controls="filtersContent" aria-label="Alternar filtros">
+      <!-- Barra fija bajo el header + panel de filtros colapsable -->
+      <div class="sticky-controls" role="region" aria-label="Controles de búsqueda y filtros" data-collapsible="filters">
+        <div class="filters-bar">
+          <div class="container filters-bar__inner">
+            <button class="filters-toggle" type="button" aria-expanded="true" aria-controls="filtersContent" aria-label="Colapsar/expandir filtros">
               <span class="toggle-icon">▲</span>
             </button>
+          </div>
+        </div>
+
+        <div class="filters-panel">
+          <div class="container">
             <div class="controls" id="filtersContent">
               <div class="search">
                 <input id="search" type="search"
@@ -63,16 +71,10 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="filters-handle" aria-hidden="true">
-          <div class="container">
-            <button class="filters-toggle filters-toggle--handle" type="button" aria-expanded="true" aria-controls="filtersContent" aria-label="Alternar filtros">
-              <span class="toggle-icon">▲</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="section">
+      <div class="section">
+        <div class="container">
           <div class="grid list-grid" id="list" aria-label="Listado del archivo"></div>
 
           <div class="card empty-state" id="emptyState" hidden>
