@@ -308,14 +308,14 @@ h1,h2,h3{ margin:0 0 10px; }
 /* Handle visible when filters scroll out of view */
 .filters-handle{
   position: sticky;
-  top: 0;
+  top: 58px; /* sit below the header, aligned with sticky-controls */
   z-index: 65;
   display: none;
   background: transparent;
   pointer-events: none; /* allow only the button to be interactive */
-  padding: 6px 0;
+  padding: 6px 0 8px; /* a little taller for aesthetics */
 }
-.filters-handle .container{ display:flex; justify-content:flex-end; }
+.filters-handle .container{ display:flex; justify-content:center; }
 .filters-handle .filters-toggle--handle{
   pointer-events: auto;
   width: 40px;
