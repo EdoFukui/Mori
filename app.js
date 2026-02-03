@@ -63,7 +63,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["1 hoja"],
-      meta: "en sustrato mineral • comuna por definir"
+      meta: ""
     },
     {
       id: "t2",
@@ -73,7 +73,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["variegada"],
-      meta: "en sustrato • comuna por definir"
+      meta: ""
     },
     {
       id: "t3",
@@ -83,7 +83,7 @@ const DATA = {
       disponible: true,
       condicion: "Corte fresco",
       tags: ["2 hojas"],
-      meta: "corte fresco • comuna por definir"
+      meta: ""
     },
     {
       id: "t4",
@@ -93,7 +93,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["juvenil"],
-      meta: "en sustrato • comuna por definir"
+      meta: ""
     },
     {
       id: "t5",
@@ -103,7 +103,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["hoja grande"],
-      meta: "en sustrato • comuna por definir"
+      meta: ""
     },
     {
       id: "t6",
@@ -113,7 +113,7 @@ const DATA = {
       disponible: true,
       condicion: "Enraizado",
       tags: ["variegada"],
-      meta: "en sustrato • comuna por definir"
+      meta: ""
     }
   ]
 };
@@ -152,18 +152,11 @@ function waLink(text){
 }
 
 function buildTruequeMessage(item){
-  const disponibilidad = item.disponible ? "Disponible" : "No disponible";
-  const condicion = item.disponible ? ` • ${item.condicion}` : "";
-  const meta = item.meta ? `\nDetalles: ${item.meta}` : "";
-  const tags = (item.tags && item.tags.length) ? `\nTags: ${item.tags.join(", ")}` : "";
-
   return [
-    "Hola! Vengo desde Plantas Mori.",
-    `Me interesa este esqueje: ${item.nombre} (${item.familia})`,
-    `Estado: ${disponibilidad}${condicion}`,
-    `${meta}${tags}`,
+    "Hola! Me interesa esta planta:",
+    `${item.nombre} (${item.familia})`,
     "",
-    "¿Podemos coordinar un trueque? 🙂"
+    "¿Sigue disponible?"
   ].join("\n");
 }
 
