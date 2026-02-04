@@ -178,6 +178,11 @@ h1,h2,h3{ margin:0 0 10px; }
   box-shadow: var(--shadow);
   transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease), border-color var(--t) var(--ease);
 }
+
+.section .container > .card + .card{
+  margin-top: 22px;
+}
+
 .lift:hover{
   transform: translateY(-2px);
   box-shadow: var(--shadow2);
