@@ -1,7 +1,6 @@
 /* =========================
-   UI 3.2 — Archivo: switch Trueque (oculto por defecto)
-   + badge Trueque oculto/visible
-   + Trueque: sin "comuna"
+   UI 3.3 — Micro-claim + Reglas (Trueque)
+   + Archivo: switch Trueque (oculto por defecto)
    ========================= */
 
 const STATUS_ORDER = ["Juvenil", "Madre", "Colección"];
@@ -29,7 +28,6 @@ const STATE_OVERRIDES_KEY = "mori_estado_overrides";
    ========================= */
 
 const CATALOGO = [
-  // ==== EXISTENTES (con foto) ====
   {
     id: "p1",
     nombre: "Alocasia sp. Silver Dragon",
@@ -85,7 +83,6 @@ const CATALOGO = [
     trueque: { disponible: true, condicion: "Enraizado", meta: "en sustrato", tags: ["variegada"] }
   },
 
-  // ==== NUEVAS (sin foto por ahora) ====
   { id: "p7",  nombre: "Philodendron billietiae", familia: "Philodendron", estado: "Juvenil", img: "assets/img/philodendron-billietiae.jpeg", tags: [] },
   { id: "p8",  nombre: "Monstera deliciosa", familia: "Monstera", estado: "Juvenil", img: "assets/img/monstera-deliciosa.jpeg", tags: [] },
 
@@ -108,10 +105,7 @@ const CATALOGO = [
   { id: "p20", nombre: "Alocasia Dragons Breath", familia: "Alocasia", estado: "Juvenil", img: "assets/img/alocasia-dragons-breath.jpeg", tags: [] }
 ];
 
-/* =========================
-   Helpers
-   ========================= */
-
+/* Helpers */
 function qs(sel, root=document){ return root.querySelector(sel); }
 function qsa(sel, root=document){ return [...root.querySelectorAll(sel)]; }
 
@@ -271,7 +265,7 @@ function initNav(){
   });
 }
 
-/* Sticky offset automático */
+/* Sticky offset */
 function setHeaderOffsetVar(){
   const header = qs(".header");
   if(!header) return;
@@ -350,17 +344,13 @@ function applyEstadoOverrides(items){
   return items.map(p => ov[p.id] ? ({ ...p, estado: ov[p.id] }) : p);
 }
 
-/* Archivo blurb */
 function estadoBlurb(estado){
   if(estado === "Colección") return "Pieza de colección.";
   if(estado === "Madre") return "Planta madre.";
   return "Juvenil (en crecimiento).";
 }
 
-/* =========================
-   Archivo
-   ========================= */
-
+/* Archivo */
 function initArchivo(){
   const root = qs("[data-page='archivo']");
   if(!root) return;
@@ -373,7 +363,6 @@ function initArchivo(){
   const emptyClearBtn = qs("#emptyClearBtn", root);
 
   const toggleTrueque = qs("#toggleTrueque", root);
-  const truequeBadge = qs("#truequeBadge", root);
 
   const chipsEstado = qs("#chipsEstado", root);
   const chipsFamilia = qs("#chipsFamilia", root);
@@ -388,14 +377,8 @@ function initArchivo(){
   const familiaOptions = buildFamilyOptions(baseItems);
   const estadoOptions = buildEstadoOptions(baseItems);
 
-  // showTrueque: false => OCULTA las que tienen trueque
   let state = { showTrueque: false, estado: "__all", familia: "__all", query: "" };
   const defaults = { ...state };
-
-  function updateBadge(){
-    if(!truequeBadge) return;
-    truequeBadge.textContent = state.showTrueque ? "Trueque visible" : "Trueque oculto";
-  }
 
   function render(){
     baseItems = applyEstadoOverrides(CATALOGO);
@@ -416,7 +399,6 @@ function initArchivo(){
     ]);
     if(activeFilters) activeFilters.textContent = filterText;
 
-    updateBadge();
     if(toggleTrueque) toggleTrueque.checked = state.showTrueque;
 
     list.innerHTML = "";
@@ -451,7 +433,6 @@ function initArchivo(){
       st.textContent = x.estado;
       tags.appendChild(st);
 
-      // si está en trueque y lo estamos mostrando, marca discreta
       if(x.trueque && state.showTrueque){
         const tt = document.createElement("span");
         tt.className = "pill";
@@ -489,7 +470,6 @@ function initArchivo(){
       body.appendChild(meta);
       body.appendChild(actions);
 
-      // Admin-only: set estado local (solo tu navegador)
       if(isAdmin){
         const admin = document.createElement("div");
         admin.className = "admin-actions";
@@ -560,10 +540,7 @@ function initArchivo(){
   render();
 }
 
-/* =========================
-   Trueque
-   ========================= */
-
+/* Trueque */
 function initTrueque(){
   const root = qs("[data-page='trueque']");
   if(!root) return;

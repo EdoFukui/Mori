@@ -49,6 +49,33 @@ h1,h2,h3{ margin:0 0 10px; }
 .muted{ color: var(--muted); }
 .small{ font-size: 12px; }
 
+/* Micro-claim (1 línea, editorial) */
+.micro-claim{
+  margin: 6px 0 10px;
+  color: rgba(26,20,22,.72);
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: .01em;
+}
+
+/* Reglas (Trueque) */
+.rules{
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.rules__title{
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+.rules__list{
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.rules__list li{ margin: 6px 0; }
+
 /* A11y */
 .skip{
   position:absolute; left:-999px; top:auto;
@@ -260,20 +287,6 @@ h1,h2,h3{ margin:0 0 10px; }
 .toggle__text{
   font-weight: 900;
   font-size: 13px;
-}
-
-/* Mini badge arriba del listado */
-.list-top{ display:flex; justify-content:flex-start; margin: 0 0 10px; }
-.mini-badge{
-  display:inline-flex;
-  align-items:center;
-  padding: 7px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(26,20,22,.14);
-  background: rgba(251,247,243,.66);
-  color: rgba(26,20,22,.70);
-  font-size: 12px;
-  font-weight: 900;
 }
 
 /* Sticky controls */

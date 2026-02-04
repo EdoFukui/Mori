@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Trueque — Plantas Mori</title>
-  <meta name="description" content="Inventario de esquejes para intercambio. Disponible/No disponible + Corte fresco/Enraizado." />
+  <meta name="description" content="Trueques disponibles. Coordina por WhatsApp." />
   <meta name="theme-color" content="#DED7D1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -15,7 +15,7 @@
     <div class="container header__inner">
       <a class="brand" href="index.html">
         <strong class="serif">Plantas Mori</strong>
-        <small>Trueque • Inventario</small>
+        <small>Trueque • Esquejes</small>
       </a>
 
       <nav class="nav" aria-label="Navegación principal">
@@ -35,9 +35,19 @@
       <div class="container">
         <article class="card lift">
           <h1 class="serif">Trueque</h1>
-          <p class="muted">
-            Solo lo transaccional (corte fresco/enraizado). El Archivo es tu colección completa.
-          </p>
+
+          <!-- Micro-claim (1 línea) -->
+          <p class="micro-claim">Esquejes disponibles • Coordina por WhatsApp</p>
+
+          <!-- Reglas (3 bullets, corto) -->
+          <div class="rules">
+            <h2 class="serif rules__title">Reglas del Trueque</h2>
+            <ul class="rules__list">
+              <li>Estados: <strong>corte fresco</strong> o <strong>enraizado</strong>.</li>
+              <li>Se coordina por <strong>WhatsApp</strong>.</li>
+              <li>Intercambio según acuerdo (equivalencias y disponibilidad).</li>
+            </ul>
+          </div>
         </article>
       </div>
 
@@ -50,7 +60,7 @@
           <div class="controls" id="filtersContent">
             <div class="search">
               <input id="search" type="search"
-                     placeholder="Buscar: manjula, holly, enraizado..."
+                     placeholder="Buscar: silver dragon, manjula, holly..."
                      aria-label="Buscar en trueque" />
               <button id="clearBtn" class="btn btn--small btn--ghost" type="button" aria-label="Limpiar búsqueda y filtros">Limpiar</button>
             </div>
@@ -61,7 +71,7 @@
             </div>
 
             <div>
-              <div class="small muted" style="margin-bottom:6px;">Condición (solo si está disponible)</div>
+              <div class="small muted" style="margin-bottom:6px;">Condición</div>
               <div class="chips" id="chipsCond" aria-label="Filtro por condición"></div>
             </div>
 
@@ -80,25 +90,14 @@
 
       <div class="section">
         <div class="container">
-          <div class="grid list-grid" id="list" aria-label="Listado de trueque"></div>
+          <div class="grid list-grid" id="list" aria-label="Listado de trueques"></div>
 
           <div class="card empty-state" id="emptyState" hidden>
             <h2 class="serif">Sin resultados</h2>
-            <p class="muted">Prueba cambiando filtros o limpia todo.</p>
+            <p class="muted">Prueba con otros términos o limpia los filtros.</p>
             <div class="hr"></div>
             <button class="btn btn--small" type="button" id="emptyClearBtn">Limpiar filtros</button>
           </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="container">
-          <article class="card lift">
-            <h2 class="serif">Nota</h2>
-            <p class="muted">
-              Recomendación: cuarentena preventiva y revisión de plagas. Esto es intercambio entre coleccionistas.
-            </p>
-          </article>
         </div>
       </div>
     </section>
