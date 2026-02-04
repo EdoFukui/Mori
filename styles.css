@@ -17,10 +17,6 @@
 
   --ease: cubic-bezier(.2,.8,.2,1);
   --t: 170ms;
-
-  /* se setea desde JS (app.js) */
-  --header-h: 58px;
-  --sticky-gap: 8px; /* aire entre header y barra sticky */
 }
 
 /* Reset mínimo */
@@ -43,14 +39,14 @@ img{ max-width:100%; display:block; }
   margin-inline: auto;
 }
 
-/* Tipografía base */
+/* Tipos */
 h1,h2,h3{ margin:0 0 10px; }
 .serif{ font-family: "Fraunces", Georgia, "Times New Roman", serif; }
 .lead{ color: var(--muted); font-size: 16px; margin: 10px 0 0; }
 .muted{ color: var(--muted); }
 .small{ font-size: 12px; }
 
-/* A11y */
+/* Accesibilidad */
 .skip{
   position:absolute; left:-999px; top:auto;
   width:1px; height:1px; overflow:hidden;
@@ -73,7 +69,7 @@ h1,h2,h3{ margin:0 0 10px; }
 .header{
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 60;
   backdrop-filter: blur(10px);
   background: rgba(222,215,209,.78);
   border-bottom: 1px solid var(--line);
@@ -85,12 +81,20 @@ h1,h2,h3{ margin:0 0 10px; }
   gap: 12px;
   padding: 12px 0;
 }
-.brand{ display:flex; flex-direction:column; gap: 2px; }
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap: 2px;
+}
 .brand strong{ font-size: 15px; letter-spacing: .01em; }
 .brand small{ font-size: 12px; color: var(--muted); }
 
 /* Nav */
-.nav{ display:flex; align-items:center; gap: 10px; }
+.nav{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
 .nav__toggle{
   display:inline-flex;
   align-items:center;
@@ -165,22 +169,6 @@ h1,h2,h3{ margin:0 0 10px; }
 .grid{ display:grid; gap: 12px; }
 .grid-3{ grid-template-columns: 1fr; }
 
-/* UI 2: listados en 1 col móvil / 2 cols desktop */
-.list-grid{ grid-template-columns: 1fr; }
-@media (min-width: 820px){
-  .list-grid{ grid-template-columns: repeat(2, 1fr); }
-}
-
-/* =========================================================
-   FIX #1: ESPACIO ENTRE "Archivo y Trueque" y el recuadro de abajo
-   La separación real la controla el contenedor .hero__top
-   ========================================================= */
-.hero__top{
-  display: flex;
-  flex-direction: column;
-  gap: 18px; /* <-- sube a 22px si quieres aún más */
-}
-
 /* Buttons */
 .btn{
   display:inline-flex;
@@ -241,31 +229,25 @@ h1,h2,h3{ margin:0 0 10px; }
 }
 
 /* =========================================================
-   FIX #2: Sticky bar NO pegada al header (aire + top dinámico)
+   FIX: Sticky bar con aire bajo el header + estilo translúcido
    ========================================================= */
 .sticky-controls{
   position: sticky;
-  top: calc(var(--header-h, 58px) + var(--sticky-gap, 8px));
-  z-index: 45;
-
-  /* más aire interno para que la línea no toque el botón */
-  padding: 12px 0 8px;
+  top: 66px; /* header (58px aprox) + aire */
+  z-index: 55;
 
   backdrop-filter: blur(10px);
   background: rgba(222,215,209,.72);
-
   border-bottom: 1px solid rgba(26,20,22,.10);
-  border-radius: 14px;
-  margin-top: 10px; /* da aire en el flujo normal (antes de que se vuelva sticky) */
 
-  transition: padding var(--t) var(--ease), border-bottom-color var(--t) var(--ease);
-}
-.sticky-controls.is-collapsed{
   padding: 10px 0 8px;
+  margin-top: 14px; /* separa del recuadro superior (antes del sticky) */
+}
+
+.sticky-controls.is-collapsed{
   border-bottom-color: transparent;
 }
 
-/* Botón flecha: un poquito separado de la línea */
 .filters-toggle{
   display: inline-flex;
   align-items: center;
@@ -280,7 +262,7 @@ h1,h2,h3{ margin:0 0 10px; }
   cursor: pointer;
   box-shadow: 0 10px 30px rgba(0,0,0,.06);
   transition: transform var(--t) var(--ease), background var(--t) var(--ease), border-color var(--t) var(--ease);
-  margin-top: 4px; /* <-- aquí el aire extra visual */
+  margin-top: 4px; /* evita que se vea “pegado” a la línea */
 }
 .filters-toggle:hover{
   background: rgba(251,247,243,.92);
@@ -425,9 +407,18 @@ h1,h2,h3{ margin:0 0 10px; }
   flex-wrap:wrap;
   color: var(--muted);
 }
+.footer a{
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(126,15,34,.25);
+}
+.footer a:hover{
+  text-decoration-color: rgba(126,15,34,.55);
+}
 
-/* Motion reduce */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   *{ scroll-behavior: auto; }
-  .card, .btn, .chip, .nav__toggle{ transition: none !important; }
+  .card, .btn, .chip, .fade-in, .nav__toggle{ transition: none !important; }
+  .fade-in{ animation: none !important; }
 }
