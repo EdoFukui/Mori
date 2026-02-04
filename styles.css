@@ -17,6 +17,10 @@
 
   --ease: cubic-bezier(.2,.8,.2,1);
   --t: 170ms;
+
+  /* se setea desde JS (app.js) */
+  --header-h: 58px;
+  --sticky-gap: 8px; /* aire entre header y barra sticky */
 }
 
 /* Reset mínimo */
@@ -161,21 +165,20 @@ h1,h2,h3{ margin:0 0 10px; }
 .grid{ display:grid; gap: 12px; }
 .grid-3{ grid-template-columns: 1fr; }
 
-/* =========================================================
-   FIX: más aire entre los 2 recuadros grandes del index
-   (normalmente están dentro de .grid.grid-3)
-   ========================================================= */
-.grid-3{ gap: 18px; }
-
-/* Respaldo: si por alguna razón no están en grid */
-.section .container .card.lift:not(.item) + .card.lift:not(.item){
-  margin-top: 18px;
-}
-
 /* UI 2: listados en 1 col móvil / 2 cols desktop */
 .list-grid{ grid-template-columns: 1fr; }
 @media (min-width: 820px){
   .list-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =========================================================
+   FIX #1: ESPACIO ENTRE "Archivo y Trueque" y el recuadro de abajo
+   La separación real la controla el contenedor .hero__top
+   ========================================================= */
+.hero__top{
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* <-- sube a 22px si quieres aún más */
 }
 
 /* Buttons */
@@ -237,22 +240,32 @@ h1,h2,h3{ margin:0 0 10px; }
   box-shadow: 0 0 0 3px rgba(126,15,34,.10);
 }
 
-/* Sticky filters bar */
+/* =========================================================
+   FIX #2: Sticky bar NO pegada al header (aire + top dinámico)
+   ========================================================= */
 .sticky-controls{
   position: sticky;
-  top: 58px;
+  top: calc(var(--header-h, 58px) + var(--sticky-gap, 8px));
   z-index: 45;
-  padding: 10px 0 6px;
-  background: rgba(222,215,209,.72);
+
+  /* más aire interno para que la línea no toque el botón */
+  padding: 12px 0 8px;
+
   backdrop-filter: blur(10px);
+  background: rgba(222,215,209,.72);
+
   border-bottom: 1px solid rgba(26,20,22,.10);
+  border-radius: 14px;
+  margin-top: 10px; /* da aire en el flujo normal (antes de que se vuelva sticky) */
+
   transition: padding var(--t) var(--ease), border-bottom-color var(--t) var(--ease);
 }
 .sticky-controls.is-collapsed{
-  padding: 6px 0;
+  padding: 10px 0 8px;
   border-bottom-color: transparent;
 }
 
+/* Botón flecha: un poquito separado de la línea */
 .filters-toggle{
   display: inline-flex;
   align-items: center;
@@ -267,6 +280,7 @@ h1,h2,h3{ margin:0 0 10px; }
   cursor: pointer;
   box-shadow: 0 10px 30px rgba(0,0,0,.06);
   transition: transform var(--t) var(--ease), background var(--t) var(--ease), border-color var(--t) var(--ease);
+  margin-top: 4px; /* <-- aquí el aire extra visual */
 }
 .filters-toggle:hover{
   background: rgba(251,247,243,.92);
