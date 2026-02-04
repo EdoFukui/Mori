@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Trueque — Plantas Mori</title>
-  <meta name="description" content="Trueques disponibles. Coordina por WhatsApp." />
+  <meta name="description" content="Inventario de esquejes para intercambio. Disponible/No disponible + Corte fresco/Enraizado." />
   <meta name="theme-color" content="#DED7D1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -15,7 +15,7 @@
     <div class="container header__inner">
       <a class="brand" href="index.html">
         <strong class="serif">Plantas Mori</strong>
-        <small>Trueque • Esquejes</small>
+        <small>Trueque</small>
       </a>
 
       <nav class="nav" aria-label="Navegación principal">
@@ -35,69 +35,67 @@
       <div class="container">
         <article class="card lift">
           <h1 class="serif">Trueque</h1>
-
-          <!-- Micro-claim (1 línea) -->
-          <p class="micro-claim">Esquejes disponibles • Coordina por WhatsApp</p>
-
-          <!-- Reglas (3 bullets, corto) -->
-          <div class="rules">
-            <h2 class="serif rules__title">Reglas del Trueque</h2>
-            <ul class="rules__list">
-              <li>Estados: <strong>corte fresco</strong> o <strong>enraizado</strong>.</li>
-              <li>Se coordina por <strong>WhatsApp</strong>.</li>
-              <li>Intercambio según acuerdo (equivalencias y disponibilidad).</li>
-            </ul>
-          </div>
+          <p class="muted">
+            Inventario vivo de esquejes con fotos 4:5.
+            Botón abre WhatsApp con mensaje prellenado.
+          </p>
         </article>
-      </div>
 
-      <div class="sticky-controls" role="region" aria-label="Controles de búsqueda y filtros">
-        <div class="container">
-          <button class="filters-toggle" type="button" aria-expanded="true" aria-controls="filtersContent" aria-label="Colapsar/expandir filtros">
-            <span class="toggle-icon">▲</span>
-          </button>
+        <div class="sticky-controls" role="region" aria-label="Controles de búsqueda y filtros" data-collapsible="filters">
+          <div class="container">
+            <button class="filters-toggle" type="button" aria-expanded="true" aria-controls="filtersContent" aria-label="Alternar filtros">
+              <span class="toggle-icon">▲</span>
+            </button>
 
-          <div class="controls" id="filtersContent">
-            <div class="search">
-              <input id="search" type="search"
-                     placeholder="Buscar: silver dragon, manjula, holly..."
-                     aria-label="Buscar en trueque" />
-              <button id="clearBtn" class="btn btn--small btn--ghost" type="button" aria-label="Limpiar búsqueda y filtros">Limpiar</button>
-            </div>
+            <div class="controls" id="filtersContent">
+              <div class="search">
+                <input id="search" type="search"
+                       placeholder="Buscar: manjula, holly, enraizado..."
+                       aria-label="Buscar en trueque" />
+                <button id="clearBtn" class="btn btn--small btn--ghost" type="button" aria-label="Limpiar búsqueda y filtros">Limpiar</button>
+              </div>
 
-            <div>
-              <div class="small muted" style="margin-bottom:6px;">Disponibilidad</div>
-              <div class="chips" id="chipsDispon" aria-label="Filtro por disponibilidad"></div>
-            </div>
+              <div>
+                <div class="small muted" style="margin-bottom:6px;">Disponibilidad</div>
+                <div class="chips" id="chipsDispon" aria-label="Filtro por disponibilidad"></div>
+              </div>
 
-            <div>
-              <div class="small muted" style="margin-bottom:6px;">Condición</div>
-              <div class="chips" id="chipsCond" aria-label="Filtro por condición"></div>
-            </div>
+              <div>
+                <div class="small muted" style="margin-bottom:6px;">Condición (solo si está disponible)</div>
+                <div class="chips" id="chipsCond" aria-label="Filtro por condición"></div>
+              </div>
 
-            <div>
-              <div class="small muted" style="margin-bottom:6px;">Familias</div>
-              <div class="chips" id="chipsFamilia" aria-label="Filtro por familias"></div>
-            </div>
+              <div>
+                <div class="small muted" style="margin-bottom:6px;">Familias</div>
+                <div class="chips" id="chipsFamilia" aria-label="Filtro por familias"></div>
+              </div>
 
-            <div class="results-row">
-              <div class="small muted" id="resultCount">0 resultado(s)</div>
-              <div class="small muted" id="activeFilters" aria-live="polite"></div>
+              <div class="results-row">
+                <div class="small muted" id="resultCount">0 resultado(s)</div>
+                <div class="small muted" id="activeFilters" aria-live="polite"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="section">
-        <div class="container">
-          <div class="grid list-grid" id="list" aria-label="Listado de trueques"></div>
+        <div class="section">
+          <div class="grid list-grid" id="list" aria-label="Listado de trueque"></div>
 
           <div class="card empty-state" id="emptyState" hidden>
             <h2 class="serif">Sin resultados</h2>
-            <p class="muted">Prueba con otros términos o limpia los filtros.</p>
+            <p class="muted">Prueba cambiando filtros o limpia todo.</p>
             <div class="hr"></div>
             <button class="btn btn--small" type="button" id="emptyClearBtn">Limpiar filtros</button>
           </div>
+        </div>
+
+        <div class="section">
+          <article class="card lift">
+            <h2 class="serif">Nota de convivencia</h2>
+            <p class="muted">
+              Recomendación: cuarentena preventiva y revisión de plagas. Esto es intercambio entre coleccionistas.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -106,7 +104,8 @@
   <footer class="footer">
     <div class="container footer__inner">
       <span>© <span id="year"></span> Plantas Mori</span>
-      <span class="small">UI 3 • Trueque</span>
+      <span class="small">UI 2 • Trueque</span>
+      <a class="small" href="https://www.instagram.com/plantasmori?igsh=MXFtMHpsMjE5ZmVkag==" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </footer>
 
