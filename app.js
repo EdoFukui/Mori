@@ -1,7 +1,3 @@
-/* =========================
-   UI 2 — Datos + fotos reales (assets/img)
-   ========================= */
-
 const DATA = {
   archivo: [
     {
@@ -10,7 +6,8 @@ const DATA = {
       familia: "Alocasia",
       img: "assets/img/alocasia-silver-dragon.jpeg",
       tags: ["textura", "hoja densa"],
-      nota: "Alocasia compacta de hoja gruesa. (Ficha breve, borrador.)"
+      nota: "Alocasia compacta de hoja gruesa. (Ficha breve, borrador.)",
+      esTrueque: true
     },
     {
       id: "a2",
@@ -18,7 +15,8 @@ const DATA = {
       familia: "Epipremnum",
       img: "assets/img/epipremnum-manjula.jpeg",
       tags: ["variegada", "interior"],
-      nota: "Variegación crema/verde, crecimiento noble y muy decorativo."
+      nota: "Variegación crema/verde, crecimiento noble y muy decorativo.",
+      esTrueque: true
     },
     {
       id: "a3",
@@ -26,7 +24,8 @@ const DATA = {
       familia: "Philodendron",
       img: "assets/img/cordatum-brasil.jpeg",
       tags: ["juvenil", "rápido"],
-      nota: "Cordatum ‘Brasil’ (juvenil). Ideal para enraizar y formar matas colgantes."
+      nota: "Cordatum ‘Brasil’ (juvenil). Ideal para enraizar y formar matas colgantes.",
+      esTrueque: true
     },
     {
       id: "a4",
@@ -34,7 +33,8 @@ const DATA = {
       familia: "Monstera",
       img: "assets/img/monstera-siltepecana.jpeg",
       tags: ["textura", "trepadora"],
-      nota: "Juvenil con patrón plateado; cambia mucho al madurar."
+      nota: "Juvenil con patrón plateado; cambia mucho al madurar.",
+      esTrueque: true
     },
     {
       id: "a5",
@@ -42,7 +42,8 @@ const DATA = {
       familia: "Philodendron",
       img: "assets/img/philodendron-glorious.jpeg",
       tags: ["velloso", "colección"],
-      nota: "Hoja aterciopelada, nervadura marcada. (Borrador de ficha.)"
+      nota: "Hoja aterciopelada, nervadura marcada. (Borrador de ficha.)",
+      esTrueque: true
     },
     {
       id: "a6",
@@ -50,7 +51,8 @@ const DATA = {
       familia: "Syngonium",
       img: "assets/img/syngonium-holly.jpeg",
       tags: ["variegada", "compacta"],
-      nota: "Syngonium de variegación suave, formato compacto."
+      nota: "Syngonium de variegación suave, formato compacto.",
+      esTrueque: true
     }
   ],
 
@@ -112,9 +114,6 @@ const DATA = {
   ]
 };
 
-/* =========================
-   Helpers
-   ========================= */
 const qs = (sel, el=document) => el.querySelector(sel);
 const qsa = (sel, el=document) => Array.from(el.querySelectorAll(sel));
 
@@ -127,9 +126,6 @@ function escapeHtml(str){
     .replaceAll("'", "&#039;");
 }
 
-/* =========================
-   UI 3: medir alto real del header para sticky (evita "huecos")
-   ========================= */
 function setHeaderHeightVar(){
   const header = qs(".header");
   if(!header) return;
@@ -137,17 +133,11 @@ function setHeaderHeightVar(){
   document.documentElement.style.setProperty("--headerH", `${h}px`);
 }
 
-/* =========================
-   Footer año
-   ========================= */
 function setYear(){
   const y = qs("#year");
   if(y) y.textContent = String(new Date().getFullYear());
 }
 
-/* =========================
-   Nav móvil
-   ========================= */
 function initNav(){
   const toggle = qs(".nav__toggle");
   const list = qs(".nav__list");
@@ -166,9 +156,6 @@ function initNav(){
   });
 }
 
-/* =========================
-   Filtros colapsables
-   ========================= */
 function initFiltersToggle(){
   const stickyControls = qs(".sticky-controls");
   const toggles = qsa(".filters-toggle");
@@ -183,15 +170,12 @@ function initFiltersToggle(){
   });
 }
 
-/* =========================
-   Render chips
-   ========================= */
 function renderChips(container, options, activeValue, onClick){
   container.innerHTML = "";
   options.forEach(opt => {
     const b = document.createElement("button");
     b.className = "chip";
-    b.type = "button";
+    b.type = "button hookup";
     b.textContent = opt.label;
     b.setAttribute("aria-pressed", String(opt.value === activeValue));
     b.addEventListener("click", () => onClick(opt.value));
@@ -199,17 +183,42 @@ function renderChips(container, options, activeValue, onClick){
   });
 }
 
-function applyStaggerFade(listEl){
-  const items = qsa(".item", listEl);
-  items.forEach((el, i) => {
-    el.classList.add("fade-in");
-    el.style.animationDelay = `${Math.min(i, 10) * 14}ms`;
-  });
+function renderChipToggle(container, label, isOn, onToggle){
+  container.innerHTML = "";
+  const b = document.createElement("button");
+  b.className = "chip";
+  b.type = "button";
+  b.textContent = label;
+  b.setAttribute("aria-pressed", String(isOn));
+  b.addEventListener("click", () => onToggle(!isOn));
+  container.appendChild(b);
 }
 
-/* =========================
-   UI 2: helper para media (foto)
-   ========================= */
+function matchesQuery(x, q){
+  if(!q) return true;
+  const hay = [
+    x.nombre,
+    x.familia,
+    ...(x.tags || []),
+    x.nota || "",
+    x.condicion || "",
+    x.disponible === false ? "no disponible" : "disponible",
+    x.esTrueque ? "trueque" : ""
+  ].join(" ").toLowerCase();
+  return hay.includes(q.toLowerCase().trim());
+}
+
+function buildFamilyOptions(items){
+  const fam = Array.from(new Set(items.map(i => i.familia))).sort((a,b) => a.localeCompare(b));
+  return [{ value:"__all", label:"Todas" }, ...fam.map(f => ({ value:f, label:f }))];
+}
+
+function buildActiveFiltersText(parts){
+  const on = parts.filter(Boolean);
+  if(on.length === 0) return "";
+  return `Filtros: ${on.join(" • ")}`;
+}
+
 function renderMedia(imgSrc, alt){
   const media = document.createElement("div");
   media.className = "media";
@@ -232,34 +241,7 @@ function renderMedia(imgSrc, alt){
 }
 
 /* =========================
-   Query matching
-   ========================= */
-function matchesQuery(x, q){
-  if(!q) return true;
-  const hay = [
-    x.nombre,
-    x.familia,
-    ...(x.tags || []),
-    x.nota || "",
-    x.condicion || "",
-    x.disponible === false ? "no disponible" : "disponible"
-  ].join(" ").toLowerCase();
-  return hay.includes(q.toLowerCase().trim());
-}
-
-function buildFamilyOptions(items){
-  const fam = Array.from(new Set(items.map(i => i.familia))).sort((a,b) => a.localeCompare(b));
-  return [{ value:"__all", label:"Todas" }, ...fam.map(f => ({ value:f, label:f }))];
-}
-
-function buildActiveFiltersText(parts){
-  const on = parts.filter(Boolean);
-  if(on.length === 0) return "";
-  return `Filtros: ${on.join(" • ")}`;
-}
-
-/* =========================
-   Archivo
+   Archivo (con Trueque oculto por defecto)
    ========================= */
 function initArchivo(){
   const root = qs("[data-page='archivo']");
@@ -269,6 +251,7 @@ function initArchivo(){
   const clearBtn = qs("#clearBtn", root);
   const emptyClearBtn = qs("#emptyClearBtn", root);
   const chipsFamilia = qs("#chipsFamilia", root);
+  const chipsTrueque = qs("#chipsTrueque", root);
   const resultCount = qs("#resultCount", root);
   const activeFilters = qs("#activeFilters", root);
   const list = qs("#list", root);
@@ -276,19 +259,26 @@ function initArchivo(){
 
   const familiaOptions = buildFamilyOptions(DATA.archivo);
 
-  let state = { familia: "__all", query: "" };
-  const defaults = { familia: "__all", query: "" };
+  let state = {
+    familia: "__all",
+    query: "",
+    showTrueque: false // 👈 oculto por defecto
+  };
+
+  const defaults = { ...state };
 
   function render(){
     const items = DATA.archivo
       .filter(x => state.familia === "__all" ? true : x.familia === state.familia)
-      .filter(x => matchesQuery(x, state.query));
+      .filter(x => matchesQuery(x, state.query))
+      .filter(x => state.showTrueque ? true : (x.esTrueque ? false : true));
 
     resultCount.textContent = `${items.length} resultado(s)`;
 
     const filterText = buildActiveFiltersText([
       state.query ? `búsqueda “${state.query}”` : "",
-      state.familia !== "__all" ? state.familia : ""
+      state.familia !== "__all" ? state.familia : "",
+      state.showTrueque ? "Mostrando Trueque" : ""
     ]);
     if(activeFilters) activeFilters.textContent = filterText;
 
@@ -303,12 +293,17 @@ function initArchivo(){
       const body = document.createElement("div");
       body.className = "item__body";
 
+      const pillsExtra = (x.esTrueque && state.showTrueque)
+        ? `<span class="pill pill--accent">Trueque</span>`
+        : "";
+
       body.innerHTML = `
         <h2 class="serif item__title">${escapeHtml(x.nombre)}</h2>
         <div class="item__meta">
           <span class="pill">${escapeHtml(x.familia)}</span>
         </div>
         <div class="pills">
+          ${pillsExtra}
           ${(x.tags || []).slice(0,3).map(t => `<span class="pill">${escapeHtml(t)}</span>`).join("")}
         </div>
         <p class="tagline">${escapeHtml(x.nota || "")}</p>
@@ -318,17 +313,18 @@ function initArchivo(){
     });
 
     emptyState.hidden = items.length !== 0;
-    if(items.length) applyStaggerFade(list);
   }
 
   function clearAll(){
     state = { ...defaults };
     if(search) search.value = "";
     renderChips(chipsFamilia, familiaOptions, state.familia, (v) => { state.familia = v; render(); });
+    renderChipToggle(chipsTrueque, "Mostrar Trueque", state.showTrueque, (v)=>{ state.showTrueque = v; render(); });
     render();
   }
 
   renderChips(chipsFamilia, familiaOptions, state.familia, (v) => { state.familia = v; render(); });
+  renderChipToggle(chipsTrueque, "Mostrar Trueque", state.showTrueque, (v)=>{ state.showTrueque = v; render(); });
 
   if(search){
     search.addEventListener("input", () => {
@@ -434,7 +430,6 @@ function initTrueque(){
     });
 
     emptyState.hidden = items.length !== 0;
-    if(items.length) applyStaggerFade(list);
   }
 
   function clearAll(){
@@ -462,9 +457,7 @@ function initTrueque(){
   render();
 }
 
-/* =========================
-   Fonts (Fraunces + Inter)
-   ========================= */
+/* Fonts */
 function loadFonts(){
   const link1 = document.createElement("link");
   link1.rel = "preconnect";

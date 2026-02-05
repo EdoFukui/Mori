@@ -35,7 +35,7 @@
       <div class="container">
         <article class="card lift">
           <h1 class="serif">Archivo</h1>
-          <p class="muted">Buscador + chips por familia. (Fotos verticales 4:5).</p>
+          <p class="muted">Por defecto, el Archivo oculta lo que ya está en Trueque (para no repetirse).</p>
         </article>
       </div>
     </section>
@@ -52,6 +52,11 @@
                    placeholder="Buscar: silver dragon, manjula, holly..."
                    aria-label="Buscar en el archivo" />
             <button id="clearBtn" class="btn btn--small btn--ghost" type="button" aria-label="Limpiar búsqueda y filtros">Limpiar</button>
+          </div>
+
+          <div>
+            <div class="small muted" style="margin-bottom:6px;">Visibilidad</div>
+            <div class="chips" id="chipsTrueque" aria-label="Mostrar u ocultar plantas de trueque"></div>
           </div>
 
           <div>
@@ -85,7 +90,7 @@
     <div class="container footer__inner">
       <span>© <span id="year"></span> Plantas Mori</span>
       <span class="small">
-        UI 2 • Archivo •
+        UI 3 • Archivo •
         <a href="https://www.instagram.com/plantasmori?igsh=MXFtMHpsMjE5ZmVkag==" target="_blank" rel="noopener noreferrer">Instagram</a>
       </span>
     </div>

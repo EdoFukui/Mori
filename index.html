@@ -24,7 +24,7 @@
           <li><a href="archivo.html">Archivo</a></li>
           <li><a href="trueque.html">Trueque</a></li>
           <li><a href="#contacto">Contacto</a></li>
-          <li><a class="btn btn--small btn--ghost" href="#estado">Fase cero</a></li>
+          <li><a class="btn btn--small btn--ghost" href="#fase">Fase cero</a></li>
         </ul>
       </nav>
     </div>
@@ -33,25 +33,24 @@
   <main id="contenido">
     <section class="hero">
       <div class="container">
-        <div class="hero__top">
-          <span class="badge">UI 2 • Fotos reales • Editorial complementario</span>
-          <h1 class="serif">Archivo vivo + trueque de esquejes.</h1>
-          <p class="lead">
-            Ahora el sitio ya convive con fotos verdes (vertical tipo Instagram).
-            La UI queda neutra para que las plantas sean la protagonista.
-          </p>
-          <div class="cta-row">
-            <a class="btn" href="archivo.html">Entrar al Archivo</a>
-            <a class="btn btn--ghost" href="trueque.html">Ver Trueque</a>
-          </div>
+        <span class="badge">UI 3 • Archivo sin repetirse • Grid</span>
+
+        <h1 class="serif">Archivo vivo + trueque de esquejes.</h1>
+        <p class="lead">
+          Archivo muestra la colección completa, pero evita repetirse: lo que está en Trueque se oculta por defecto.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn" href="archivo.html">Entrar al Archivo</a>
+          <a class="btn btn--ghost" href="trueque.html">Ver Trueque</a>
         </div>
 
         <div class="hr"></div>
 
-        <section class="section grid grid-3" aria-label="Entradas">
+        <section class="section grid grid-3" aria-label="Entradas" id="fase">
           <article class="card lift">
             <h2 class="serif">Archivo</h2>
-            <p class="muted">Fichas simples por familia. Buscador + chips sticky.</p>
+            <p class="muted">Fichas simples por familia. Buscador + chips sticky. Trueque oculto por defecto.</p>
             <div class="hr"></div>
             <a class="btn btn--small" href="archivo.html">Abrir Archivo</a>
           </article>
@@ -63,11 +62,11 @@
             <a class="btn btn--small" href="trueque.html">Abrir Trueque</a>
           </article>
 
-          <article class="card lift" id="estado">
-            <h2 class="serif">Estado</h2>
-            <p class="muted">Borrador público: portafolio + comunidad (no venta por ahora).</p>
+          <article class="card lift">
+            <h2 class="serif">Cómo funciona</h2>
+            <p class="muted">Navega por familia, busca por nombre y, si quieres ver repetidos, activa “Mostrar Trueque”.</p>
             <div class="hr"></div>
-            <p class="small muted">UI 2: fotos 4:5 + paleta neutra.</p>
+            <p class="small muted">Fase cero: portafolio + comunidad (sin venta por ahora).</p>
           </article>
         </section>
 
@@ -92,7 +91,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <span>© <span id="year"></span> Plantas Mori</span>
-      <span class="small">UI 2 • Mobile-first • Fotos 4:5 • <a href="https://www.instagram.com/plantasmori?igsh=MXFtMHpsMjE5ZmVkag==" target="_blank" rel="noopener noreferrer">Instagram</a></span>
+      <span class="small">UI 3 • Mobile-first • Grid • <a href="https://www.instagram.com/plantasmori?igsh=MXFtMHpsMjE5ZmVkag==" target="_blank" rel="noopener noreferrer">Instagram</a></span>
     </div>
   </footer>
 

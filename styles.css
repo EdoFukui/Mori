@@ -1,12 +1,10 @@
 :root{
-  /* UI 2: neutros "papel/piedra" para que el verde domine */
-  --bg: #DED7D1;        /* stone */
-  --paper: #FBF7F3;     /* paper */
+  --bg: #DED7D1;
+  --paper: #FBF7F3;
   --ink: #1A1416;
   --muted: #554B4E;
   --line: rgba(26,20,22,.14);
 
-  /* Acento complementario roto (editorial) */
   --wine: #7E0F22;
   --wineSoft: rgba(126,15,34,.12);
 
@@ -15,7 +13,6 @@
   --shadow2: 0 16px 40px rgba(0,0,0,.14);
   --max: 1040px;
 
-  /* Alto real del header (lo setea app.js) */
   --headerH: 58px;
 
   --ease: cubic-bezier(.2,.8,.2,1);
@@ -98,12 +95,8 @@ a{ color: inherit; }
   flex-direction:column;
   gap: 2px;
 }
-.brand strong{
-  font-size: 1.08rem;
-}
-.brand small{
-  color: var(--muted);
-}
+.brand strong{ font-size: 1.08rem; }
+.brand small{ color: var(--muted); }
 
 .nav{ display:flex; align-items:center; }
 .nav__toggle{
@@ -128,9 +121,7 @@ a{ color: inherit; }
   padding: 8px 10px;
   border-radius: 999px;
 }
-.nav__list a:hover{
-  background: rgba(251,247,243,.55);
-}
+.nav__list a:hover{ background: rgba(251,247,243,.55); }
 
 /* Buttons */
 .btn{
@@ -158,11 +149,24 @@ a{ color: inherit; }
 .hero{ padding: 18px 0 30px; }
 .section{ padding: 18px 0; }
 
-/* stack spacing: cards apiladas (como en landing) */
+/* stack spacing */
 .section .card.lift + .card.lift{ margin-top: 18px; }
 
-.grid{ display:grid; gap: 12px; }
-.grid-3{ grid-template-columns: 1fr; }
+.grid{
+  display:grid;
+  gap: 12px;
+}
+
+/* Landing grid: siempre misma altura entre cards */
+.grid-3{ grid-template-columns: 1fr; align-items: stretch; }
+.grid-3 > .card{
+  height: 100%;
+  display:flex;
+  flex-direction:column;
+}
+.grid-3 > .card .hr{ margin-top: auto; }
+.grid-3 > .card .btn{ align-self: flex-start; }
+
 @media (min-width: 860px){
   .grid-3{ grid-template-columns: repeat(3, 1fr); }
 }
@@ -244,9 +248,7 @@ a{ color: inherit; }
   padding: 10px 0;
   border-bottom-color: transparent;
 }
-.sticky-controls.is-collapsed .toggle-icon{
-  transform: scaleY(-1);
-}
+.sticky-controls.is-collapsed .toggle-icon{ transform: scaleY(-1); }
 .sticky-controls.is-collapsed #filtersContent{
   max-height: 0;
   opacity: 0;
@@ -299,9 +301,24 @@ a{ color: inherit; }
   flex-wrap:wrap;
 }
 
-/* List grid + Items */
-.list-grid{ grid-template-columns: 1fr; }
+/* =========================
+   LISTADO: vuelve la cuadrícula real
+   ========================= */
+.list-grid{
+  grid-template-columns: 1fr;
+}
+@media (min-width: 620px){
+  .list-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 980px){
+  .list-grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 
+/* Items */
 .item{
   display:flex;
   flex-direction:column;
@@ -316,7 +333,7 @@ a{ color: inherit; }
   border-radius: 16px;
   overflow:hidden;
   border: 1px solid rgba(26,20,22,.10);
-  background: rgba(26,20,22,.08);
+  background: rgba(26,20,22,.12); /* un poco más oscuro para destacar */
   aspect-ratio: 4 / 5;
   position: relative;
 }
@@ -337,9 +354,7 @@ a{ color: inherit; }
   font-size: 1.1rem;
 }
 
-.item__body{
-  padding: 18px;
-}
+.item__body{ padding: 18px; }
 .item__title{
   margin: 0 0 4px;
   font-size: 1.25rem;
@@ -377,9 +392,7 @@ a{ color: inherit; }
 }
 
 /* Empty state */
-.empty-state{
-  text-align:center;
-}
+.empty-state{ text-align:center; }
 .empty-state h2{ margin-top: 0; }
 
 /* Footer */
@@ -395,11 +408,10 @@ a{ color: inherit; }
   flex-wrap:wrap;
   color: var(--muted);
 }
-
 .footer a{ color: inherit; text-decoration: none; }
 .footer a:hover{ text-decoration: underline; }
 
-/* Hide old handle if exists in repo */
+/* Hide old handle if exists */
 .filters-handle{ display:none !important; }
 
 /* Mobile nav */
