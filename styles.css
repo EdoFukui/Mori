@@ -15,6 +15,13 @@
 
   --ease: cubic-bezier(.2,.8,.2,1);
   --t: 170ms;
+
+  /* Altura visual del header (para top sticky). Si cambias padding del header, ajusta esto. */
+  --headerTop: 58px;
+
+  /* Mismo “vidrio” del header */
+  --glassBg: rgba(222,215,209,.78);
+  --glassBlur: 10px;
 }
 
 *{ box-sizing: border-box; }
@@ -64,8 +71,8 @@ h1,h2,h3{ margin:0 0 10px; }
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(10px);
-  background: rgba(222,215,209,.78);
+  backdrop-filter: blur(var(--glassBlur));
+  background: var(--glassBg);
   border-bottom: 1px solid var(--line);
 }
 .header__inner{
@@ -252,21 +259,27 @@ h1,h2,h3{ margin:0 0 10px; }
   margin-top: 6px;
 }
 
-/* Sticky controls */
+/* Sticky controls (FILTROS) */
+/* ✅ CAMBIO: sin sombra arriba/abajo; mismo “vidrio” del header */
 .sticky-controls{
   position: sticky;
-  top: 58px;
+  top: var(--headerTop);
   z-index: 55;
   padding: 10px 0 6px;
-  background: rgba(222,215,209,.78);
-  backdrop-filter: blur(10px);
+
+  background: var(--glassBg);
+  backdrop-filter: blur(var(--glassBlur));
+
   border-bottom: 1px solid rgba(26,20,22,.14);
-  box-shadow: 0 10px 24px rgba(0,0,0,.10); /* mantenemos la separación del panel principal */
+
+  /* 🔥 clave: quitamos la sombra que se veía arriba/abajo */
+  box-shadow: none;
+
   transition: padding var(--t) var(--ease), border-bottom-color var(--t) var(--ease);
 }
 .sticky-controls.is-collapsed{
   padding: 6px 0;
-  border-bottom-color: transparent;
+  border-bottom-color: rgba(26,20,22,.10);
 }
 
 .filters-toggle{
@@ -307,16 +320,16 @@ h1,h2,h3{ margin:0 0 10px; }
   opacity: 0;
 }
 
-/* Handle: SIN SOMBRA (lo que pediste) */
+/* (Este handle extra se deja “neutral”; si no lo usas, no afecta) */
 .filters-handle{
   position: sticky;
-  top: 58px;
+  top: var(--headerTop);
   z-index: 65;
   display: none;
-  background: rgba(222,215,209,.78);
-  backdrop-filter: blur(10px);
+  background: var(--glassBg);
+  backdrop-filter: blur(var(--glassBlur));
   border-bottom: 1px solid rgba(26,20,22,.14);
-  box-shadow: none;                 /* ✅ quitamos sombreado */
+  box-shadow: none;
   pointer-events: none;
   padding: 6px 0 8px;
 }
