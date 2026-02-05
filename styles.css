@@ -290,7 +290,7 @@ h1,h2,h3{ margin:0 0 10px; }
 
 /* Barra del toggle (siempre visible) */
 .filters-bar{
-  background: rgba(222,215,209,.72);
+  background: rgba(222,215,209,.94);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(26,20,22,.10);
 }
@@ -341,7 +341,7 @@ h1,h2,h3{ margin:0 0 10px; }
 
 /* Panel de filtros (se expande/colapsa) */
 .filters-panel{
-  background: rgba(222,215,209,.72);
+  background: rgba(222,215,209,.94);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(26,20,22,.10);
   padding: 10px 0 8px;
