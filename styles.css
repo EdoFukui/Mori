@@ -1,12 +1,10 @@
 :root{
-  /* UI 2: neutros "papel/piedra" para que el verde domine */
-  --bg: #DED7D1;        /* stone */
-  --paper: #FBF7F3;     /* paper */
+  --bg: #DED7D1;
+  --paper: #FBF7F3;
   --ink: #1A1416;
   --muted: #554B4E;
   --line: rgba(26,20,22,.14);
 
-  /* Acento complementario roto (editorial) */
   --wine: #7E0F22;
   --wineSoft: rgba(126,15,34,.12);
 
@@ -19,7 +17,6 @@
   --t: 170ms;
 }
 
-/* Reset mínimo */
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
 body{
@@ -33,20 +30,17 @@ body{
 a{ color: inherit; text-decoration: none; }
 img{ max-width:100%; display:block; }
 
-/* Contenedor */
 .container{
   width: min(var(--max), 92%);
   margin-inline: auto;
 }
 
-/* Tipografía base */
 h1,h2,h3{ margin:0 0 10px; }
 .serif{ font-family: "Fraunces", Georgia, "Times New Roman", serif; }
 .lead{ color: var(--muted); font-size: 16px; margin: 10px 0 0; }
 .muted{ color: var(--muted); }
 .small{ font-size: 12px; }
 
-/* A11y */
 .skip{
   position:absolute; left:-999px; top:auto;
   width:1px; height:1px; overflow:hidden;
@@ -161,11 +155,6 @@ h1,h2,h3{ margin:0 0 10px; }
 .grid{ display:grid; gap: 12px; }
 .grid-3{ grid-template-columns: 1fr; }
 
-/* =========================================================
-   UI A: Alturas consistentes (tarjetas)
-   ========================================================= */
-
-/* Portada: mismas alturas */
 .grid-3 > .card{
   height: 100%;
   display: flex;
@@ -173,7 +162,6 @@ h1,h2,h3{ margin:0 0 10px; }
 }
 .grid-3 > .card > .hr{ margin-top: auto; }
 
-/* Listados en 1 col móvil / 2 cols desktop */
 .list-grid{ grid-template-columns: 1fr; }
 @media (min-width: 820px){
   .list-grid{ grid-template-columns: repeat(2, 1fr); }
@@ -270,10 +258,10 @@ h1,h2,h3{ margin:0 0 10px; }
   top: 58px;
   z-index: 55;
   padding: 10px 0 6px;
-  background: rgba(222,215,209,.78); /* igual al header */
+  background: rgba(222,215,209,.78);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(26,20,22,.14);
-  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  box-shadow: 0 10px 24px rgba(0,0,0,.10); /* mantenemos la separación del panel principal */
   transition: padding var(--t) var(--ease), border-bottom-color var(--t) var(--ease);
 }
 .sticky-controls.is-collapsed{
@@ -295,12 +283,8 @@ h1,h2,h3{ margin:0 0 10px; }
   cursor: pointer;
   transition: transform var(--t) var(--ease), background var(--t) var(--ease);
 }
-.filters-toggle:hover{
-  background: rgba(251,247,243,.98);
-}
-.filters-toggle:active{
-  transform: translateY(1px);
-}
+.filters-toggle:hover{ background: rgba(251,247,243,.98); }
+.filters-toggle:active{ transform: translateY(1px); }
 
 .toggle-icon{
   width: 18px;
@@ -310,9 +294,7 @@ h1,h2,h3{ margin:0 0 10px; }
   font-size: 14px;
   line-height: 1;
 }
-.sticky-controls.is-collapsed .toggle-icon{
-  transform: scaleY(-1);
-}
+.sticky-controls.is-collapsed .toggle-icon{ transform: scaleY(-1); }
 
 #filtersContent{
   max-height: 1000px;
@@ -325,17 +307,17 @@ h1,h2,h3{ margin:0 0 10px; }
   opacity: 0;
 }
 
-/* Handle visible when filters scroll out of view */
+/* Handle: SIN SOMBRA (lo que pediste) */
 .filters-handle{
   position: sticky;
   top: 58px;
   z-index: 65;
   display: none;
-  background: rgba(222,215,209,.78); /* igual al header */
+  background: rgba(222,215,209,.78);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(26,20,22,.14);
-  box-shadow: 0 10px 24px rgba(0,0,0,.10);
-  pointer-events: none; /* solo el botón interactivo */
+  box-shadow: none;                 /* ✅ quitamos sombreado */
+  pointer-events: none;
   padding: 6px 0 8px;
 }
 .filters-handle .container{ display:flex; justify-content:center; }
@@ -376,7 +358,7 @@ h1,h2,h3{ margin:0 0 10px; }
   flex-wrap:wrap;
 }
 
-/* ===== UI 2: Cards con foto arriba (Instagram feel) ===== */
+/* Cards con foto arriba */
 .item{
   display:flex;
   flex-direction:column;
@@ -387,9 +369,7 @@ h1,h2,h3{ margin:0 0 10px; }
 }
 .item.card{ padding: 0; }
 
-.item__media{
-  padding: 12px 12px 0 12px;
-}
+.item__media{ padding: 12px 12px 0 12px; }
 .ph{
   width: 100%;
   border-radius: 16px;
@@ -449,9 +429,7 @@ h1,h2,h3{ margin:0 0 10px; }
   border-color: rgba(126,15,34,.28);
   background: rgba(126,15,34,.10);
 }
-.pill--muted{
-  background: rgba(26,20,22,.06);
-}
+.pill--muted{ background: rgba(26,20,22,.06); }
 
 .item__meta{ color: var(--muted); font-size: 13px; }
 .item__actions{
