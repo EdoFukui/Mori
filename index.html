@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Plantas Mori</title>
-  <meta name="description" content="Archivo (colección) y Trueque (disponibles). Sitio mobile-first." />
+  <title>Plantas Mori — Archivo y Trueque</title>
+  <meta name="description" content="Plantas Mori: archivo vivo de plantas y espacio de trueque de esquejes. Enfoque educativo, fase cero." />
   <meta name="theme-color" content="#DED7D1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -15,7 +15,7 @@
     <div class="container header__inner">
       <a class="brand" href="index.html">
         <strong class="serif">Plantas Mori</strong>
-        <small>UI 3 • Colección + Trueque</small>
+        <small>Archivo vivo • Trueque • Educación</small>
       </a>
 
       <nav class="nav" aria-label="Navegación principal">
@@ -24,70 +24,67 @@
           <li><a href="archivo.html">Archivo</a></li>
           <li><a href="trueque.html">Trueque</a></li>
           <li><a href="#contacto">Contacto</a></li>
-          <li><a class="btn btn--small btn--ghost" href="index.html">Inicio</a></li>
+          <li><a class="btn btn--small btn--ghost" href="#estado">Fase cero</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main id="contenido">
-    <section class="section hero">
+    <section class="hero">
       <div class="container">
         <div class="hero__top">
-          <span class="badge">🌿 Portafolio vivo • Mobile-first</span>
-          <article class="card lift">
-            <h1 class="serif">Archivo y Trueque</h1>
-            <p class="lead">
-              <strong>Archivo</strong> muestra la <strong>colección completa</strong> (juveniles, madres y piezas de colección).
-              <strong>Trueque</strong> muestra solo lo <strong>disponible o registrable</strong> para intercambio.
-            </p>
-
-            <div class="hr"></div>
-
-            <div class="cta-row">
-              <a class="btn" href="archivo.html">Ver Archivo (Colección)</a>
-              <a class="btn btn--ghost" href="trueque.html">Ver Trueque</a>
-            </div>
-          </article>
-
-          <div class="grid grid-3">
-            <article class="card lift">
-              <h2 class="serif">Archivo</h2>
-              <p class="muted">
-                Catálogo de plantas que tienes. Útil para planear futuras madres y esquejes.
-              </p>
-            </article>
-
-            <article class="card lift">
-              <h2 class="serif">Trueque</h2>
-              <p class="muted">
-                Inventario transaccional: “corte fresco” o “enraizado”, disponible / no disponible.
-              </p>
-            </article>
-
-            <article class="card lift">
-              <h2 class="serif">Minimalista</h2>
-              <p class="muted">
-                Estados simples: <strong>Juvenil</strong>, <strong>Madre</strong>, <strong>Colección</strong>.
-              </p>
-            </article>
+          <span class="badge">UI 2 • Fotos reales • Editorial complementario</span>
+          <h1 class="serif">Archivo vivo + trueque de esquejes.</h1>
+          <p class="lead">
+            Ahora el sitio ya convive con fotos verdes (vertical tipo Instagram).
+            La UI queda neutra para que las plantas sean la protagonista.
+          </p>
+          <div class="cta-row">
+            <a class="btn" href="archivo.html">Entrar al Archivo</a>
+            <a class="btn btn--ghost" href="trueque.html">Ver Trueque</a>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section id="contacto" class="section">
-      <div class="container">
-        <article class="card lift">
-          <h2 class="serif">Contacto</h2>
-          <p class="muted">
-            (Placeholder) Más adelante: Instagram / WhatsApp / formulario.
-          </p>
-          <div class="hr"></div>
-          <p class="small muted">
-            WhatsApp (ficticio por ahora): +56 9 5555 5555
-          </p>
-        </article>
+        <div class="hr"></div>
+
+        <section class="section grid grid-3" aria-label="Entradas">
+          <article class="card lift">
+            <h2 class="serif">Archivo</h2>
+            <p class="muted">Fichas simples por familia. Buscador + chips sticky.</p>
+            <div class="hr"></div>
+            <a class="btn btn--small" href="archivo.html">Abrir Archivo</a>
+          </article>
+
+          <article class="card lift">
+            <h2 class="serif">Trueque</h2>
+            <p class="muted">Disponibles ahora: Corte fresco / Enraizado. Botón WhatsApp prellenado.</p>
+            <div class="hr"></div>
+            <a class="btn btn--small" href="trueque.html">Abrir Trueque</a>
+          </article>
+
+          <article class="card lift" id="estado">
+            <h2 class="serif">Estado</h2>
+            <p class="muted">Borrador público: portafolio + comunidad (no venta por ahora).</p>
+            <div class="hr"></div>
+            <p class="small muted">UI 2: fotos 4:5 + paleta neutra.</p>
+          </article>
+        </section>
+
+        <section class="section" id="contacto">
+          <article class="card lift">
+            <h2 class="serif">Contacto</h2>
+            <p class="muted">Placeholder. Luego conectamos canales reales.</p>
+            <div class="hr"></div>
+            <div class="cta-row">
+              <a class="btn btn--small" href="https://wa.me/56955555555?text=Hola%21%20Vengo%20desde%20Plantas%20Mori."
+                 target="_blank" rel="noopener noreferrer">WhatsApp (ficticio)</a>
+              <a class="btn btn--small btn--ghost" href="https://www.instagram.com/plantasmori?igsh=MXFtMHpsMjE5ZmVkag=="
+                 target="_blank" rel="noopener noreferrer">Instagram</a>
+              <a class="btn btn--small btn--ghost" href="#" onclick="alert('Luego: correo'); return false;">Correo</a>
+            </div>
+          </article>
+        </section>
       </div>
     </section>
   </main>
@@ -95,7 +92,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <span>© <span id="year"></span> Plantas Mori</span>
-      <span class="small">UI 3 • Inicio</span>
+      <span class="small">UI 2 • Mobile-first • Fotos 4:5 • <a href="https://www.instagram.com/plantasmori?igsh=MXFtMHpsMjE5ZmVkag==" target="_blank" rel="noopener noreferrer">Instagram</a></span>
     </div>
   </footer>
 

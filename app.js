@@ -1,265 +1,148 @@
 /* =========================
-   Plantas Mori — UI 3
-   Invariantes:
-   - Archivo oculta por defecto lo que está en Trueque
-   - Trueque muestra solo lo disponible/registrado para intercambio
-   - Placeholders visibles en Archivo cuando no hay foto
-   - Sticky de filtros: una sola barra bajo el header
+   UI 2 — Datos + fotos reales (assets/img)
    ========================= */
 
-const WHATSAPP_NUMBER = "56955555555"; // ficticio por ahora
+const DATA = {
+  archivo: [
+    {
+      id: "a1",
+      nombre: "Alocasia sp. Silver Dragon",
+      familia: "Alocasia",
+      img: "assets/img/alocasia-silver-dragon.jpeg",
+      tags: ["textura", "hoja densa"],
+      nota: "Alocasia compacta de hoja gruesa. (Ficha breve, borrador.)"
+    },
+    {
+      id: "a2",
+      nombre: "Epipremnum sp. Manjula",
+      familia: "Epipremnum",
+      img: "assets/img/epipremnum-manjula.jpeg",
+      tags: ["variegada", "interior"],
+      nota: "Variegación crema/verde, crecimiento noble y muy decorativo."
+    },
+    {
+      id: "a3",
+      nombre: "Philodendron sp. Brasil (Cordatum)",
+      familia: "Philodendron",
+      img: "assets/img/cordatum-brasil.jpeg",
+      tags: ["juvenil", "rápido"],
+      nota: "Cordatum ‘Brasil’ (juvenil). Ideal para enraizar y formar matas colgantes."
+    },
+    {
+      id: "a4",
+      nombre: "Monstera sp. Siltepecana",
+      familia: "Monstera",
+      img: "assets/img/monstera-siltepecana.jpeg",
+      tags: ["textura", "trepadora"],
+      nota: "Juvenil con patrón plateado; cambia mucho al madurar."
+    },
+    {
+      id: "a5",
+      nombre: "Philodendron sp. Glorious",
+      familia: "Philodendron",
+      img: "assets/img/philodendron-glorious.jpeg",
+      tags: ["velloso", "colección"],
+      nota: "Hoja aterciopelada, nervadura marcada. (Borrador de ficha.)"
+    },
+    {
+      id: "a6",
+      nombre: "Syngonium sp. Holly",
+      familia: "Syngonium",
+      img: "assets/img/syngonium-holly.jpeg",
+      tags: ["variegada", "compacta"],
+      nota: "Syngonium de variegación suave, formato compacto."
+    }
+  ],
 
-const FAMILY_ORDER = [
-  "Alocasia",
-  "Anthurium",
-  "Philodendron",
-  "Monstera",
-  "Epipremnum",
-  "Scindapsus",
-  "Syngonium",
-  "Otros"
-];
-
-/* =========================
-   Catálogo maestro (Archivo)
-   - Las 6 con foto real
-   - El resto placeholders (con rutas futuras)
-   ========================= */
-
-const CATALOGO = [
-  // === Con foto real (y además están en Trueque) ===
-  {
-    id: "p1",
-    nombre: "Alocasia sp. Silver Dragon",
-    familia: "Alocasia",
-    img: "assets/img/alocasia-silver-dragon.jpeg",
-    tags: ["juvenil"],
-    isTrueque: true,
-    trueque: { disponible: true, condicion: "Enraizado", tags: ["1 hoja"], meta: "" }
-  },
-  {
-    id: "p2",
-    nombre: "Epipremnum sp. Manjula",
-    familia: "Epipremnum",
-    img: "assets/img/epipremnum-manjula.jpeg",
-    tags: ["juvenil", "variegada"],
-    isTrueque: true,
-    trueque: { disponible: true, condicion: "Enraizado", tags: ["variegada"], meta: "" }
-  },
-  {
-    id: "p3",
-    nombre: "Cordatum sp. Brasil",
-    familia: "Philodendron",
-    img: "assets/img/cordatum-brasil.jpeg",
-    tags: ["juvenil", "cordatum"],
-    isTrueque: true,
-    trueque: { disponible: true, condicion: "Corte fresco", tags: ["2 hojas"], meta: "" }
-  },
-  {
-    id: "p4",
-    nombre: "Monstera sp. Siltepecana",
-    familia: "Monstera",
-    img: "assets/img/monstera-siltepecana.jpeg",
-    tags: ["juvenil"],
-    isTrueque: true,
-    trueque: { disponible: true, condicion: "Enraizado", tags: ["juvenil"], meta: "" }
-  },
-  {
-    id: "p5",
-    nombre: "Philodendron sp. Glorious",
-    familia: "Philodendron",
-    img: "assets/img/philodendron-glorious.jpeg",
-    tags: ["juvenil"],
-    isTrueque: true,
-    trueque: { disponible: true, condicion: "Enraizado", tags: ["hoja grande"], meta: "" }
-  },
-  {
-    id: "p6",
-    nombre: "Syngonium sp. Holly",
-    familia: "Syngonium",
-    img: "assets/img/syngonium-holly.jpeg",
-    tags: ["juvenil", "variegada"],
-    isTrueque: true,
-    trueque: { disponible: true, condicion: "Enraizado", tags: ["variegada"], meta: "" }
-  },
-
-  // === Placeholders (sin foto aún) ===
-  { id: "p7",  nombre: "Philodendron billietiae", familia: "Philodendron", img: "assets/img/philodendron-billietiae.jpeg", tags: ["juvenil"], isTrueque: false },
-  { id: "p8",  nombre: "Monstera deliciosa", familia: "Monstera", img: "assets/img/monstera-deliciosa.jpeg", tags: ["juvenil"], isTrueque: false },
-
-  { id: "p9",  nombre: "Syngonium Red Arrow", familia: "Syngonium", img: "assets/img/syngonium-red-arrow.jpeg", tags: ["juvenil"], isTrueque: false },
-  { id: "p10", nombre: "Syngonium Confetti", familia: "Syngonium", img: "assets/img/syngonium-confetti.jpeg", tags: ["juvenil"], isTrueque: false },
-  { id: "p11", nombre: "Syngonium Gold Allusion", familia: "Syngonium", img: "assets/img/syngonium-gold-allusion.jpeg", tags: ["juvenil"], isTrueque: false },
-
-  { id: "p12", nombre: "Philodendron gloriosum", familia: "Philodendron", img: "assets/img/philodendron-gloriosum.jpeg", tags: ["juvenil"], isTrueque: false },
-  { id: "p13", nombre: "Philodendron McDowell", familia: "Philodendron", img: "assets/img/philodendron-mcdowell.jpeg", tags: ["juvenil"], isTrueque: false },
-
-  { id: "p14", nombre: "Epipremnum Marble Queen", familia: "Epipremnum", img: "assets/img/epipremnum-marble-queen.jpeg", tags: ["juvenil", "variegada"], isTrueque: false },
-  { id: "p15", nombre: "Epipremnum Golden", familia: "Epipremnum", img: "assets/img/epipremnum-golden.jpeg", tags: ["juvenil"], isTrueque: false },
-
-  { id: "p16", nombre: "Scindapsus pictus Argyraeus", familia: "Scindapsus", img: "assets/img/scindapsus-pictus-argyraeus.jpeg", tags: ["juvenil"], isTrueque: false },
-  { id: "p17", nombre: "Scindapsus pictus Exotica", familia: "Scindapsus", img: "assets/img/scindapsus-pictus-exotica.jpeg", tags: ["juvenil"], isTrueque: false },
-
-  { id: "p18", nombre: "Scindapsus Jade", familia: "Scindapsus", img: "assets/img/scindapsus-jade.jpeg", tags: ["juvenil"], isTrueque: false },
-
-  { id: "p19", nombre: "Alocasia amazonica", familia: "Alocasia", img: "assets/img/alocasia-amazonica.jpeg", tags: ["juvenil"], isTrueque: false },
-  { id: "p20", nombre: "Alocasia Dragons Breath", familia: "Alocasia", img: "assets/img/alocasia-dragons-breath.jpeg", tags: ["juvenil"], isTrueque: false }
-];
-
-// Derivados
-const ARCHIVO_ITEMS = [...CATALOGO];
-const TRUEQUE_ITEMS = CATALOGO
-  .filter(x => x.isTrueque && x.trueque)
-  .map(x => ({
-    id: x.id,
-    nombre: x.nombre,
-    familia: x.familia,
-    img: x.img,
-    disponible: x.trueque.disponible,
-    condicion: x.trueque.condicion,
-    tags: x.trueque.tags || [],
-    meta: x.trueque.meta || ""
-  }));
+  trueque: [
+    {
+      id: "t1",
+      nombre: "Alocasia sp. Silver Dragon",
+      familia: "Alocasia",
+      img: "assets/img/alocasia-silver-dragon.jpeg",
+      disponible: true,
+      condicion: "Enraizado",
+      hojas: 1
+    },
+    {
+      id: "t2",
+      nombre: "Epipremnum sp. Manjula",
+      familia: "Epipremnum",
+      img: "assets/img/epipremnum-manjula.jpeg",
+      disponible: true,
+      condicion: "Enraizado",
+      hojas: 3
+    },
+    {
+      id: "t3",
+      nombre: "Philodendron sp. Brasil (Cordatum)",
+      familia: "Philodendron",
+      img: "assets/img/cordatum-brasil.jpeg",
+      disponible: true,
+      condicion: "Corte fresco",
+      hojas: 2
+    },
+    {
+      id: "t4",
+      nombre: "Monstera sp. Siltepecana",
+      familia: "Monstera",
+      img: "assets/img/monstera-siltepecana.jpeg",
+      disponible: true,
+      condicion: "Enraizado",
+      hojas: 3
+    },
+    {
+      id: "t5",
+      nombre: "Philodendron sp. Glorious",
+      familia: "Philodendron",
+      img: "assets/img/philodendron-glorious.jpeg",
+      disponible: true,
+      condicion: "Enraizado",
+      hojas: 2
+    },
+    {
+      id: "t6",
+      nombre: "Syngonium sp. Holly",
+      familia: "Syngonium",
+      img: "assets/img/syngonium-holly.jpeg",
+      disponible: true,
+      condicion: "Enraizado",
+      hojas: 3
+    }
+  ]
+};
 
 /* =========================
    Helpers
    ========================= */
-function qs(sel, root=document){ return root.querySelector(sel); }
-function qsa(sel, root=document){ return [...root.querySelectorAll(sel)]; }
+const qs = (sel, el=document) => el.querySelector(sel);
+const qsa = (sel, el=document) => Array.from(el.querySelectorAll(sel));
 
-function norm(s){
-  return String(s || "")
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim();
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-function setYear(){
-  const el = qs("#year");
-  if(el) el.textContent = String(new Date().getFullYear());
-}
-
+/* =========================
+   UI 3: medir alto real del header para sticky (evita "huecos")
+   ========================= */
 function setHeaderHeightVar(){
   const header = qs(".header");
   if(!header) return;
-
-  const apply = () => {
-    const h = header.offsetHeight || 60;
-    document.documentElement.style.setProperty("--header-h", `${h}px`);
-  };
-
-  apply();
-  window.addEventListener("resize", apply, { passive: true });
+  const h = Math.round(header.getBoundingClientRect().height);
+  document.documentElement.style.setProperty("--headerH", `${h}px`);
 }
 
-function buildActiveFiltersText(parts){
-  const clean = parts.filter(Boolean);
-  return clean.length ? `Filtros: ${clean.join(" • ")}` : "";
-}
-
-function buildFamilyOptions(items){
-  const present = new Set(items.map(x => x.familia).filter(Boolean));
-  const ordered = FAMILY_ORDER.filter(f => present.has(f));
-  return [{label:"Todas", value:"__all"}].concat(ordered.map(f => ({label:f, value:f})));
-}
-
-function matchesQuery(item, query){
-  if(!query) return true;
-  const q = norm(query);
-
-  const synonyms = [
-    ["ph.", "philodendron"],
-    ["sc.", "scindapsus"],
-    ["mq", "marble queen"]
-  ];
-
-  let expanded = q;
-  for(const [a,b] of synonyms){
-    if(expanded.includes(a)) expanded = expanded.replaceAll(a, b);
-  }
-
-  const hay = [
-    item.nombre,
-    item.familia,
-    ...(item.tags || []),
-    item.trueque?.condicion,
-    item.trueque?.meta,
-    item.condicion,
-    item.meta
-  ].filter(Boolean).map(norm).join(" ");
-
-  return hay.includes(expanded);
-}
-
-function renderChips(container, options, activeValue, onClick){
-  container.innerHTML = "";
-  options.forEach(opt => {
-    const b = document.createElement("button");
-    b.className = "chip";
-    b.type = "button";
-    b.textContent = opt.label;
-    b.setAttribute("aria-pressed", String(opt.value === activeValue));
-    b.addEventListener("click", () => onClick(opt.value));
-    container.appendChild(b);
-  });
-}
-
-function applyStaggerFade(listEl){
-  const items = qsa(".item", listEl);
-  items.forEach((el, i) => {
-    el.classList.add("fade-in");
-    el.style.animationDelay = `${Math.min(i, 10) * 14}ms`;
-  });
-}
-
-function waLink(text){
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-}
-
-function buildTruequeMessage(item){
-  const disponibilidad = item.disponible ? "Disponible" : "No disponible";
-  const condicion = item.disponible ? ` • ${item.condicion}` : "";
-
-  return [
-    "Hola! Vengo desde Plantas Mori.",
-    `Me interesa este esqueje: ${item.nombre} (${item.familia})`,
-    `Estado: ${disponibilidad}${condicion}`,
-    "",
-    "¿Podemos coordinar un trueque? 🙂"
-  ].join("\n");
-}
-
-/* media con fallback */
-function buildMedia(imgSrc, altText){
-  const wrap = document.createElement("div");
-  wrap.className = "item__media";
-
-  const ph = document.createElement("div");
-  ph.className = "ph";
-
-  // si no hay src, o si es placeholder aún no subido, el onerror lo convertirá
-  const im = document.createElement("img");
-  im.src = imgSrc || "";
-  im.alt = altText || "";
-  im.loading = "lazy";
-  im.decoding = "async";
-
-  const fallback = () => {
-    try{ im.removeAttribute("src"); }catch(_){}
-    im.style.display = "none";
-    ph.classList.add("ph--fallback");
-    ph.setAttribute("data-fallback", "Sin imagen");
-    if(altText) ph.setAttribute("title", altText);
-  };
-
-  if(!imgSrc) fallback();
-
-  im.addEventListener("error", fallback, { once: true });
-
-  ph.appendChild(im);
-  wrap.appendChild(ph);
-  return wrap;
+/* =========================
+   Footer año
+   ========================= */
+function setYear(){
+  const y = qs("#year");
+  if(y) y.textContent = String(new Date().getFullYear());
 }
 
 /* =========================
@@ -284,26 +167,95 @@ function initNav(){
 }
 
 /* =========================
-   Sticky collapse (por página)
+   Filtros colapsables
    ========================= */
-function initFiltersToggles(){
-  const blocks = qsa(".sticky-controls");
-  if(!blocks.length) return;
+function initFiltersToggle(){
+  const stickyControls = qs(".sticky-controls");
+  const toggles = qsa(".filters-toggle");
+  if(!stickyControls || toggles.length === 0) return;
 
-  blocks.forEach(block => {
-    const toggle = qs(".filters-toggle", block);
-    if(!toggle) return;
-
-    // estado inicial expandido
-    block.classList.remove("is-collapsed");
-    toggle.setAttribute("aria-expanded", "true");
-
-    toggle.addEventListener("click", (e) => {
+  toggles.forEach(t => {
+    t.addEventListener("click", (e) => {
       e.preventDefault();
-      const collapsed = block.classList.toggle("is-collapsed");
-      toggle.setAttribute("aria-expanded", String(!collapsed));
+      const isCollapsed = stickyControls.classList.toggle("is-collapsed");
+      toggles.forEach(tb => tb.setAttribute("aria-expanded", String(!isCollapsed)));
     });
   });
+}
+
+/* =========================
+   Render chips
+   ========================= */
+function renderChips(container, options, activeValue, onClick){
+  container.innerHTML = "";
+  options.forEach(opt => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.type = "button";
+    b.textContent = opt.label;
+    b.setAttribute("aria-pressed", String(opt.value === activeValue));
+    b.addEventListener("click", () => onClick(opt.value));
+    container.appendChild(b);
+  });
+}
+
+function applyStaggerFade(listEl){
+  const items = qsa(".item", listEl);
+  items.forEach((el, i) => {
+    el.classList.add("fade-in");
+    el.style.animationDelay = `${Math.min(i, 10) * 14}ms`;
+  });
+}
+
+/* =========================
+   UI 2: helper para media (foto)
+   ========================= */
+function renderMedia(imgSrc, alt){
+  const media = document.createElement("div");
+  media.className = "media";
+
+  if(imgSrc){
+    const img = document.createElement("img");
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.alt = alt || "Foto";
+    img.src = imgSrc;
+    img.onerror = () => {
+      media.innerHTML = `<div class="fallback">🍃</div>`;
+    };
+    media.appendChild(img);
+  } else {
+    media.innerHTML = `<div class="fallback">🍃</div>`;
+  }
+
+  return media;
+}
+
+/* =========================
+   Query matching
+   ========================= */
+function matchesQuery(x, q){
+  if(!q) return true;
+  const hay = [
+    x.nombre,
+    x.familia,
+    ...(x.tags || []),
+    x.nota || "",
+    x.condicion || "",
+    x.disponible === false ? "no disponible" : "disponible"
+  ].join(" ").toLowerCase();
+  return hay.includes(q.toLowerCase().trim());
+}
+
+function buildFamilyOptions(items){
+  const fam = Array.from(new Set(items.map(i => i.familia))).sort((a,b) => a.localeCompare(b));
+  return [{ value:"__all", label:"Todas" }, ...fam.map(f => ({ value:f, label:f }))];
+}
+
+function buildActiveFiltersText(parts){
+  const on = parts.filter(Boolean);
+  if(on.length === 0) return "";
+  return `Filtros: ${on.join(" • ")}`;
 }
 
 /* =========================
@@ -321,19 +273,14 @@ function initArchivo(){
   const activeFilters = qs("#activeFilters", root);
   const list = qs("#list", root);
   const emptyState = qs("#emptyState", root);
-  const toggleTrueque = qs("#toggleTrueque", root);
 
-  const familiaOptions = buildFamilyOptions(ARCHIVO_ITEMS);
+  const familiaOptions = buildFamilyOptions(DATA.archivo);
 
-  let state = {
-    familia: "__all",
-    query: "",
-    showTrueque: false // IMPORTANT: oculto por defecto
-  };
+  let state = { familia: "__all", query: "" };
+  const defaults = { familia: "__all", query: "" };
 
   function render(){
-    const items = ARCHIVO_ITEMS
-      .filter(x => (state.showTrueque ? true : !x.isTrueque))
+    const items = DATA.archivo
       .filter(x => state.familia === "__all" ? true : x.familia === state.familia)
       .filter(x => matchesQuery(x, state.query));
 
@@ -341,108 +288,51 @@ function initArchivo(){
 
     const filterText = buildActiveFiltersText([
       state.query ? `búsqueda “${state.query}”` : "",
-      state.familia !== "__all" ? state.familia : "",
-      state.showTrueque ? "incluye Trueque" : ""
+      state.familia !== "__all" ? state.familia : ""
     ]);
     if(activeFilters) activeFilters.textContent = filterText;
 
     list.innerHTML = "";
     items.forEach(x => {
       const card = document.createElement("article");
-      card.className = "card item lift";
+      card.className = "card lift item";
 
-      card.appendChild(buildMedia(x.img, x.nombre));
+      const media = renderMedia(x.img, x.nombre);
+      card.appendChild(media);
 
       const body = document.createElement("div");
       body.className = "item__body";
 
-      const titleRow = document.createElement("div");
-      titleRow.className = "item__title";
-
-      const h3 = document.createElement("h3");
-      h3.className = "serif";
-      h3.textContent = x.nombre;
-
-      const fam = document.createElement("span");
-      fam.className = "pill pill--muted";
-      fam.textContent = x.familia;
-
-      titleRow.appendChild(h3);
-      titleRow.appendChild(fam);
-
-      const tags = document.createElement("div");
-      tags.className = "tags";
-
-      // Tag discreto si es parte de trueque (solo cuando se muestra)
-      if(x.isTrueque && state.showTrueque){
-        const p = document.createElement("span");
-        p.className = "pill pill--wine";
-        p.textContent = "Trueque";
-        tags.appendChild(p);
-      }
-
-      (x.tags || []).slice(0,3).forEach(t => {
-        const p = document.createElement("span");
-        p.className = "pill";
-        p.textContent = t;
-        tags.appendChild(p);
-      });
-
-      const meta = document.createElement("div");
-      meta.className = "item__meta";
-      meta.textContent = "Ficha breve (borrador).";
-
-      const actions = document.createElement("div");
-      actions.className = "item__actions";
-
-      const btn = document.createElement("a");
-      btn.className = "btn btn--small btn--ghost";
-      btn.href = "#";
-      btn.textContent = "Ver ficha (placeholder)";
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        alert("Más adelante: ficha por especie. Por ahora es borrador.");
-      });
-
-      actions.appendChild(btn);
-
-      body.appendChild(titleRow);
-      body.appendChild(tags);
-      body.appendChild(meta);
-      body.appendChild(actions);
-
+      body.innerHTML = `
+        <h2 class="serif item__title">${escapeHtml(x.nombre)}</h2>
+        <div class="item__meta">
+          <span class="pill">${escapeHtml(x.familia)}</span>
+        </div>
+        <div class="pills">
+          ${(x.tags || []).slice(0,3).map(t => `<span class="pill">${escapeHtml(t)}</span>`).join("")}
+        </div>
+        <p class="tagline">${escapeHtml(x.nota || "")}</p>
+      `;
       card.appendChild(body);
       list.appendChild(card);
     });
 
-    renderChips(chipsFamilia, familiaOptions, state.familia, (v) => {
-      state.familia = v;
-      render();
-    });
-
-    if(emptyState) emptyState.hidden = items.length !== 0;
-    applyStaggerFade(list);
+    emptyState.hidden = items.length !== 0;
+    if(items.length) applyStaggerFade(list);
   }
 
   function clearAll(){
-    state.familia = "__all";
-    state.query = "";
-    state.showTrueque = false;
+    state = { ...defaults };
     if(search) search.value = "";
-    if(toggleTrueque) toggleTrueque.checked = false;
+    renderChips(chipsFamilia, familiaOptions, state.familia, (v) => { state.familia = v; render(); });
     render();
   }
 
+  renderChips(chipsFamilia, familiaOptions, state.familia, (v) => { state.familia = v; render(); });
+
   if(search){
-    search.addEventListener("input", (e) => {
-      state.query = e.target.value;
-      render();
-    });
-  }
-  if(toggleTrueque){
-    toggleTrueque.checked = false; // por defecto
-    toggleTrueque.addEventListener("change", () => {
-      state.showTrueque = toggleTrueque.checked;
+    search.addEventListener("input", () => {
+      state.query = search.value;
       render();
     });
   }
@@ -470,44 +360,42 @@ function initTrueque(){
   const list = qs("#list", root);
   const emptyState = qs("#emptyState", root);
 
-  const familiaOptions = buildFamilyOptions(TRUEQUE_ITEMS);
+  const familiaOptions = buildFamilyOptions(DATA.trueque);
 
   const disponOptions = [
-    {label:"Disponible", value:"disponible"},
-    {label:"No disponible", value:"nodisponible"},
-    {label:"Todos", value:"todos"},
+    { value:"__all", label:"Todos" },
+    { value:"disponible", label:"Disponible" },
+    { value:"no", label:"No disponible" }
   ];
 
   const condOptions = [
-    {label:"Cualquiera", value:"__any"},
-    {label:"Corte fresco", value:"Corte fresco"},
-    {label:"Enraizado", value:"Enraizado"},
+    { value:"__all", label:"Todos" },
+    { value:"Corte fresco", label:"Corte fresco" },
+    { value:"Enraizado", label:"Enraizado" }
   ];
 
-  let state = { dispon: "disponible", condicion: "__any", familia: "__all", query: "" };
+  let state = { dispon: "__all", cond: "__all", familia: "__all", query: "" };
   const defaults = { ...state };
 
   function render(){
-    const items = TRUEQUE_ITEMS
+    const items = DATA.trueque
       .filter(x => {
-        if(state.dispon === "todos") return true;
-        if(state.dispon === "disponible") return x.disponible === true;
-        if(state.dispon === "nodisponible") return x.disponible === false;
-        return true;
+        if(state.dispon === "__all") return true;
+        return state.dispon === "disponible" ? x.disponible === true : x.disponible === false;
+      })
+      .filter(x => {
+        if(state.cond === "__all") return true;
+        return x.disponible === true && x.condicion === state.cond;
       })
       .filter(x => state.familia === "__all" ? true : x.familia === state.familia)
-      .filter(x => {
-        if(state.condicion === "__any") return true;
-        return x.disponible === true && x.condicion === state.condicion;
-      })
       .filter(x => matchesQuery(x, state.query));
 
     resultCount.textContent = `${items.length} resultado(s)`;
 
     const filterText = buildActiveFiltersText([
       state.query ? `búsqueda “${state.query}”` : "",
-      state.dispon === "disponible" ? "Disponible" : (state.dispon === "nodisponible" ? "No disponible" : "Todos"),
-      state.dispon !== "nodisponible" && state.condicion !== "__any" ? state.condicion : "",
+      state.dispon !== "__all" ? (state.dispon === "disponible" ? "Disponible" : "No disponible") : "",
+      state.cond !== "__all" ? state.cond : "",
       state.familia !== "__all" ? state.familia : ""
     ]);
     if(activeFilters) activeFilters.textContent = filterText;
@@ -515,104 +403,56 @@ function initTrueque(){
     list.innerHTML = "";
     items.forEach(x => {
       const card = document.createElement("article");
-      card.className = "card item lift";
+      card.className = "card lift item";
 
-      card.appendChild(buildMedia(x.img, x.nombre));
+      const media = renderMedia(x.img, x.nombre);
+      card.appendChild(media);
 
       const body = document.createElement("div");
       body.className = "item__body";
 
-      const titleRow = document.createElement("div");
-      titleRow.className = "item__title";
+      const pills = [
+        `<span class="pill">${x.disponible ? "Disponible" : "No disponible"}</span>`,
+        x.disponible ? `<span class="pill pill--accent">${escapeHtml(x.condicion || "")}</span>` : "",
+        x.hojas ? `<span class="pill">${escapeHtml(String(x.hojas))} hoja(s)</span>` : ""
+      ].filter(Boolean).join("");
 
-      const h3 = document.createElement("h3");
-      h3.className = "serif";
-      h3.textContent = x.nombre;
+      const msg = encodeURIComponent(`Hola! Me interesa proponer trueque por: ${x.nombre}.`);
+      const wa = `https://wa.me/56955555555?text=${msg}`;
 
-      const fam = document.createElement("span");
-      fam.className = "pill pill--muted";
-      fam.textContent = x.familia;
-
-      titleRow.appendChild(h3);
-      titleRow.appendChild(fam);
-
-      const tags = document.createElement("div");
-      tags.className = "tags";
-
-      const st = document.createElement("span");
-      st.className = "pill pill--wine";
-      st.textContent = x.disponible ? "Disponible" : "No disponible";
-      tags.appendChild(st);
-
-      if(x.disponible){
-        const cd = document.createElement("span");
-        cd.className = "pill";
-        cd.textContent = x.condicion;
-        tags.appendChild(cd);
-      }
-
-      (x.tags || []).slice(0,2).forEach(t => {
-        const p = document.createElement("span");
-        p.className = "pill";
-        p.textContent = t;
-        tags.appendChild(p);
-      });
-
-      const actions = document.createElement("div");
-      actions.className = "item__actions";
-
-      const btn = document.createElement("a");
-      btn.href = "#";
-      btn.className = "btn btn--small";
-      btn.textContent = x.disponible ? "Proponer trueque (WhatsApp)" : "Consultar igual (WhatsApp)";
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const msg = buildTruequeMessage(x);
-        window.open(waLink(msg), "_blank", "noopener,noreferrer");
-      });
-
-      if(!x.disponible) btn.classList.add("btn--ghost");
-
-      actions.appendChild(btn);
-
-      body.appendChild(titleRow);
-      body.appendChild(tags);
-      body.appendChild(actions);
+      body.innerHTML = `
+        <h2 class="serif item__title">${escapeHtml(x.nombre)}</h2>
+        <div class="item__meta">
+          <span class="pill">${escapeHtml(x.familia)}</span>
+        </div>
+        <div class="pills">${pills}</div>
+        <a class="btn" href="${wa}" target="_blank" rel="noopener noreferrer">Proponer trueque (WhatsApp)</a>
+      `;
 
       card.appendChild(body);
       list.appendChild(card);
     });
 
-    renderChips(chipsDispon, disponOptions, state.dispon, (v) => {
-      state.dispon = v;
-      if(state.dispon === "nodisponible") state.condicion = "__any";
-      render();
-    });
-
-    renderChips(chipsCond, condOptions, state.condicion, (v) => {
-      if(state.dispon === "nodisponible") return;
-      state.condicion = v;
-      render();
-    });
-
-    renderChips(chipsFamilia, familiaOptions, state.familia, (v) => {
-      state.familia = v;
-      render();
-    });
-
-    if(emptyState) emptyState.hidden = items.length !== 0;
-    applyStaggerFade(list);
+    emptyState.hidden = items.length !== 0;
+    if(items.length) applyStaggerFade(list);
   }
 
   function clearAll(){
     state = { ...defaults };
     if(search) search.value = "";
+    renderChips(chipsDispon, disponOptions, state.dispon, (v)=>{ state.dispon=v; render(); });
+    renderChips(chipsCond, condOptions, state.cond, (v)=>{ state.cond=v; render(); });
+    renderChips(chipsFamilia, familiaOptions, state.familia, (v)=>{ state.familia=v; render(); });
     render();
   }
 
+  renderChips(chipsDispon, disponOptions, state.dispon, (v)=>{ state.dispon=v; render(); });
+  renderChips(chipsCond, condOptions, state.cond, (v)=>{ state.cond=v; render(); });
+  renderChips(chipsFamilia, familiaOptions, state.familia, (v)=>{ state.familia=v; render(); });
+
   if(search){
-    search.addEventListener("input", (e) => {
-      state.query = e.target.value;
+    search.addEventListener("input", () => {
+      state.query = search.value;
       render();
     });
   }
@@ -623,7 +463,7 @@ function initTrueque(){
 }
 
 /* =========================
-   Fuentes + Init global
+   Fonts (Fraunces + Inter)
    ========================= */
 function loadFonts(){
   const link1 = document.createElement("link");
@@ -644,11 +484,15 @@ function loadFonts(){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  setHeaderHeightVar();
   loadFonts();
   setYear();
-  setHeaderHeightVar();
   initNav();
-  initFiltersToggles();
+  initFiltersToggle();
   initArchivo();
   initTrueque();
+});
+
+window.addEventListener("resize", () => {
+  setHeaderHeightVar();
 });
