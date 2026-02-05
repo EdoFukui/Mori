@@ -1,12 +1,18 @@
 const DATA = {
+  // =========================
+  // ARCHIVO (colección completa)
+  // - esTrueque:true => se oculta por defecto, se ve solo con el switch
+  // - img:"" => usa fallback (🍃)
+  // =========================
   archivo: [
+    // --- TRUEQUE (con foto) ---
     {
       id: "a1",
       nombre: "Alocasia sp. Silver Dragon",
       familia: "Alocasia",
       img: "assets/img/alocasia-silver-dragon.jpeg",
-      tags: ["textura", "hoja densa"],
-      nota: "Alocasia compacta de hoja gruesa. (Ficha breve, borrador.)",
+      tags: ["Juvenil"],
+      nota: "Borrador de ficha.",
       esTrueque: true
     },
     {
@@ -14,8 +20,8 @@ const DATA = {
       nombre: "Epipremnum sp. Manjula",
       familia: "Epipremnum",
       img: "assets/img/epipremnum-manjula.jpeg",
-      tags: ["variegada", "interior"],
-      nota: "Variegación crema/verde, crecimiento noble y muy decorativo.",
+      tags: ["Juvenil"],
+      nota: "Borrador de ficha.",
       esTrueque: true
     },
     {
@@ -23,8 +29,8 @@ const DATA = {
       nombre: "Philodendron sp. Brasil (Cordatum)",
       familia: "Philodendron",
       img: "assets/img/cordatum-brasil.jpeg",
-      tags: ["juvenil", "rápido"],
-      nota: "Cordatum ‘Brasil’ (juvenil). Ideal para enraizar y formar matas colgantes.",
+      tags: ["Juvenil"],
+      nota: "Borrador de ficha.",
       esTrueque: true
     },
     {
@@ -32,8 +38,8 @@ const DATA = {
       nombre: "Monstera sp. Siltepecana",
       familia: "Monstera",
       img: "assets/img/monstera-siltepecana.jpeg",
-      tags: ["textura", "trepadora"],
-      nota: "Juvenil con patrón plateado; cambia mucho al madurar.",
+      tags: ["Juvenil"],
+      nota: "Borrador de ficha.",
       esTrueque: true
     },
     {
@@ -41,8 +47,8 @@ const DATA = {
       nombre: "Philodendron sp. Glorious",
       familia: "Philodendron",
       img: "assets/img/philodendron-glorious.jpeg",
-      tags: ["velloso", "colección"],
-      nota: "Hoja aterciopelada, nervadura marcada. (Borrador de ficha.)",
+      tags: ["Juvenil", "Colección"],
+      nota: "Borrador de ficha.",
       esTrueque: true
     },
     {
@@ -50,67 +56,42 @@ const DATA = {
       nombre: "Syngonium sp. Holly",
       familia: "Syngonium",
       img: "assets/img/syngonium-holly.jpeg",
-      tags: ["variegada", "compacta"],
-      nota: "Syngonium de variegación suave, formato compacto.",
+      tags: ["Juvenil"],
+      nota: "Borrador de ficha.",
       esTrueque: true
-    }
+    },
+
+    // --- RESTO ARCHIVO (placeholders por ahora) ---
+    { id:"a7",  nombre:"Philodendron Billetiae", familia:"Philodendron", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a8",  nombre:"Monstera Deliciosa", familia:"Monstera", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a9",  nombre:"Syngonium Red Arrow", familia:"Syngonium", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a10", nombre:"Syngonium Confetti", familia:"Syngonium", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a11", nombre:"Philodendron Gloriosum", familia:"Philodendron", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a12", nombre:"Philodendron McDowell", familia:"Philodendron", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+
+    { id:"a13", nombre:"Epipremnum Marble Queen", familia:"Epipremnum", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a14", nombre:"Epipremnum Golden", familia:"Epipremnum", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+
+    { id:"a15", nombre:"Syngonium Gold Allusion", familia:"Syngonium", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+
+    { id:"a16", nombre:"Scindapsus Jade", familia:"Scindapsus", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a17", nombre:"Scindapsus Pictus Argyraeus", familia:"Scindapsus", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a18", nombre:"Scindapsus Pictus Exotica", familia:"Scindapsus", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+
+    { id:"a19", nombre:"Alocasia Amazonica", familia:"Alocasia", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false },
+    { id:"a20", nombre:"Alocasia Dragon's Breath", familia:"Alocasia", img:"", tags:["Juvenil"], nota:"(Sin foto aún)", esTrueque:false }
   ],
 
+  // =========================
+  // TRUEQUE (solo transaccional)
+  // =========================
   trueque: [
-    {
-      id: "t1",
-      nombre: "Alocasia sp. Silver Dragon",
-      familia: "Alocasia",
-      img: "assets/img/alocasia-silver-dragon.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      hojas: 1
-    },
-    {
-      id: "t2",
-      nombre: "Epipremnum sp. Manjula",
-      familia: "Epipremnum",
-      img: "assets/img/epipremnum-manjula.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      hojas: 3
-    },
-    {
-      id: "t3",
-      nombre: "Philodendron sp. Brasil (Cordatum)",
-      familia: "Philodendron",
-      img: "assets/img/cordatum-brasil.jpeg",
-      disponible: true,
-      condicion: "Corte fresco",
-      hojas: 2
-    },
-    {
-      id: "t4",
-      nombre: "Monstera sp. Siltepecana",
-      familia: "Monstera",
-      img: "assets/img/monstera-siltepecana.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      hojas: 3
-    },
-    {
-      id: "t5",
-      nombre: "Philodendron sp. Glorious",
-      familia: "Philodendron",
-      img: "assets/img/philodendron-glorious.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      hojas: 2
-    },
-    {
-      id: "t6",
-      nombre: "Syngonium sp. Holly",
-      familia: "Syngonium",
-      img: "assets/img/syngonium-holly.jpeg",
-      disponible: true,
-      condicion: "Enraizado",
-      hojas: 3
-    }
+    { id:"t1", nombre:"Alocasia sp. Silver Dragon", familia:"Alocasia", img:"assets/img/alocasia-silver-dragon.jpeg", disponible:true, condicion:"Enraizado", hojas:1 },
+    { id:"t2", nombre:"Epipremnum sp. Manjula", familia:"Epipremnum", img:"assets/img/epipremnum-manjula.jpeg", disponible:true, condicion:"Enraizado", hojas:3 },
+    { id:"t3", nombre:"Philodendron sp. Brasil (Cordatum)", familia:"Philodendron", img:"assets/img/cordatum-brasil.jpeg", disponible:true, condicion:"Corte fresco", hojas:2 },
+    { id:"t4", nombre:"Monstera sp. Siltepecana", familia:"Monstera", img:"assets/img/monstera-siltepecana.jpeg", disponible:true, condicion:"Enraizado", hojas:3 },
+    { id:"t5", nombre:"Philodendron sp. Glorious", familia:"Philodendron", img:"assets/img/philodendron-glorious.jpeg", disponible:true, condicion:"Enraizado", hojas:2 },
+    { id:"t6", nombre:"Syngonium sp. Holly", familia:"Syngonium", img:"assets/img/syngonium-holly.jpeg", disponible:true, condicion:"Enraizado", hojas:3 }
   ]
 };
 
@@ -170,30 +151,6 @@ function initFiltersToggle(){
   });
 }
 
-function renderChips(container, options, activeValue, onClick){
-  container.innerHTML = "";
-  options.forEach(opt => {
-    const b = document.createElement("button");
-    b.className = "chip";
-    b.type = "button hookup";
-    b.textContent = opt.label;
-    b.setAttribute("aria-pressed", String(opt.value === activeValue));
-    b.addEventListener("click", () => onClick(opt.value));
-    container.appendChild(b);
-  });
-}
-
-function renderChipToggle(container, label, isOn, onToggle){
-  container.innerHTML = "";
-  const b = document.createElement("button");
-  b.className = "chip";
-  b.type = "button";
-  b.textContent = label;
-  b.setAttribute("aria-pressed", String(isOn));
-  b.addEventListener("click", () => onToggle(!isOn));
-  container.appendChild(b);
-}
-
 function matchesQuery(x, q){
   if(!q) return true;
   const hay = [
@@ -240,8 +197,21 @@ function renderMedia(imgSrc, alt){
   return media;
 }
 
+function renderChips(container, options, activeValue, onClick){
+  container.innerHTML = "";
+  options.forEach(opt => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.type = "button";
+    b.textContent = opt.label;
+    b.setAttribute("aria-pressed", String(opt.value === activeValue));
+    b.addEventListener("click", () => onClick(opt.value));
+    container.appendChild(b);
+  });
+}
+
 /* =========================
-   Archivo (con Trueque oculto por defecto)
+   Archivo (switch real + trueque oculto por defecto)
    ========================= */
 function initArchivo(){
   const root = qs("[data-page='archivo']");
@@ -251,7 +221,7 @@ function initArchivo(){
   const clearBtn = qs("#clearBtn", root);
   const emptyClearBtn = qs("#emptyClearBtn", root);
   const chipsFamilia = qs("#chipsFamilia", root);
-  const chipsTrueque = qs("#chipsTrueque", root);
+  const toggleTrueque = qs("#toggleTrueque", root);
   const resultCount = qs("#resultCount", root);
   const activeFilters = qs("#activeFilters", root);
   const list = qs("#list", root);
@@ -262,7 +232,7 @@ function initArchivo(){
   let state = {
     familia: "__all",
     query: "",
-    showTrueque: false // 👈 oculto por defecto
+    showTrueque: false // apagado por defecto
   };
 
   const defaults = { ...state };
@@ -278,7 +248,7 @@ function initArchivo(){
     const filterText = buildActiveFiltersText([
       state.query ? `búsqueda “${state.query}”` : "",
       state.familia !== "__all" ? state.familia : "",
-      state.showTrueque ? "Mostrando Trueque" : ""
+      state.showTrueque ? "Mostrando plantas de trueque" : ""
     ]);
     if(activeFilters) activeFilters.textContent = filterText;
 
@@ -293,21 +263,18 @@ function initArchivo(){
       const body = document.createElement("div");
       body.className = "item__body";
 
-      const pillsExtra = (x.esTrueque && state.showTrueque)
-        ? `<span class="pill pill--accent">Trueque</span>`
-        : "";
+      const pills = [
+        `<span class="pill">${escapeHtml(x.familia)}</span>`,
+        ...(x.tags || []).slice(0,2).map(t => `<span class="pill">${escapeHtml(t)}</span>`),
+        (x.esTrueque && state.showTrueque) ? `<span class="pill pill--accent">Trueque</span>` : ""
+      ].filter(Boolean).join("");
 
       body.innerHTML = `
         <h2 class="serif item__title">${escapeHtml(x.nombre)}</h2>
-        <div class="item__meta">
-          <span class="pill">${escapeHtml(x.familia)}</span>
-        </div>
-        <div class="pills">
-          ${pillsExtra}
-          ${(x.tags || []).slice(0,3).map(t => `<span class="pill">${escapeHtml(t)}</span>`).join("")}
-        </div>
+        <div class="pills">${pills}</div>
         <p class="tagline">${escapeHtml(x.nota || "")}</p>
       `;
+
       card.appendChild(body);
       list.appendChild(card);
     });
@@ -318,13 +285,28 @@ function initArchivo(){
   function clearAll(){
     state = { ...defaults };
     if(search) search.value = "";
-    renderChips(chipsFamilia, familiaOptions, state.familia, (v) => { state.familia = v; render(); });
-    renderChipToggle(chipsTrueque, "Mostrar Trueque", state.showTrueque, (v)=>{ state.showTrueque = v; render(); });
+    if(toggleTrueque) toggleTrueque.checked = state.showTrueque;
+
+    renderChips(chipsFamilia, familiaOptions, state.familia, (v) => {
+      state.familia = v;
+      render();
+    });
+
     render();
   }
 
-  renderChips(chipsFamilia, familiaOptions, state.familia, (v) => { state.familia = v; render(); });
-  renderChipToggle(chipsTrueque, "Mostrar Trueque", state.showTrueque, (v)=>{ state.showTrueque = v; render(); });
+  renderChips(chipsFamilia, familiaOptions, state.familia, (v) => {
+    state.familia = v;
+    render();
+  });
+
+  if(toggleTrueque){
+    toggleTrueque.checked = state.showTrueque;
+    toggleTrueque.addEventListener("change", () => {
+      state.showTrueque = toggleTrueque.checked;
+      render();
+    });
+  }
 
   if(search){
     search.addEventListener("input", () => {
@@ -418,9 +400,7 @@ function initTrueque(){
 
       body.innerHTML = `
         <h2 class="serif item__title">${escapeHtml(x.nombre)}</h2>
-        <div class="item__meta">
-          <span class="pill">${escapeHtml(x.familia)}</span>
-        </div>
+        <div class="pills"><span class="pill">${escapeHtml(x.familia)}</span></div>
         <div class="pills">${pills}</div>
         <a class="btn" href="${wa}" target="_blank" rel="noopener noreferrer">Proponer trueque (WhatsApp)</a>
       `;

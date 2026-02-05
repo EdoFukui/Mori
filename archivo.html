@@ -49,14 +49,21 @@
         <div class="controls" id="filtersContent">
           <div class="search">
             <input id="search" type="search"
-                   placeholder="Buscar: silver dragon, manjula, holly..."
+                   placeholder="Buscar: billetiae, manjula, holly..."
                    aria-label="Buscar en el archivo" />
             <button id="clearBtn" class="btn btn--small btn--ghost" type="button" aria-label="Limpiar búsqueda y filtros">Limpiar</button>
           </div>
 
           <div>
             <div class="small muted" style="margin-bottom:6px;">Visibilidad</div>
-            <div class="chips" id="chipsTrueque" aria-label="Mostrar u ocultar plantas de trueque"></div>
+
+            <div class="switch-row">
+              <span>Mostrar plantas de trueque</span>
+              <label class="switch" aria-label="Mostrar plantas de trueque">
+                <input id="toggleTrueque" type="checkbox" />
+                <span class="slider"></span>
+              </label>
+            </div>
           </div>
 
           <div>
@@ -89,10 +96,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <span>© <span id="year"></span> Plantas Mori</span>
-      <span class="small">
-        UI 3 • Archivo •
-        <a href="https://www.instagram.com/plantasmori?igsh=MXFtMHpsMjE5ZmVkag==" target="_blank" rel="noopener noreferrer">Instagram</a>
-      </span>
+      <span class="small">UI 3 • Archivo</span>
     </div>
   </footer>
 
