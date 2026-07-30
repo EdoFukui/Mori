@@ -51,6 +51,24 @@ body {
     object-fit: cover;
 }
 
+/* --- Fondo estático (móvil/tablet ≤900px) ---
+   Imagen aprobada por el usuario: composición con la planta en el
+   tercio inferior-izquierdo y una franja de sombra oscura y uniforme
+   en el tercio central, pensada para que el texto del Hero centrado
+   se lea con buen contraste. */
+body.fondo-estatico::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-image: url('../../assets/hero-movil.webp');
+    background-size: cover;
+    background-position: center;
+}
+
 /* --- Velo global sobre el fondo --- */
 body::before {
     content: "";

@@ -3,11 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mori</title>
+    <title>Mori — Plantas exóticas en Santiago | Venta y Trueque</title>
+
+    <!-- SEO / metadatos básicos -->
+    <!-- TODO: reemplazar el dominio de ejemplo (plantasmori.cl) por el dominio real una vez definido -->
+    <meta name="description" content="Plantas exóticas de interior criadas con dedicación. Compra y trueque de ejemplares únicos en Santiago, con envíos a regiones. Cada foto es del ejemplar real que recibes.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#1e211e">
+    <link rel="canonical" href="https://www.plantasmori.cl/">
+
+    <!-- Open Graph / redes sociales -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Mori">
+    <meta property="og:title" content="Mori — Plantas exóticas en Santiago">
+    <meta property="og:description" content="Plantas exóticas de interior criadas con dedicación. Compra y trueque de ejemplares únicos, con envíos a regiones.">
+    <!-- TODO: crear assets/social/mori-preview.jpg (1200x630) con una foto real del catálogo antes de publicar -->
+    <meta property="og:image" content="https://www.plantasmori.cl/assets/social/mori-preview.jpg">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.plantasmori.cl/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mori — Plantas exóticas en Santiago">
+    <meta name="twitter:description" content="Plantas exóticas de interior criadas con dedicación. Compra y trueque de ejemplares únicos, con envíos a regiones.">
+    <meta name="twitter:image" content="https://www.plantasmori.cl/assets/social/mori-preview.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
     <!-- Tipografías (Google Fonts) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
     <!-- Hojas de estilo (separadas por responsabilidad) -->
@@ -16,6 +42,22 @@
     <link rel="stylesheet" href="src/css/components.css">
     <link rel="stylesheet" href="src/css/sections.css">
     <link rel="stylesheet" href="src/css/modal.css">
+
+    <!-- Datos estructurados (SEO — negocio local) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Florist",
+        "name": "Mori",
+        "description": "Venta y trueque de plantas exóticas de interior.",
+        "areaServed": "CL",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Santiago",
+            "addressCountry": "CL"
+        }
+    }
+    </script>
 </head>
 <body>
 
@@ -74,6 +116,7 @@
     </main>
 
     <!-- 5. Contacto + footer -->
+    <!-- TODO CRÍTICO: reemplazar 1234567890 por el número real de WhatsApp antes de publicar (pendiente para el lanzamiento oficial, confirmado por el usuario) -->
     <section class="contacto" id="contacto">
         <h2 class="titulo-seccion reveal">Hablemos</h2>
         <p class="texto-contacto reveal">¿Viste algo que te gustó? Escríbeme y hagamos que tu jardín crezca.</p>
@@ -86,15 +129,26 @@
 
         <div class="botones-contacto reveal">
             <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="btn-contacto">WhatsApp</a>
-            <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener noreferrer" class="btn-contacto">Instagram</a>
+            <a href="https://www.instagram.com/plantasmori" target="_blank" rel="noopener noreferrer" class="btn-contacto">Instagram</a>
         </div>
 
         <footer>
             <div class="footer-contenido">
                 <p class="footer-texto">© 2026 Mori</p>
                 <div class="footer-redes">
-                    <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                    <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.6 6.3A8.9 8.9 0 0 0 3.2 16.9L2 21l4.2-1.1A8.9 8.9 0 0 0 12 21a8.9 8.9 0 0 0 5.6-14.7Z"/>
+                            <path d="M9 8.5c0-.3.2-.5.5-.5H10c.3 0 .5.2.6.5l.6 1.8c.1.3 0 .6-.2.8l-.6.6a5.5 5.5 0 0 0 2.9 2.9l.6-.6c.2-.2.5-.3.8-.2l1.8.6c.3.1.5.3.5.6v.6c0 1-.8 1.8-1.8 1.8h-.3C11.2 17.9 6.1 12.8 6 9v-.3c0-1 .8-1.8 1.8-1.8"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/plantasmori" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="5"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </footer>

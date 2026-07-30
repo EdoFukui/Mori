@@ -160,14 +160,16 @@ p {
 
 /* --- Responsivo --- */
 @media (max-width: 768px) {
-    .hero-contenido {
-        margin-left: 0;
-        text-align: center;
-        max-width: 90%;
-    }
-
     .hero {
         padding: 20px;
+        align-items: center;
+    }
+
+    .hero-contenido {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center;
+        max-width: 90%;
     }
 
     .catalogo {

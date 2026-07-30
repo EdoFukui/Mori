@@ -2,8 +2,28 @@
 // FONDO ANIMADO — Canvas timelapse controlado
 // por scroll (GSAP + ScrollTrigger)
 // ============================================
+//
+// Decisión (mobile-first, confirmada por el usuario): en pantallas
+// de hasta 900px de ancho se usa una imagen estática de fondo en vez
+// del timelapse animado, para priorizar rendimiento y simplicidad en
+// móvil. El canvas solo se activa por encima de ese ancho.
+//
+// La imagen estática definitiva (assets/hero-movil.webp) fue generada
+// y aprobada por el usuario, con una composición pensada para que el
+// texto del Hero centrado tenga buen contraste sobre una franja de
+// sombra oscura en el tercio central de la imagen. El fondo estático
+// se resuelve por CSS (ver base.css, clase .fondo-estatico).
+
+const BREAKPOINT_ESTATICO = 900;
 
 export function initBackground() {
+    if (window.innerWidth <= BREAKPOINT_ESTATICO) {
+        // En móvil/tablet no se inicializa el canvas: el fondo estático
+        // se resuelve por CSS (ver base.css, clase .fondo-estatico).
+        document.body.classList.add('fondo-estatico');
+        return;
+    }
+
     const canvas = document.getElementById('fondo-timelapse');
     if (!canvas) return;
 
@@ -25,12 +45,19 @@ export function initBackground() {
     function preloadImages() {
         for (let i = 0; i < frameCount; i++) {
             const img = new Image();
+
+            // El primer frame es crítico para el primer render;
+            // el resto se marca como baja prioridad para no competir
+            // con CSS/fuentes/JS en conexiones lentas (Etapa de performance).
+            if (i === 0) {
+                img.fetchPriority = 'high';
+                img.onload = () => render(0);
+            } else {
+                img.fetchPriority = 'low';
+            }
+
             img.src = frameSrc(i);
             frames.push(img);
-
-            if (i === 0) {
-                img.onload = () => render(0);
-            }
         }
     }
 

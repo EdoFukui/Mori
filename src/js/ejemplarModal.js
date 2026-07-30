@@ -12,6 +12,7 @@
 // - Permite volver al catálogo e iniciar contacto
 //   (Navegación, sección 5).
 
+// TODO CRÍTICO: reemplazar por el número real en formato internacional sin '+' (ej: 56912345678)
 const WHATSAPP_URL = 'https://wa.me/1234567890';
 
 function formatoPrecioCLP(precio) {
