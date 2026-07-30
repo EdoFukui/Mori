@@ -55,14 +55,51 @@ function modalContenidoHTML(planta) {
     `;
 }
 
+// Selector de elementos focuseables típicos dentro del modal.
+const SELECTOR_FOCUSEABLES =
+    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export function initEjemplarModal(plantas) {
     const overlay = document.getElementById('modal-ejemplar');
     const contenido = document.getElementById('modal-ejemplar-contenido');
-    if (!overlay || !contenido) return;
+    const modalCaja = overlay ? overlay.querySelector('.modal-caja') : null;
+    if (!overlay || !contenido || !modalCaja) return;
+
+    // Elemento que tenía el foco antes de abrir el modal (para devolvérselo al cerrar).
+    let elementoAnterior = null;
+
+    function obtenerFocuseables() {
+        return Array.from(modalCaja.querySelectorAll(SELECTOR_FOCUSEABLES)).filter(
+            (el) => el.offsetParent !== null // descarta elementos ocultos
+        );
+    }
+
+    function manejarTabDentroDelModal(event) {
+        if (event.key !== 'Tab') return;
+
+        const focuseables = obtenerFocuseables();
+        if (focuseables.length === 0) {
+            event.preventDefault();
+            return;
+        }
+
+        const primero = focuseables[0];
+        const ultimo = focuseables[focuseables.length - 1];
+
+        if (event.shiftKey && document.activeElement === primero) {
+            event.preventDefault();
+            ultimo.focus();
+        } else if (!event.shiftKey && document.activeElement === ultimo) {
+            event.preventDefault();
+            primero.focus();
+        }
+    }
 
     function abrirModal(id) {
         const planta = plantas.find(p => p.id === id);
         if (!planta) return;
+
+        elementoAnterior = document.activeElement;
 
         contenido.innerHTML = modalContenidoHTML(planta);
         overlay.classList.add('activo');
@@ -71,12 +108,27 @@ export function initEjemplarModal(plantas) {
 
         const btnCerrar = contenido.querySelector('.btn-cerrar-modal');
         btnCerrar.addEventListener('click', cerrarModal);
+
+        // Mueve el foco al primer elemento focuseable del modal (el botón "X"),
+        // en vez de dejarlo en el fondo de la página.
+        const focuseables = obtenerFocuseables();
+        (focuseables[0] || modalCaja).focus();
+
+        document.addEventListener('keydown', manejarTabDentroDelModal);
     }
 
     function cerrarModal() {
         overlay.classList.remove('activo');
         overlay.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-abierto');
+
+        document.removeEventListener('keydown', manejarTabDentroDelModal);
+
+        // Devuelve el foco al elemento (tarjeta) que abrió el modal.
+        if (elementoAnterior && document.body.contains(elementoAnterior)) {
+            elementoAnterior.focus();
+        }
+        elementoAnterior = null;
     }
 
     // Delegación de eventos: cualquier tarjeta con data-id abre su modal.

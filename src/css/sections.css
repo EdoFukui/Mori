@@ -57,6 +57,20 @@ p {
     margin: 0 auto;
 }
 
+@media (max-width: 900px) {
+    .grid-plantas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-plantas {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 420px;
+    }
+}
+
 /* --- 3. Sobre nosotros --- */
 .sobre-nosotros {
     text-align: center;
@@ -172,6 +186,16 @@ p {
         max-width: 90%;
     }
 
+    .hero-contenido p {
+        color: #ded9c8;
+        text-shadow: 0 2px 12px rgba(15, 10, 5, 0.5);
+    }
+
+    .hero-contenido .tag {
+        color: #ded9c8;
+        text-shadow: 0 2px 12px rgba(15, 10, 5, 0.5);
+    }
+
     .catalogo {
         padding: 60px 20px;
     }
@@ -179,5 +203,15 @@ p {
     .titulo-seccion {
         font-size: 2rem;
         margin-bottom: 40px;
+    }
+
+    .texto-sobre-nosotros {
+        font-size: 0.95rem;
+        line-height: 1.65;
+        padding: 28px 24px;
+    }
+
+    .texto-sobre-nosotros p {
+        margin-bottom: 14px;
     }
 }

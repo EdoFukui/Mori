@@ -28,7 +28,9 @@
 
 /* --- Tarjeta de ejemplar (catálogo) --- */
 .card {
-    background-color: rgba(255, 255, 255, 0.8);
+    /* Crema cálido de la paleta (mismo tono que el fondo del modal, #fdfbf7)
+       en vez de blanco puro, para que no destaque como un blanco "frío". */
+    background-color: rgba(253, 251, 247, 0.85);
     backdrop-filter: blur(5px);
     border-radius: 8px;
     overflow: hidden;
@@ -78,6 +80,15 @@
 .card:hover .btn-card {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* En pantallas táctiles no existe :hover, así que el botón quedaría
+   invisible sobre la tarjeta. Se muestra siempre en ese caso. */
+@media (hover: none) {
+    .btn-card {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .card-info {
@@ -135,7 +146,8 @@
 
 /* --- Skeleton loader (estado de carga del catálogo) --- */
 .skeleton-card {
-    background-color: rgba(255, 255, 255, 0.4);
+    /* Mismo tono que .card, para que no haya un salto de color al cargar */
+    background-color: rgba(253, 251, 247, 0.5);
     backdrop-filter: blur(5px);
     border-radius: 8px;
     overflow: hidden;
@@ -204,16 +216,18 @@
     background-color: var(--color-text);
 }
 
-/* --- Responsivo --- */
-@media (max-width: 900px) {
-    .grid-plantas {
-        grid-template-columns: repeat(2, 1fr);
+@media (max-width: 768px) {
+    .btn-arriba {
+        bottom: 100px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.25rem;
     }
 }
 
-@media (max-width: 768px) {
-    .grid-plantas {
-        grid-template-columns: 1fr;
-        gap: 32px;
-    }
-}
+/* Nota: las reglas responsivas de .grid-plantas viven en sections.css,
+   justo después de su definición base, para evitar que el orden de
+   carga de las hojas de estilo (esta se carga antes que sections.css)
+   haga que una regla incondicional posterior gane por cascada sobre
+   una regla condicional anterior con la misma especificidad. */

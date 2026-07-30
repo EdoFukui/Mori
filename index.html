@@ -29,6 +29,11 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <!-- Fallback PNG para navegadores sin soporte de favicon SVG (ej. Safari < 2022) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+    <!-- Ícono para agregar el sitio a la pantalla de inicio en iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 
     <!-- Tipografías (Google Fonts) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -156,7 +161,7 @@
 
     <!-- Vista de Detalle del Ejemplar (modal) -->
     <div id="modal-ejemplar" class="modal-overlay" aria-hidden="true">
-        <div class="modal-caja">
+        <div class="modal-caja" tabindex="-1">
             <button type="button" class="modal-cerrar-x" aria-label="Cerrar">×</button>
             <div id="modal-ejemplar-contenido"></div>
         </div>
