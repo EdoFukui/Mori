@@ -1,0 +1,111 @@
+/* ============================================
+   LAYOUT — Header, navegación, secciones, footer
+   ============================================ */
+
+/* --- Encabezado / navegación --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.logo {
+    font-family: var(--font-logo);
+    font-size: 3rem;
+    font-weight: normal;
+    color: var(--color-text);
+    text-decoration: none;
+    line-height: 1;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+nav a:hover {
+    opacity: 0.7;
+}
+
+/* --- Secciones genéricas --- */
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Footer --- */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 50px;
+    box-sizing: border-box;
+}
+
+.footer-contenido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-texto {
+    font-size: 0.85rem;
+    color: #fdfbf7;
+    margin: 0;
+}
+
+.footer-redes {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-redes a {
+    font-size: 0.85rem;
+    color: #fdfbf7;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.footer-redes a:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+}
+
+/* --- Diseño responsivo --- */
+@media (max-width: 768px) {
+    header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav ul {
+        gap: 20px;
+    }
+
+    .footer-contenido {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
