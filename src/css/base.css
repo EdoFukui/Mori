@@ -8,6 +8,7 @@
     src: url('../../assets/fonts/Ananda.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 /* --- Sistema de colores y tipografía --- */

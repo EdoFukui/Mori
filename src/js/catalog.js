@@ -12,8 +12,7 @@
 // los ejemplares en estado "retirado" desaparecen del
 // catálogo público, por lo que se filtran antes de renderizar.
 
-// TODO CRÍTICO: reemplazar por el número real en formato internacional sin '+' (ej: 56912345678)
-const WHATSAPP_URL = 'https://wa.me/1234567890';
+const WHATSAPP_URL = 'https://wa.me/56968242441';
 
 function formatoPrecioCLP(precio) {
     return new Intl.NumberFormat('es-CL', {
