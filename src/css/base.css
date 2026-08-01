@@ -53,10 +53,9 @@ body {
 }
 
 /* --- Fondo estático (móvil/tablet ≤900px) ---
-   Imagen aprobada por el usuario: composición con la planta en el
-   tercio inferior-izquierdo y una franja de sombra oscura y uniforme
-   en el tercio central, pensada para que el texto del Hero centrado
-   se lea con buen contraste. */
+   Composición con la planta en el tercio inferior-izquierdo y una
+   franja de sombra oscura y uniforme en el tercio central, pensada
+   para que el texto del Hero centrado se lea con buen contraste. */
 body.fondo-estatico::after {
     content: "";
     position: fixed;

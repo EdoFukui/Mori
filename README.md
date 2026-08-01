@@ -49,9 +49,11 @@ bundler, sin dependencias de build**. Todo corre directo en el navegador.
     │   └── modal.css           # Modal de detalle
     ├── js/
     │   ├── main.js             # Inicialización general
+    │   ├── config.js           # Valores compartidos (ej. WhatsApp)
     │   ├── background.js       # Fondo animado del Hero
     │   ├── catalog.js          # Carga y render del catálogo + filtros
     │   ├── ejemplarModal.js    # Modal de detalle (con focus trap)
+    │   ├── whatsappLinks.js    # Sincroniza enlaces estáticos de WhatsApp
     │   ├── scrollReveal.js     # Animaciones al hacer scroll
     │   └── scrollTop.js        # Botón flotante "ir arriba"
     └── data/

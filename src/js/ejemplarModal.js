@@ -2,17 +2,11 @@
 // VISTA DE DETALLE DEL EJEMPLAR — Modal
 // ============================================
 //
-// Decisión congelada por el usuario: la Vista de Detalle se
-// implementa como modal (Guía de Implementación, sección 6,
-// dejaba esta elección libre).
-//
-// Requisitos funcionales cubiertos:
-// - Muestra toda la información aprobada del ejemplar
-//   (Catálogo, sección 9).
-// - Permite volver al catálogo e iniciar contacto
-//   (Navegación, sección 5).
+// Muestra el detalle completo de un ejemplar (imagen, especie,
+// tamaño, condición y precio o modalidad de trueque) y permite
+// volver al catálogo o iniciar contacto por WhatsApp desde ahí.
 
-const WHATSAPP_URL = 'https://wa.me/56968242441';
+import { WHATSAPP_URL } from './config.js';
 
 function formatoPrecioCLP(precio) {
     return new Intl.NumberFormat('es-CL', {
@@ -23,6 +17,9 @@ function formatoPrecioCLP(precio) {
 }
 
 function etiquetaComercial(planta) {
+    if (planta.estado === 'reservado') {
+        return 'Reservada';
+    }
     if (planta.categoria === 'venta' && typeof planta.precio === 'number') {
         return formatoPrecioCLP(planta.precio);
     }
@@ -39,7 +36,7 @@ function modalContenidoHTML(planta) {
             <img src="${planta.imagen}" alt="${planta.nombre}">
         </div>
         <div class="modal-info">
-            <span class="tag-card">${etiquetaComercial(planta)}</span>
+            <span class="tag-card${planta.estado === 'reservado' ? ' reservada' : ''}">${etiquetaComercial(planta)}</span>
             <h3>${planta.nombre}</h3>
             <p class="modal-especie">${planta.especie}</p>
             <ul class="modal-detalles">

@@ -3,16 +3,15 @@
 // por scroll (GSAP + ScrollTrigger)
 // ============================================
 //
-// Decisión (mobile-first, confirmada por el usuario): en pantallas
-// de hasta 900px de ancho se usa una imagen estática de fondo en vez
-// del timelapse animado, para priorizar rendimiento y simplicidad en
-// móvil. El canvas solo se activa por encima de ese ancho.
+// Mobile-first: en pantallas de hasta 900px de ancho se usa una
+// imagen estática de fondo en vez del timelapse animado, para
+// priorizar rendimiento y simplicidad en móvil. El canvas solo
+// se activa por encima de ese ancho.
 //
-// La imagen estática definitiva (assets/hero-movil.webp) fue generada
-// y aprobada por el usuario, con una composición pensada para que el
-// texto del Hero centrado tenga buen contraste sobre una franja de
-// sombra oscura en el tercio central de la imagen. El fondo estático
-// se resuelve por CSS (ver base.css, clase .fondo-estatico).
+// La imagen estática (assets/hero-movil.webp) tiene una composición
+// pensada para que el texto del Hero centrado tenga buen contraste
+// sobre una franja de sombra oscura en el tercio central. El fondo
+// estático se resuelve por CSS (ver base.css, clase .fondo-estatico).
 
 const BREAKPOINT_ESTATICO = 900;
 

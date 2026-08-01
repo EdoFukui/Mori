@@ -3,16 +3,14 @@
 // tarjetas y filtros por categoría
 // ============================================
 //
-// Esquema de datos aprobado (Etapa 4): cada ejemplar tiene
-// id, nombre, especie, categoria (venta|trueque), precio
-// (CLP o null si es trueque), estado (disponible|reservado|
-// retirado), tamaño, condicion, imagen.
+// Esquema de datos: cada ejemplar tiene id, nombre, especie,
+// categoria (venta|trueque), precio (CLP o null si es trueque),
+// estado (disponible|reservado|retirado), tamaño, condicion, imagen.
 //
-// Regla funcional (Especificación del Catálogo, sección 6):
-// los ejemplares en estado "retirado" desaparecen del
-// catálogo público, por lo que se filtran antes de renderizar.
+// Los ejemplares en estado "retirado" se excluyen del catálogo
+// público y se filtran antes de renderizar.
 
-const WHATSAPP_URL = 'https://wa.me/56968242441';
+import { WHATSAPP_URL } from './config.js';
 
 function formatoPrecioCLP(precio) {
     return new Intl.NumberFormat('es-CL', {
@@ -35,6 +33,9 @@ function skeletonCardHTML() {
 }
 
 function etiquetaComercial(planta) {
+    if (planta.estado === 'reservado') {
+        return 'Reservada';
+    }
     if (planta.categoria === 'venta' && typeof planta.precio === 'number') {
         return formatoPrecioCLP(planta.precio);
     }
@@ -45,12 +46,12 @@ function cardHTML(planta) {
     return `
         <div class="card reveal" data-categoria="${planta.categoria}" data-id="${planta.id}">
             <div class="card-imagen">
-                <img src="${planta.imagen}" alt="${planta.nombre}" loading="lazy">
+                <img src="${planta.imagen}" alt="${planta.nombre}, tamaño ${planta.tamaño}, ${planta.condicion}" loading="lazy">
                 <a href="${WHATSAPP_URL}" target="_blank" rel="noopener noreferrer" class="btn-card">Consultar</a>
             </div>
             <div class="card-info">
                 <h3>${planta.nombre}</h3>
-                <span class="tag-card">${etiquetaComercial(planta)}</span>
+                <span class="tag-card${planta.estado === 'reservado' ? ' reservada' : ''}">${etiquetaComercial(planta)}</span>
             </div>
         </div>
     `;
@@ -75,7 +76,7 @@ export async function initCatalog(observer) {
         return [];
     }
 
-    // 3. Filtrar ejemplares retirados del inventario activo (Catálogo, sección 6)
+    // 3. Filtrar ejemplares retirados del inventario activo
     const plantasActivas = plantas.filter(planta => planta.estado !== 'retirado');
 
     contenedor.innerHTML = plantasActivas.map(cardHTML).join('');

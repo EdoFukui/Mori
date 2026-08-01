@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.plantasmori.cl/sitemap.xml
+Sitemap: https://edofukui.github.io/Mori/sitemap.xml
